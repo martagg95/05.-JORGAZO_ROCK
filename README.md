@@ -2,7 +2,7 @@
 
 # 🎸 Jorgazo Rock - Sitio web oficial
 
-Este repositorio contiene la web del festival punk-rock **Jorgazo Rock**, un evento cultural y autogestionado que se celebra cada verano en **Cabeza La Vaca (Badajoz)** desde 2013.
+Este repositorio contiene la web del festival punk-rock **Jorgazo Rock**, un evento cultural y autogestionado que se celebra cada otoño en **Cabeza La Vaca (Badajoz)** desde 2013.
 
 👉 Puedes ver la web en vivo aquí:  
 [https://martagg95.github.io/05.-JORGAZO_ROCK/](https://martagg95.github.io/05.-JORGAZO_ROCK/)
