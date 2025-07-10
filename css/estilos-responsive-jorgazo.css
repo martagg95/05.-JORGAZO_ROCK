@@ -1,6 +1,131 @@
-/* jorgazo-responsive.css */
+/* === TABLET (≤ 768px) === */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
+    padding-bottom: 0.3rem;
+  }
 
-/* Este archivo se cargará solo en pantallas menores a 1024px */
+  p {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+
+  .cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .section {
+    padding: 3rem 1.5rem;
+  }
+    #countdown {
+      gap: 1rem;
+      max-width: 100%;
+    }
+  
+    #countdown div {
+      padding: 1rem;
+      width: 100px;
+    }
+  
+    #countdown span {
+      font-size: 2.2rem;
+    }
+  
+    #countdown small {
+      font-size: 0.8rem;
+    }
+  }  
+
+  .fake-img {
+    height: 160px;
+    font-size: 0.9rem;
+  }
+
+  .map iframe {
+    height: 250px;
+  }
+
+  .formulario input,
+  .formulario textarea {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+
+  .formulario button {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+/* === MÓVILES (≤ 480px) === */
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+    padding: 0 0.5rem;
+  }
+
+  #countdown {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  #countdown div {
+    width: 80%;
+    max-width: 220px;
+    padding: 1.2rem;
+  }
+
+  #countdown span {
+    font-size: 2rem;
+  }
+
+  .cta-button {
+    width: 100%;
+    display: block;
+    max-width: 280px;
+    margin: 2.5rem auto;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .grid-background {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+  }
+
+  .fake-img {
+    height: 150px;
+  }
+
+  #countdown {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .map {
+    max-width: 100%;
+  }
+
+  .map iframe {
+    height: 200px;
+  }
+}
+
+/* Si algún elemento individual causa desbordamiento, lo recortamos automáticamente */
+* {
+  box-sizing: border-box;
+}
+
 @media screen and (max-width: 1024px) {
 
     /* Adaptar storytelling */
@@ -153,6 +278,55 @@
         font-size: 1.2rem;
         text-align: center!important;
     }
+
+    /* === NUEVAS MEJORAS VISUALES PARA GALERÍA === */
+
+body {
+  padding-top: 80px; /* Ajusta según el alto real del header */
+}
+
+/* Asegura que el header no tape contenido */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+section {
+  margin-bottom: 2rem;
+}
+
+/* Mejora padding horizontal global para evitar texto pegado al borde */
+section, .storytelling-text, .intro, .pueblo-celebra {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Alineación perfecta de textos en storytelling */
+.storytelling-text, 
+.storytelling-alt .storytelling-text {
+  align-items: center;
+  justify-content: center;
+}
+
+/* Imágenes en storytelling centradas y con altura fluida */
+.storytelling-img,
+.storytelling-alt .storytelling-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Imagen de fondo bien escalada */
+
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+ /* === FIN DE LAS MEJORAS VISUALES === */
+
   }
   
   /* Ajustes móviles más pequeños */
@@ -172,4 +346,57 @@
     .modal-content {
       max-width: 90%;
     }
+
+    /* === NUEVAS MEJORAS PARA MÓVILES MUY PEQUEÑOS === */
+
+    /* Padding más suave en móviles muy estrechos */
+section {
+  padding: 1rem;
+}
+
+/* Reducción del logo en móviles mini */
+#scroll-logo {
+  transform: scale(0.6);
+}
+
+.grid-item img {
+  border-radius: 8px !important; /* más pequeño en móvil */
+  box-shadow: 0 0 8px rgba(230, 0, 0, 0.4); /* más sutil */
+  padding: 0 !important;
+  margin: 0 auto;
+}
+
+.grid-item {
+  padding: 0.5rem;
+}
+
+.grid-item.grande {
+  grid-column: span 1 !important; /* se ajusta mejor al stack vertical */
+}
+
+.grid-jorgazo {
+  gap: 1rem;
+}
+
+/* Footer responsive fix para email y enlaces */
+footer a {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  font-size: 1.2rem;
+  display: inline-block;
+  max-width: 100%;
+  text-align: center;
+  line-height: 1.4;
+}
+
+footer p {
+  padding: 0 1rem;
+}
+
+footer {
+  padding-bottom: 3rem;
+}
+
+/* === FIN DE LAS MEJORAS === */
+
   }   
