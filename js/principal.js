@@ -256,3 +256,27 @@ const logo = document.getElementById("scroll-logo");
       });
     });
   });
+
+  /* === MODAL PARA AMPLIACIÓN DE IMÁGENES === */
+
+  // Función para abrir el modal con la imagen
+  function openModal(src) {
+    const modal = document.getElementById("imageModal");
+    const modalImg = document.getElementById("modalImage");
+    modal.style.display = "flex";
+    modalImg.src = src;
+  }
+
+  // Función para cerrar el modal
+  function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+
+  // Asociar clics a todas las imágenes de la galería
+  document.addEventListener("DOMContentLoaded", function () {
+    const imgs = document.querySelectorAll(".grid-jorgazo img, .storytelling-img img");
+    imgs.forEach(img => {
+      img.style.cursor = "zoom-in";
+      img.addEventListener("click", () => openModal(img.src));
+    });
+  });
