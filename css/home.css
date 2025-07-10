@@ -668,38 +668,6 @@ p {
   grid-column: span 1;
 }
 
-/* === RESPONSIVE === */
-@media (max-width: 1024px) {
-  .pueblo-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-  .pueblo-img.grande,
-  .pueblo-img.vertical,
-  .pueblo-img.small {
-    grid-column: span 2;
-  }
-  .pueblo-img img {
-    height: 220px;
-  }
-}
-
-@media (max-width: 600px) {
-  .pueblo-grid {
-    grid-template-columns: 1fr;
-  }
-  .pueblo-img img {
-    height: 200px;
-  }
-  .pueblo-celebra h2 {
-    font-size: 2rem;
-  }
-  .pueblo-celebra .intro {
-    font-size: 1rem;
-    padding: 0 1rem;
-  }
-}
-
 .caption {
   font-size: 0.9rem;
   color: #000;

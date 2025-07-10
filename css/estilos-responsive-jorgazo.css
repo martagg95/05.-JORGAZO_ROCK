@@ -212,13 +212,18 @@
     }
   
     /* Pueblo celebra */
-    .pueblo-grid {
-      grid-template-columns: 1fr;
-    }
-  
-    .pueblo-img img {
-      height: 200px;
-    }
+      .pueblo-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .pueblo-img.grande,
+      .pueblo-img.vertical,
+      .pueblo-img.small {
+        grid-column: span 2;
+      }
+      .pueblo-img img {
+        height: 220px;
+      }
   
     /* Formulario */
     .formulario input,
