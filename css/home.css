@@ -670,6 +670,134 @@ p {
   grid-column: span 1;
 }
 
+/* NUEVA SECCIÓN - AMPLIACIÓN PROPUESTA RAFA */
+
+.fuente-lunara-highlight {
+  padding: 6rem 2rem;
+  background: repeating-linear-gradient(
+    45deg,
+    #000,
+    #000 10px,
+    #1a1a1a 10px,
+    #1a1a1a 20px
+  );
+  border-top: 3px dashed #e60000;
+  border-bottom: 3px dashed #e60000;
+  text-align: center;
+}
+
+.fuente-lunara-highlight h2 {
+  font-size: 3rem;
+  font-family: 'Rubik Glitch', sans-serif;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px dashed #e60000;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.fuente-desc {
+  font-size: 1.6rem;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+  color: #fff;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px #000;
+}
+
+.fake-video-wrapper {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 3px solid #e60000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.fake-video-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  filter: grayscale(10%);
+}
+
+.play-icon-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(230, 0, 0, 0.8);
+  border-radius: 50%;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(255,0,0,0.5);
+  transition: all 0.2s ease-in-out;
+}
+
+.play-icon-overlay:hover {
+  background: #fff;
+}
+
+.play-icon-overlay svg {
+  fill: #fff;
+}
+
+.play-icon-overlay:hover svg {
+  fill: #e60000;
+}
+
+.fake-video-wrapper:hover .fake-video-img {
+  filter: brightness(1.05);
+  transform: scale(1.01);
+  transition: all 0.2s ease-in-out;
+}
+
+.frase-subrayada {
+  position: relative;
+  display: inline-block;
+  margin: 3rem auto 2rem;
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-style: italic;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  line-height: 1.4;
+  max-width: 700px;
+  padding: 1rem 1.5rem;
+  z-index: 1;
+}
+
+.frase-subrayada p {
+  position: relative;
+  z-index: 2;
+}
+
+.frase-subrayada::after {
+  content: "";
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: repeating-linear-gradient(
+    -10deg,
+    rgba(230, 0, 0, 0.6),
+    rgba(230, 0, 0, 0.6) 2px,
+    rgba(0, 0, 0, 0.4) 2px,
+    rgba(0, 0, 0, 0.4) 4px
+  );
+  transform: skewY(-5deg);
+  z-index: 1;
+  border-radius: 3px;
+  opacity: 0.8;
+}
+
+/* FIN SECCIÓN PROPUESTA RAFA */
+
 .caption {
   font-size: 0.9rem;
   color: #000;
