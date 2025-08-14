@@ -36,7 +36,49 @@
     #countdown small {
       font-size: 0.8rem;
     }
-  }  
+
+  /* === AJUSTES RESPONSIVE MODAL DE BANDAS === */
+  .modal-banda-content {
+    max-width: 95%;
+    padding: 1.5rem;
+    max-height: 90vh;
+  }
+
+  #modalBandaBody h3 {
+    font-size: 2rem;
+  }
+
+  #modalBandaBody p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  #modalBandaBody .cta-button {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Responsive para el menú */
+  .menu-link {
+    font-size: 2rem; /* Ligeramente más grande para móvil */
+    text-align: center;
+    padding: 0.8rem;
+    padding-right: 1rem!important;
+    transform: translateY(30px);
+  }
+
+  #menu-trigger {
+    width: 50px;
+    height: 50px;
+  }
+  #menu-trigger img {
+    width: 32px;
+    height: 32px;
+  }
+  #menu-close {
+    font-size: 3.5rem;
+  }
+}  
 
   .fake-img {
     height: 160px;
@@ -417,5 +459,19 @@ footer {
   .banda-card {
     max-width: 400px; /* Ancho máximo para las tarjetas */
     margin: 0 auto; /* Centrar las tarjetas */
+  }
+
+  /* === AJUSTES RESPONSIVE MODAL DE BANDAS (SOBREESCRITURA) === */
+  .modal-banda-content {
+    max-width: 90%;
+    padding: 1rem;
+  }
+
+  #modalBandaBody h3 {
+    font-size: 1.8rem;
+  }
+
+  #modalBandaBody p {
+    font-size: 1rem;
   }
 }
