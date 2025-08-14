@@ -43,10 +43,30 @@
 
 <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
 </head>
 
 <body>
-  <section class="section-logo-intro">
+
+  <!-- === MENÚ PUNK ROCK === -->
+  <button id="menu-trigger" title="Menú" aria-label="Abrir menú" aria-haspopup="true" aria-controls="punk-menu-overlay">
+    <img src="images/logo/menu1.svg" alt="Icono del menú">
+  </button>
+
+  <nav id="punk-menu-overlay" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
+    <div id="paint-splatter"></div>
+    <h2 id="menu-heading" class="visually-hidden">Navegación Principal</h2>
+    <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
+    <a href="#inicio" class="menu-link">INICIO</a>
+    <a href="#cartelazo" class="menu-link">EL CARTELAZO</a>
+    <a href="#historia" class="menu-link">EL JORGAZO</a>
+    <a href="#fuente-lunara" class="menu-link">LA FUENTE LUNARA</a>
+    <a href="#galeria" class="menu-link">GALERÍA</a>
+    <a href="#contacto" class="menu-link">CONTACTO</a>
+  </nav>
+  <!-- === FIN MENÚ PUNK ROCK === -->
+  <section id="inicio" class="section-logo-intro">
     <img id="scroll-logo" src="images/logo/img43-sin-fondo.png" alt="Logo Jorgazo Rock" loading="lazy">
   </section><br><br><br><br><br><br><br><br><br><br>
   <div class="grid-background">
@@ -136,15 +156,53 @@
 
   
   <!-- FIN DE LA SECCIÓN DEL CONTADOR -->
+
+  <!-- === SECCIÓN DE BANDAS - EL CARTELAZO === -->
+  <section id="cartelazo" class="section section-cartelazo" data-aos="fade-up">
+    <center>
+      <h2>EL CARTELAZO</h2>
+    </center>
+    <div class="cartelazo-grid">
+      <!-- Tarjeta de Banda 1 -->
+      <div class="banda-card" role="button" tabindex="0" data-banda="banda-1">
+        <img src="images/bandas/delirium_clowniko.webp" alt="" loading="lazy">
+        <div class="banda-nombre">Delírium Clownico Cirkabaret Musikal</div>
+      </div>
+      <!-- Tarjeta de Banda 2 -->
+      <div class="banda-card" role="button" tabindex="0" data-banda="banda-2">
+        <img src="images/bandas/vilamc_yeuh.webp" alt="" loading="lazy">
+        <div class="banda-nombre">Vila MC YeuH</div>
+      </div>
+      <!-- Tarjeta de Banda 3 -->
+      <div class="banda-card" role="button" tabindex="0" data-banda="banda-3">
+        <img src="images/bandas/river_hakes.webp" alt="" loading="lazy">
+        <div class="banda-nombre">River Hakes</div>
+      </div>
+    </div>
+    <center>
+      <p>¡Más bandas por confirmar!</p>
+    </center>
+    </div>
+  </section>
+
+  <!-- === MODAL DE BANDA === -->
+  <div id="modalBanda" class="modal-banda">
+    <div class="modal-banda-content">
+      <span class="close-modal-banda">&times;</span>
+      <div id="modalBandaBody">
+        <!-- Contenido dinámico de la banda -->
+      </div>
+    </div>
+  </div>
   
   
-  <section class="section storytelling-wrapper" data-aos="fade-up">
+  <section id="historia" class="section storytelling-wrapper" data-aos="fade-up">
     <div class="storytelling-text" data-aos="fade-right">
       <h2>Una historia de punk-rock, pueblo y amistad</h2>
       <p>El Jorgazo Rock nació en 2013 como una excusa para juntarnos lxs amigxs, con ganas de meterle ruido a un pueblo donde hacía falta diversidad cultural y música con garra.</p>
     </div>
     <div class="storytelling-img img-vertical-grande" data-aos="fade-left" data-aos-delay="200">
-      <img src="images/denis_inma.webp" alt="Imagen vertical festival Jorgazo Rock">
+      <img src="images/denis_inma.webp" alt="Denis e Inma, organizadores del Jorgazo Rock" loading="lazy">
     </div>    
   </section>
   <section class="storytelling-horizontal-img" data-aos="zoom-in-up">
@@ -156,7 +214,7 @@
   </section>  
   <section class="storytelling-alt" data-aos="fade-up">
     <div class="storytelling-img" data-aos="fade-right">
-      <img src="images/merce_y_nina.webp" alt="Otra escena del festival Jorgazo Rock" loading="lazy">
+      <img src="images/merce_y_nina.webp" alt="Merce y Nina, organizadoras del Jorgazo Rock" loading="lazy">
     </div>
     <div class="storytelling-text" data-aos="fade-left" data-aos-delay="200">
       <h2 style="text-align: right;">Libertad, igualdad y solidaridad</h2>
@@ -164,7 +222,7 @@
       <p>Además, colaboramos con Ecologistas en Acción para montar actividades para peques. Este año celebramos nuestro X aniversario.</p>
     </div>
   </section>
-  <section class="section galeria-grid" data-aos="fade-up">
+  <section id="galeria" class="section galeria-grid" data-aos="fade-up">
     <center><h2>Momentos únicos...</h2></center>
     
     <div class="grid-jorgazo">
@@ -175,7 +233,7 @@
         <img src="images/grupo1_jorgazorock_2024.webp" alt="Grupo tocando en el Jorgazo Rock en 2024" loading="lazy">
       </div>
       <div class="grid-item" data-aos="fade-up">
-        <img src="images/asistentes_jorgazorock.webp" alt="Imagen de asistentes al Jorgazo Rock" loading="lazy">
+        <img src="images/asistentes_jorgazorock.webp" alt="Asistentes disfrutando del Jorgazo Rock" loading="lazy">
       </div>
       <div class="grid-item" data-aos="fade-up">
         <img src="images/cantante_grupo_jorgazorock_2016.webp" alt="Cantante en el Jorgazo Rock 2016" loading="lazy">
@@ -222,12 +280,12 @@
       </center>
       <div class="video-wrapper">
         <div style="position: relative; width: 100%; max-width: 100dvw; aspect-ratio: 16/9;">
-          <a href="https://youtube.com/shorts/SM2LiA_Ml4Y" target="_blank" rel="noopener noreferrer">
-            <img src="images/portada_video.webp" alt="Miniatura del vídeo" 
+          <a href="https://youtube.com/shorts/SM2LiA_Ml4Y" target="_blank" rel="noopener noreferrer" aria-label="Ver vídeo resumen del Jorgazo Rock en YouTube">
+            <img src="images/portada_video.webp" alt="Miniatura del vídeo del festival" 
                  style="width: 100%; height: auto; display: block; object-fit: cover; cursor: pointer;" 
                  loading="lazy" decoding="async" />
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-                        background: rgba(0, 0, 0, 0.6); border-radius: 50%; padding: 15px;">
+                        background: rgba(0, 0, 0, 0.6); border-radius: 50%; padding: 15px; pointer-events: none;">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="#fff">
                 <path d="M8 5v14l11-7z"/>
               </svg>
@@ -254,7 +312,7 @@
         src="https://open.spotify.com/embed/playlist/4YfpcYbOXHBEpHgt7aww8t?utm_source=generator" 
         width="100%" height="380" frameBorder="0" allowtransparency="true" 
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-        loading="lazy" title="Vídeo conmemorativo Edición IX Jorgazo Rock">
+        loading="lazy" title="Playlist del Jorgazo Rock en Spotify">
       </iframe>
     </div>
   
@@ -279,7 +337,7 @@
     <div class="pueblo-grid">
   
       <div class="pueblo-img grande" data-aos="fade-right">
-        <img src="images/fuente_lunara.webp" alt="Fuente Lunara" loading="lazy">
+        <img src="images/fuente_lunara.webp" alt="La Fuente Lunara, un paraje natural con árboles y un arroyo" loading="lazy">
         <div class="pueblo-img-content">
           <h3>La Fuente Lunara</h3>
           <p>Donde cada otoño se convierte en templo de diversión y abrazos, al aire libre, bajo las estrellas y hasta el amanecer.</p>
@@ -287,7 +345,7 @@
       </div>
   
       <div class="pueblo-img vertical" data-aos="zoom-in">
-        <img src="images/albergue_municipal.webp" alt="Albergue rural" loading="lazy">
+        <img src="images/albergue_municipal.webp" alt="Fachada del Albergue Municipal de Cabeza la Vaca" loading="lazy">
         <div class="pueblo-img-content">
           <h3>El Albergue Municipal</h3>
           <p>Un sitio humilde pero acogedor donde duermen las ideas, las risas y nuestrxs queridxs amigxs de los grupos.</p>
@@ -295,7 +353,7 @@
       </div>
   
       <div class="pueblo-img vertical" data-aos="zoom-in">
-        <img src="images/vecinos_cabeza_la_vaca.webp" alt="Vecinxs" loading="lazy">
+        <img src="images/vecinos_cabeza_la_vaca.webp" alt="Vecinos del pueblo colaborando en el festival" loading="lazy">
         <div class="pueblo-img-content">
           <h3>Vecinxs de lujo</h3>
           <p>Hasta quien no escucha rock o punk ayuda con una sonrisa, una caña bien fresquita o una buena paella.</p>
@@ -303,7 +361,7 @@
       </div>
   
       <div class="pueblo-img vertical" data-aos="fade-up">
-        <img src="images/calles_pueblo_cabeza_la_vaca.webp" alt="Calles del pueblo" loading="lazy">
+        <img src="images/calles_pueblo_cabeza_la_vaca.webp" alt="Una calle empedrada y blanca típica de Cabeza la Vaca" loading="lazy">
         <div class="pueblo-img-content">
           <h3>Un lugar con historia</h3>
           <p>Un pueblo obrero que se ha hecho a sí mismo. Cabeza la Vaca es pasado, presente y futuro.</p>
@@ -311,7 +369,7 @@
       </div>
   
       <div class="pueblo-img vertical" data-aos="fade-up">
-        <img src="images/peques_naturaleza_cabeza_la_vaca.webp" alt="Peques disfrutando" loading="lazy">
+        <img src="images/peques_naturaleza_cabeza_la_vaca.webp" alt="Niños y niñas jugando en un entorno natural durante las actividades infantiles" loading="lazy">
         <div class="pueblo-img-content">
           <h3>Nuestrxs peques; el futuro</h3>
           <p>Actividades infantiles que mezclan punk y naturaleza. Porque la revolución también se enseña.</p>
@@ -320,6 +378,34 @@
   
     </div>
   </section>  
+
+  <!-- AMPLIACIÓN CON PROPUESTA DE RAFA -->
+
+  <section id="fuente-lunara" class="section fuente-lunara-highlight" data-aos="fade-up">
+    <center>
+      <h2>¿Aún no conoces la Fuente Lunara?</h2>
+      <p class="fuente-desc frase-subrayada">
+        Un refugio entre árboles.
+Un techado de madera.
+Una barbacoa encendida.
+
+Y en mitad de todo eso... el Jorgazo.
+      </p>
+    </center>
+  
+    <div class="fake-video-wrapper">
+      <a href="https://www.facebook.com/AytoCabezaLaVaca/videos/1226769235829694" target="_blank" rel="noopener noreferrer" aria-label="Ver vídeo de la Fuente Lunara en Facebook">
+        <img src="images/fuente_lunara.webp" alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" />
+        <div class="play-icon-overlay" style="pointer-events: none;">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="#fff">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </div>
+      </a>
+    </div>
+  </section>  
+
+  <!-- FIN DE LA SECCIÓN PROPUESTA POR RAFA -->
    
 
   <section class="section" data-aos="fade-up">
@@ -334,7 +420,8 @@
         src="https://www.google.com/maps?q=Fuente+Lunara,+Cabeza+la+Vaca,+Badajoz&output=embed"
         allowfullscreen=""
         loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade">
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de ubicación de la Fuente Lunara">
       </iframe>
     </div>
   </section>  
@@ -360,7 +447,7 @@
   <!-- Archivo script principal -->
 
   <script src="js/principal.js"></script>
-  <footer class="section-footer">
+  <footer id="contacto" class="section-footer">
     <p>&copy; 2025 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
     <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank">Instagram</a> y <a href="https://www.facebook.com/JorgazoRock" target="_blank">Facebook</a></p>
     <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
