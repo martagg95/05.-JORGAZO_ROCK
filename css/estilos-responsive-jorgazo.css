@@ -405,3 +405,17 @@ footer {
 /* === FIN DE LAS MEJORAS === */
 
   }   
+
+/* === ESTILOS RESPONSIVE PARA EL CARTELAZO === */
+
+@media (max-width: 768px) {
+  .cartelazo-grid {
+    grid-template-columns: 1fr; /* Una sola columna en tablets y móviles */
+    gap: 2rem; /* Espacio entre las tarjetas */
+  }
+
+  .banda-card {
+    max-width: 400px; /* Ancho máximo para las tarjetas */
+    margin: 0 auto; /* Centrar las tarjetas */
+  }
+}

@@ -280,3 +280,96 @@ const logo = document.getElementById("scroll-logo");
       img.addEventListener("click", () => openModal(img.src));
     });
   });
+
+/* === MODAL DE BANDAS === */
+
+const bandasData = {
+  "banda-1": {
+    nombre: "Delírium Clownico Cirkabaret Musikal",
+    bio: "Delirium Clownico es un dúo de payasos de Huelva que mezcla circo, teatro y música en un espectáculo de cabaret. Han participado en diversos festivales, llevando su humor y arte a todos los rincones.",
+    link: "https://www.facebook.com/share/p/1Cja6aACwq/?mibextid=wwXIfr", // Changed from youtube to link
+    linkType: "facebook", // New property
+  },
+  "banda-2": {
+    nombre: "Vila MC YeuH",
+    bio: "Vila MC YeuH es un artista de rap combativo, con letras potentes y un mensaje directo que resuena con la esencia del Jorgazo Rock. Su música es un puñetazo de libertad en cada rima.",
+    link: "https://www.youtube.com/user/VilaMcyoou", // Changed from youtube to link
+    linkType: "youtube", // New property
+    social: {
+      instagram: "https://www.instagram.com/villa.mc/",
+      facebook: "https://www.facebook.com/VilaMCYeuH/"
+    }
+  },
+  "banda-3": {
+    nombre: "River Hakes",
+    bio: "Desde Cáceres, Extremadura, River Hakes trae su potente hardcore-metal al Jorgazo Rock. Formados en 2019, su energía en el escenario y sus letras contundentes prometen un directo inolvidable, fiel al espíritu rebelde del festival.",
+    link: "https://www.youtube.com/@riverhakes", // Changed from youtube to link
+    linkType: "youtube", // New property
+    social: {
+      instagram: "https://www.instagram.com/riverhakes/",
+      facebook: "https://www.facebook.com/riverhakescc"
+    }
+  }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const modalBanda = document.getElementById("modalBanda");
+  const modalBandaBody = document.getElementById("modalBandaBody");
+  const closeModalBanda = document.querySelector(".close-modal-banda");
+
+  document.querySelectorAll(".banda-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const bandaId = card.getAttribute("data-banda");
+      const banda = bandasData[bandaId];
+
+      let externalLinkContent = '';
+      if (banda.link) {
+        let buttonText = '';
+        if (banda.linkType === 'facebook') {
+          buttonText = 'Ver publicación en Facebook';
+        } else if (banda.linkType === 'youtube') {
+          buttonText = 'Ver canal de YouTube';
+        } else {
+          buttonText = 'Ver más'; // Generic fallback
+        }
+        externalLinkContent = `<a href="${banda.link}" target="_blank" class="cta-button">${buttonText}</a>`;
+      }
+
+      let socialLinksContent = '';
+      if (banda.social) {
+        socialLinksContent = '<div class="banda-social-links">';
+        if (banda.social.spotify && banda.social.spotify !== '#') {
+          socialLinksContent += `<a href="${banda.social.spotify}" target="_blank"><i class="fab fa-spotify"></i></a>`;
+        }
+        if (banda.social.instagram && banda.social.instagram !== '#') {
+          socialLinksContent += `<a href="${banda.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
+        }
+        if (banda.social.facebook && banda.social.facebook !== '#') {
+          socialLinksContent += `<a href="${banda.social.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>`;
+        }
+        socialLinksContent += '</div>';
+      }
+
+      modalBandaBody.innerHTML = `
+        <h3>${banda.nombre}</h3>
+        <p>${banda.bio}</p>
+        <div class="banda-video">
+          ${externalLinkContent}
+        </div>
+        ${socialLinksContent}
+      `;
+
+      modalBanda.style.display = "flex";
+    });
+  });
+
+  closeModalBanda.addEventListener("click", () => {
+    modalBanda.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === modalBanda) {
+      modalBanda.style.display = "none";
+    }
+  });
+});
