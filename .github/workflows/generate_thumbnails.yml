@@ -1,0 +1,37 @@
+name: Generar miniaturas
+
+on:
+  push:
+    paths:
+      - 'assets/gallery/full/*.{jpg,jpeg,png,webp,avif}'
+
+jobs:
+  generate-thumbnails:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar dependencias
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick
+
+      - name: Generar miniaturas
+        run: |
+          mkdir -p assets/gallery/thumbs
+          for img in assets/gallery/full/*.{jpg,jpeg,png,webp,avif}; do
+            if [ -f "$img" ]; then
+              filename=$(basename "$img")
+              convert "$img" -resize 600x600\> "assets/gallery/thumbs/$filename"
+            fi
+          done
+
+      - name: Subir miniaturas
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add assets/gallery/thumbs/*
+          git diff --cached --quiet || git commit -m 'Generar miniaturas automáticamente'
+          git push
