@@ -223,6 +223,26 @@ document.addEventListener("DOMContentLoaded", () => {
           instagram: "https://www.instagram.com/riverhakes/",
           facebook: "https://www.facebook.com/riverhakescc"
         }
+      },
+      "banda-4": {
+        nombre: "Bellotaris Fallecidos",
+        bio: "Bellotaris Fallecidos es una banda de punk rock de Plasencia, Extremadura. Con un estilo enérgico y letras cargadas de humor y crítica social, son un guiño a bandas como The Dead Kennedys y Lendakaris Muertos. ¡Prepárate para una dosis de punk rock directo y sin filtros!",
+        link: "https://bellotarisfallecidos.bandcamp.com/",
+        linkType: "website",
+        social: {
+        }
+      },
+      "banda-5": {
+        nombre: "26/H",
+        bio: "26/H es una banda de hardcore punk de Badajoz. Fundada en 2011 y reformada en 2023, su sonido potente y sus letras directas son un reflejo de la escena hardcore de la región. ¡No te pierdas su energía en el Jorgazo Rock!",
+        link: "https://www.youtube.com/@26HC",
+        linkType: "youtube",
+        social: {
+          instagram: "https://www.instagram.com/26h_bdjz/",
+          facebook: "https://www.facebook.com/veintiseis.barrah",
+          spotify: "https://shre.ink/Spotify26H",
+          bandcamp: "https://26hardcore.bandcamp.com/"
+        }
       }
     };
 
@@ -238,6 +258,8 @@ document.addEventListener("DOMContentLoaded", () => {
           buttonText = 'Ver publicación en Facebook';
         } else if (banda.linkType === 'youtube') {
           buttonText = 'Ver canal de YouTube';
+        } else if (banda.linkType === 'website') {
+          buttonText = 'Ver sitio web';
         } else {
           buttonText = 'Ver más';
         }
@@ -255,6 +277,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         if (banda.social.facebook && banda.social.facebook !== '#') {
           socialLinksContent += `<a href="${banda.social.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>`;
+        }
+        if (banda.social.bandcamp && banda.social.bandcamp !== '#') {
+          socialLinksContent += `<a href="${banda.social.bandcamp}" target="_blank"><i class="fab fa-bandcamp"></i></a>`;
         }
         socialLinksContent += '</div>';
       }
