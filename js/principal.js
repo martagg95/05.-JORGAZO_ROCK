@@ -317,4 +317,39 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  /* === LÓGICA PARA EL TEASER DE LA GALERÍA EN HOME === */
+  const homeGalleryContainer = document.getElementById('home-gallery-teaser-grid');
+  if (homeGalleryContainer) {
+    const loadHomeGallery = async () => {
+      try {
+        const response = await fetch('assets/gallery.json');
+        if (!response.ok) return;
+        const allImages = await response.json();
+
+        // Filter out images with the "bandas" tag
+        const nonBandImages = allImages.filter(image => !image.tags.includes('bandas'));
+
+        // Seleccionar 12 imágenes aleatorias de las que no son de bandas
+        const shuffled = nonBandImages.sort(() => 0.5 - Math.random());
+        const selectedImages = shuffled.slice(0, 12);
+
+        let html = '';
+        selectedImages.forEach(image => {
+          // Usamos una estructura similar a la original pero más simple
+          html += `
+            <div class="grid-item" data-aos="zoom-in-up">
+              <img src="${image.thumb}" alt="${image.alt}" loading="lazy">
+            </div>
+          `;
+        });
+        homeGalleryContainer.innerHTML = html;
+
+      } catch (error) {
+        console.error("Error loading gallery teaser:", error);
+        homeGalleryContainer.innerHTML = '<p>No se pudo cargar la galería de avance.</p>';
+      }
+    };
+    loadHomeGallery();
+  }
 });

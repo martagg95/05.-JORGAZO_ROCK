@@ -1,0 +1,317 @@
+/* === ESTILOS GENERALES DE LA PÁGINA DE GALERÍA === */
+.gallery-main {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Rubik Mono One', sans-serif; /* Tipografía punk */
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background-color: #1a1a1a;
+    color: #fff;
+    /* Efecto borde rasgado */
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,3 Q25,0 50,3 T100,3" stroke="white" stroke-width="2" fill="none" /></svg>'),
+                      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
+    -webkit-mask-position: top, bottom;
+    -webkit-mask-repeat: repeat-x, repeat-x;
+    -webkit-mask-size: 100% 10px, 100% 10px;
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,3 Q25,0 50,3 T100,3" stroke="white" stroke-width="2" fill="none" /></svg>'),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
+    mask-position: top, bottom;
+    mask-repeat: repeat-x, repeat-x;
+    mask-size: 100% 10px, 100% 10px;
+}
+
+.gallery-header h1 {
+    font-family: 'Rubik Glitch', sans-serif;
+    font-size: 3rem;
+    color: #e60000; /* Rojo Jorgazo */
+    margin: 0;
+}
+
+/* === FILTROS === */
+.gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: #1a1a1a; /* Dark background */
+    border: 2px dashed #e60000; /* Red border */
+    color: #fff; /* White text */
+}
+
+.filter-group label, .filter-group #tags-label {
+    font-weight: bold;
+    color: #fff; /* White text */
+}
+
+#year-filter {
+    padding: 0.5rem;
+    border: 2px solid #333;
+    background: #fff;
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+#tags-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tag-btn {
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    /* Estilo pegatina */
+    box-shadow: 2px 2px 0px #e60000;
+    transform: rotate(-2deg);
+}
+
+.tag-btn:hover {
+    transform: rotate(2deg) scale(1.1);
+}
+
+.tag-btn.active {
+    background-color: #e60000;
+    color: #fff;
+    transform: rotate(0deg) scale(1.05);
+    box-shadow: 2px 2px 0px #333;
+}
+
+/* === CONTENEDOR DE LA GALERÍA (MASONRY) === */
+.gallery-container {
+    column-count: 4;
+    column-gap: 1rem;
+}
+
+.gallery-item {
+    margin-bottom: 1rem;
+    break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+    /* Efecto borde rasgado para cada item */
+    -webkit-mask-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 h90 v90 h-90 z" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" stroke="black" fill="black" transform="rotate(1)"/><path d="M2 2 h96 v96 h-96 z" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke="black" fill="none" transform="rotate(-1)"/></svg>');
+    mask-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M5 5 h90 v90 h-90 z" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" stroke="black" fill="black" transform="rotate(1)"/><path d="M2 2 h96 v96 h-96 z" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke="black" fill="none" transform="rotate(-1)"/></svg>');
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* SimpleLightbox Close Button Customization */
+.sl-close {
+    font-size: 2rem !important;
+    color: #fff !important;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    line-height: 40px !important;
+    text-align: center;
+}
+
+.sl-close:hover {
+    background-color: rgba(230, 0, 0, 0.8);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+    /* Efecto halftone ligero */
+    filter: sepia(0.5) contrast(1.2) brightness(0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tag-btn, .gallery-item img {
+        transition: none;
+    }
+}
+
+/* === ACCESIBILIDAD: FOCO VISIBLE === */
+.tag-btn:focus, #year-filter:focus, .gallery-item a:focus {
+    outline: 3px solid #e60000;
+    outline-offset: 3px;
+    box-shadow: none;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+    .gallery-container { column-count: 3; }
+}
+@media (max-width: 768px) {
+    .gallery-container { column-count: 2; }
+    .gallery-header h1 { font-size: 2.5rem; }
+}
+@media (max-width: 480px) {
+    .gallery-container { column-count: 1; }
+}
+
+/* === SPINNER DE CARGA === */
+.loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #e60000;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 5rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === CLASES DE UTILIDAD === */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+/* Styles for the new header and logo */
+.main-header {
+    background-color: #1a1a1a; /* Dark background like the menu */
+    padding: 1rem 0;
+    text-align: center;
+    border-bottom: 2px solid #e60000; /* Red border */
+}
+
+.header-logo {
+    max-width: 150px; /* Adjust as needed to match home page */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Styles for breadcrumbs */
+.breadcrumbs {
+    padding: 1rem;
+    background-color: #1a1a1a; /* Dark background */
+    border-bottom: 1px solid #e60000; /* Red border */
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #fff; /* White text for current page */
+}
+
+.breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.breadcrumbs li {
+    display: inline;
+}
+
+.breadcrumbs li a {
+    color: #e60000; /* Jorgazo Red for links */
+    text-decoration: none;
+}
+
+.breadcrumbs li a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+    content: '>';
+    margin-left: 0.5rem;
+    color: #fff; /* White separator */
+}
+
+/* === GALERÍA DE IMÁGENES JORGAZO (TEASER EN INDEX) === */
+.galeria-teaser {
+  padding: 6rem 2rem;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+.galeria-teaser h2 {
+  font-size: 2.8rem;
+  font-family: 'Rubik Glitch', sans-serif;
+  margin-bottom: 2rem;
+  border-bottom: 3px dashed #e60000;
+  display: inline-block;
+  padding-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.grid-jorgazo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.grid-item {
+  border: 3px solid #e60000;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.grid-item.grande {
+  grid-column: span 2;
+}
+
+/* Responsive for teaser gallery */
+@media (max-width: 1024px) {
+  .grid-jorgazo {
+    grid-template-columns: 1fr 1fr;
+  }
+  .grid-item.grande {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .grid-jorgazo {
+    grid-template-columns: 1fr;
+  }
+  .grid-item.grande {
+    grid-column: span 1;
+  }
+}
