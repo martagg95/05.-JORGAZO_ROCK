@@ -243,6 +243,34 @@ document.addEventListener("DOMContentLoaded", () => {
           spotify: "https://shre.ink/Spotify26H",
           bandcamp: "https://26hardcore.bandcamp.com/"
         }
+      },
+      "banda-7": {
+        nombre: "Ehta Gente",
+        bio: "Power trío sensacional de punk-rock, extremeños hasta la médula. Su música es un reflejo de la escena musical más alternativa y el movimiento okupa.",
+        link: "https://ehtagente.bandcamp.com/",
+        linkType: "website",
+        social: {
+          youtube: "https://www.youtube.com/@ehtagente15", 
+          instagram: "https://www.instagram.com/ehta.gente/",
+        }
+      },
+      "banda-8": {
+        nombre: "Chicalapapa",
+        bio: "Artista musical con un estilo único. Sus canciones como \"Mil maneras de palmarla\" y \"Plástico y plastilina\" muestran su versatilidad y originalidad.",
+        link: "https://www.youtube.com/@chicalapapa4853",
+        linkType: "youtube",
+        social: {
+          instagram: "https://www.instagram.com/chicalapapaoficial"
+        }
+      },
+      "banda-9": {
+        nombre: "Ermitaño",
+        bio: "Banda de rock fusión que vienen a darlo todo desde Ayamonte hasta Cabeza La Vaca. ¿Te los vas a perder?",
+        link: "https://www.youtube.com/@srwilliestudios8849",
+        linkType: "youtube",
+        social: {
+          instagram: "https://www.instagram.com/ermitano_music"
+        }
       }
     };
 
