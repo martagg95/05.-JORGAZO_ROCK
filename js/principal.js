@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("load", function () {
       const cartelImg = document.getElementById("cartelImg");
       const fallback = document.getElementById("fallbackFecha");
-      const cartelURL = "images/cartel_jorgazo_2025.jpg";
+      const cartelURL = "assets/gallery/full/cartel/Jorgazo-Rock_X.webp";
       fetch(cartelURL, { method: 'HEAD' })
         .then(res => {
           if (res.ok) {
@@ -270,6 +270,14 @@ document.addEventListener("DOMContentLoaded", () => {
         linkType: "youtube",
         social: {
           instagram: "https://www.instagram.com/ermitano_music"
+        }
+      },
+      "banda-10": {
+        nombre: "Gatos Lokos",
+        bio: "¡10ª actuación y última del Festival! El día 18/10 en Cabeza la Vaca, son los encargados de poner el broche final con su rave. ¡También son Extremeños!",
+        link: "https://www.facebook.com/100064694679305/posts/1214059404093871/?mibextid=wwXIfr&rdid=Diw87T0suYPEZ2ry",
+        linkType: "facebook",
+        social: {
         }
       }
     };
