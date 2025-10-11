@@ -1,0 +1,11 @@
+# ===================================================================
+# Reglas para todos los crawlers (buscadores y IA)
+# Se permite el acceso total para maximizar la visibilidad.
+# ===================================================================
+User-agent: *
+Allow: /
+
+# ===================================================================
+# Ubicación del sitemap
+# ===================================================================
+Sitemap: https://jorgazorock.es/sitemap.xml
