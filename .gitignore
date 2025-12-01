@@ -1,2 +1,6 @@
 .DS_Store
 .DS_Store
+
+# Archivo de estrategia SEO, no incluir en el repositorio público
+ESTRATEGIA_SEO.md
+LOG_SEO.md

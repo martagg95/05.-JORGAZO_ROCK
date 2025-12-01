@@ -26,7 +26,7 @@ body {
 }
 
 
-h2 {
+h2, h3 {
   font-family: 'Rubik Glitch', sans-serif;
   font-weight: 300;
   font-size: 2.5rem;

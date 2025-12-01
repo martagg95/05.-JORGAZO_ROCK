@@ -1,6 +1,18 @@
+/* Clase para ocultar elementos visualmente pero mantenerlos accesibles */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
 /* === TABLET (≤ 768px) === */
 @media (max-width: 768px) {
-  h2 {
+  h2, h3 {
     font-size: 2rem;
     padding-bottom: 0.3rem;
   }
@@ -102,7 +114,7 @@
 
 /* === MÓVILES (≤ 480px) === */
 @media (max-width: 480px) {
-  h2 {
+  h2, h3 {
     font-size: 1.5rem;
   }
 
@@ -283,7 +295,7 @@
     }
   
     /* H2 general */
-    h2 {
+    h2, h3 {
       font-size: 2rem;
     }
   
