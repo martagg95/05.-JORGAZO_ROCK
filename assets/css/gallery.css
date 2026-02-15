@@ -3,7 +3,8 @@
     padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
-    font-family: 'Rubik Mono One', sans-serif; /* Tipografía punk */
+    font-family: 'Rubik Mono One', sans-serif;
+    /* Tipografía punk */
 }
 
 .gallery-header {
@@ -14,12 +15,12 @@
     color: #fff;
     /* Efecto borde rasgado */
     -webkit-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,3 Q25,0 50,3 T100,3" stroke="white" stroke-width="2" fill="none" /></svg>'),
-                      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
     -webkit-mask-position: top, bottom;
     -webkit-mask-repeat: repeat-x, repeat-x;
     -webkit-mask-size: 100% 10px, 100% 10px;
     mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,3 Q25,0 50,3 T100,3" stroke="white" stroke-width="2" fill="none" /></svg>'),
-                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><rect x="0" y="0" width="100" height="10" fill="black" /><path d="M0,7 Q25,10 50,7 T100,7" stroke="white" stroke-width="2" fill="none" /></svg>');
     mask-position: top, bottom;
     mask-repeat: repeat-x, repeat-x;
     mask-size: 100% 10px, 100% 10px;
@@ -28,7 +29,8 @@
 .gallery-header h1 {
     font-family: 'Rubik Glitch', sans-serif;
     font-size: 3rem;
-    color: #e60000; /* Rojo Jorgazo */
+    color: #e60000;
+    /* Rojo Jorgazo */
     margin: 0;
 }
 
@@ -40,14 +42,19 @@
     gap: 2rem;
     margin-bottom: 3rem;
     padding: 1.5rem;
-    background: #1a1a1a; /* Dark background */
-    border: 2px dashed #e60000; /* Red border */
-    color: #fff; /* White text */
+    background: #1a1a1a;
+    /* Dark background */
+    border: 2px dashed #e60000;
+    /* Red border */
+    color: #fff;
+    /* White text */
 }
 
-.filter-group label, .filter-group #tags-label {
+.filter-group label,
+.filter-group #tags-label {
     font-weight: bold;
-    color: #fff; /* White text */
+    color: #fff;
+    /* White text */
 }
 
 #year-filter {
@@ -71,6 +78,11 @@
     background-color: #333;
     color: #fff;
     cursor: pointer;
+    min-height: 44px;
+    /* Touch target improvement */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: transform 0.2s, background-color 0.2s;
     /* Estilo pegatina */
     box-shadow: 2px 2px 0px #e60000;
@@ -123,9 +135,10 @@
     color: #fff !important;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    line-height: 40px !important;
+    width: 60px;
+    /* Increased for mobile */
+    height: 60px;
+    line-height: 55px !important;
     text-align: center;
 }
 
@@ -140,13 +153,17 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .tag-btn, .gallery-item img {
+
+    .tag-btn,
+    .gallery-item img {
         transition: none;
     }
 }
 
 /* === ACCESIBILIDAD: FOCO VISIBLE === */
-.tag-btn:focus, #year-filter:focus, .gallery-item a:focus {
+.tag-btn:focus,
+#year-filter:focus,
+.gallery-item a:focus {
     outline: 3px solid #e60000;
     outline-offset: 3px;
     box-shadow: none;
@@ -154,14 +171,35 @@
 
 /* === RESPONSIVE === */
 @media (max-width: 1024px) {
-    .gallery-container { column-count: 3; }
+    .gallery-container {
+        column-count: 3;
+    }
 }
+
 @media (max-width: 768px) {
-    .gallery-container { column-count: 2; }
-    .gallery-header h1 { font-size: 2.5rem; }
+    .gallery-container {
+        column-count: 2;
+    }
+
+    .gallery-header h1 {
+        font-size: 2rem;
+    }
+
+    .gallery-filters {
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .tag-btn {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
+
 @media (max-width: 480px) {
-    .gallery-container { column-count: 1; }
+    .gallery-container {
+        column-count: 1;
+    }
 }
 
 /* === SPINNER DE CARGA === */
@@ -176,32 +214,41 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* === CLASES DE UTILIDAD === */
 .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
+
 /* Styles for the new header and logo */
 .main-header {
-    background-color: #1a1a1a; /* Dark background like the menu */
+    background-color: #1a1a1a;
+    /* Dark background like the menu */
     padding: 1rem 0;
     text-align: center;
-    border-bottom: 2px solid #e60000; /* Red border */
+    border-bottom: 2px solid #e60000;
+    /* Red border */
 }
 
 .header-logo {
-    max-width: 150px; /* Adjust as needed to match home page */
+    max-width: 150px;
+    /* Adjust as needed to match home page */
     height: auto;
     display: block;
     margin: 0 auto;
@@ -210,13 +257,16 @@
 /* Styles for breadcrumbs */
 .breadcrumbs {
     padding: 1rem;
-    background-color: #1a1a1a; /* Dark background */
-    border-bottom: 1px solid #e60000; /* Red border */
+    background-color: #1a1a1a;
+    /* Dark background */
+    border-bottom: 1px solid #e60000;
+    /* Red border */
     font-family: 'Rubik Mono One', sans-serif;
     font-size: 0.9rem;
     text-align: center;
     margin-bottom: 2rem;
-    color: #fff; /* White text for current page */
+    color: #fff;
+    /* White text for current page */
 }
 
 .breadcrumbs ol {
@@ -233,7 +283,8 @@
 }
 
 .breadcrumbs li a {
-    color: #e60000; /* Jorgazo Red for links */
+    color: #e60000;
+    /* Jorgazo Red for links */
     text-decoration: none;
 }
 
@@ -244,74 +295,77 @@
 .breadcrumbs li:not(:last-child)::after {
     content: '>';
     margin-left: 0.5rem;
-    color: #fff; /* White separator */
+    color: #fff;
+    /* White separator */
 }
 
 /* === GALERÍA DE IMÁGENES JORGAZO (TEASER EN INDEX) === */
 .galeria-teaser {
-  padding: 6rem 2rem;
-  background-color: transparent;
-  color: white;
-  text-align: center;
-  scroll-snap-align: start;
+    padding: 6rem 2rem;
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    scroll-snap-align: start;
 }
 
 .galeria-teaser h2 {
-  font-size: 2.8rem;
-  font-family: 'Rubik Glitch', sans-serif;
-  margin-bottom: 2rem;
-  border-bottom: 3px dashed #e60000;
-  display: inline-block;
-  padding-bottom: 0.5rem;
-  letter-spacing: 2px;
+    font-size: 2.8rem;
+    font-family: 'Rubik Glitch', sans-serif;
+    margin-bottom: 2rem;
+    border-bottom: 3px dashed #e60000;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    letter-spacing: 2px;
 }
 
 .grid-jorgazo {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
 .grid-item {
-  border: 3px solid #e60000;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    border: 3px solid #e60000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
 }
 
 .grid-item.grande {
-  grid-column: span 2;
+    grid-column: span 2;
 }
 
 /* Responsive for teaser gallery */
 @media (max-width: 1024px) {
-  .grid-jorgazo {
-    grid-template-columns: 1fr 1fr;
-  }
-  .grid-item.grande {
-    grid-column: span 2;
-  }
+    .grid-jorgazo {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-item.grande {
+        grid-column: span 2;
+    }
 }
 
 @media (max-width: 600px) {
-  .grid-jorgazo {
-    grid-template-columns: 1fr;
-  }
-  .grid-item.grande {
-    grid-column: span 1;
-  }
+    .grid-jorgazo {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-item.grande {
+        grid-column: span 1;
+    }
 }

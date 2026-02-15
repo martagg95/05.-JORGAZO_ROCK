@@ -1,9 +1,12 @@
-html, body {
+html,
+body {
   scroll-snap-type: y proximity;
   scroll-behavior: smooth;
   height: 100%;
   margin: 0;
   padding: 0;
+  scroll-padding-top: 80px;
+  /* Ajustado para el menu flotante */
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
@@ -17,16 +20,17 @@ body {
 }
 
 
-.montserrat  {
+.montserrat {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  
+
 }
 
 
-h2, h3 {
+h2,
+h3 {
   font-family: 'Rubik Glitch', sans-serif;
   font-weight: 300;
   font-size: 2.5rem;
@@ -67,14 +71,17 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start; /* Mejor para dejar que crezca */
+  align-items: flex-start;
+  /* Mejor para dejar que crezca */
   gap: 4rem;
   padding: 4rem 8vw;
   scroll-snap-align: start;
-  min-height: 100vh; /* ✅ Cambiamos a mínimo */
+  min-height: 100vh;
+  /* ✅ Cambiamos a mínimo */
   z-index: 1;
   position: relative;
-  flex-wrap: wrap; /* Para evitar solapamientos en pantallas pequeñas */
+  flex-wrap: wrap;
+  /* Para evitar solapamientos en pantallas pequeñas */
 }
 
 .storytelling-text {
@@ -188,7 +195,7 @@ p {
   margin: 0 auto;
   padding: 0 2rem;
   text-align: center;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
 }
 
 /* .storytelling-manifiesto .frase-manifiesto:nth-child(even) {
@@ -199,6 +206,7 @@ p {
   .storytelling-manifiesto h2 {
     font-size: 2rem;
   }
+
   .storytelling-manifiesto .frase-manifiesto {
     font-size: 1.4rem;
     text-align: center !important;
@@ -213,10 +221,11 @@ p {
   justify-content: center;
   align-items: center;
   scroll-snap-align: start;
-  margin-top: 2rem; /* pequeña separación para evitar solapamientos */
+  margin-top: 2rem;
+  /* pequeña separación para evitar solapamientos */
   z-index: 1;
   position: relative;
-  
+
 }
 
 .storytelling-horizontal-img img {
@@ -226,7 +235,7 @@ p {
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   border: 3px solid #e60000;
-  
+
 }
 
 /* === NUEVA SECCIÓN DE STORYTELLING CONTINUADA === */
@@ -304,7 +313,7 @@ p {
   border: 3px solid #e60000;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -327,6 +336,7 @@ p {
   .grid-jorgazo {
     grid-template-columns: 1fr 1fr;
   }
+
   .grid-item.grande {
     grid-column: span 2;
   }
@@ -336,6 +346,7 @@ p {
   .grid-jorgazo {
     grid-template-columns: 1fr;
   }
+
   .grid-item.grande {
     grid-column: span 1;
   }
@@ -465,30 +476,54 @@ p {
 .countdown-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin: 3rem auto;
   flex-wrap: wrap;
+  max-width: 1200px;
+}
+
+@media (max-width: 991px) {
+  .countdown-wrapper {
+    flex-direction: column;
+    gap: 2rem;
+  }
 }
 
 .countdown-item {
   background-color: #e60000;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  padding: 2rem 1.5rem;
+  border-radius: 4px;
+  box-shadow: 8px 8px 0px #000;
   font-family: 'Rubik Mono One', sans-serif;
-  min-width: 80px;
+  min-width: 180px;
+  /* Increased for better presence */
+  text-align: center;
+  border: 4px solid #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* Prevent overflow */
 }
 
 .countdown-item span {
   display: block;
-  font-size: 2.5rem;
+  font-size: 3.5rem;
+  /* Larger numbers */
   font-weight: bold;
+  line-height: 1;
+  margin-bottom: 0.5rem;
 }
 
 .countdown-item small {
-  font-size: 1rem;
+  font-size: 1.2rem;
+  /* Larger labels */
   color: #fff;
   font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 /* === VÍDEO REVIVE JORGAZO === */
@@ -557,14 +592,16 @@ p {
 
 .playlist-festival .playlist-desc {
   font-size: 1.5rem;
-  max-width: 800px; /* Keep this for smaller screens */
+  max-width: 800px;
+  /* Keep this for smaller screens */
   margin: 0 auto 3rem;
   line-height: 1.8;
   color: #ddd;
 }
 
 .spotify-embed {
-  max-width: 800px; /* Default max-width for smaller screens */
+  max-width: 800px;
+  /* Default max-width for smaller screens */
   margin: 0 auto 2rem;
   border: 3px solid #e60000;
   border-radius: 12px;
@@ -572,22 +609,29 @@ p {
   overflow: hidden;
 }
 
-.spotify-embed iframe { /* Ensure iframe fills its container */
+.spotify-embed iframe {
+  /* Ensure iframe fills its container */
   width: 100%;
-  height: 380px; /* Keep the original height from index.html */
+  height: 380px;
+  /* Keep the original height from index.html */
 }
 
 @media (min-width: 1024px) {
   .spotify-embed {
-    max-width: 1000px; /* Increased max-width for larger screens */
+    max-width: 100%;
+    /* Full width for the section container */
+    margin: 0;
   }
 }
 
-.spotify-wrapper { /* New wrapper for responsive sizing */
+.spotify-wrapper {
+  /* New wrapper for responsive sizing */
   position: relative;
   width: 100%;
-  height: 0; /* Set height to 0 and use padding-bottom for aspect ratio */
-  padding-bottom: 56.25%; /* 16:9 Aspect Ratio (height / width * 100) */
+  height: 0;
+  /* Set height to 0 and use padding-bottom for aspect ratio */
+  padding-bottom: 56.25%;
+  /* 16:9 Aspect Ratio (height / width * 100) */
 }
 
 .spotify-wrapper iframe {
@@ -600,10 +644,12 @@ p {
 
 @media (min-width: 1024px) {
   .spotify-embed {
-    max-width: 1000px;
+    max-width: 100%;
   }
+
   .spotify-wrapper {
-    padding-bottom: 45%; /* Adjust aspect ratio for wider view on large screens */
+    padding-bottom: 25%;
+    /* Shallower for desktop wide view */
   }
 }
 
@@ -617,7 +663,7 @@ p {
   color: white;
   text-align: center;
   scroll-snap-align: start;
-  
+
 }
 
 .pueblo-celebra h2 {
@@ -654,7 +700,7 @@ p {
   background: #111;
   border: 2px solid #e60000;
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -709,13 +755,11 @@ p {
 
 .fuente-lunara-highlight {
   padding: 6rem 2rem;
-  background: repeating-linear-gradient(
-    45deg,
-    #000,
-    #000 10px,
-    #1a1a1a 10px,
-    #1a1a1a 20px
-  );
+  background: repeating-linear-gradient(45deg,
+      #000,
+      #000 10px,
+      #1a1a1a 10px,
+      #1a1a1a 20px);
   border-top: 3px dashed #e60000;
   border-bottom: 3px dashed #e60000;
   text-align: center;
@@ -749,7 +793,7 @@ p {
   border: 3px solid #e60000;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
 .fake-video-img {
@@ -768,7 +812,7 @@ p {
   background: rgba(230, 0, 0, 0.8);
   border-radius: 50%;
   padding: 20px;
-  box-shadow: 0 0 15px rgba(255,0,0,0.5);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
   transition: all 0.2s ease-in-out;
 }
 
@@ -818,13 +862,11 @@ p {
   left: 0;
   width: 100%;
   height: 20px;
-  background: repeating-linear-gradient(
-    -10deg,
-    rgba(230, 0, 0, 0.6),
-    rgba(230, 0, 0, 0.6) 2px,
-    rgba(0, 0, 0, 0.4) 2px,
-    rgba(0, 0, 0, 0.4) 4px
-  );
+  background: repeating-linear-gradient(-10deg,
+      rgba(230, 0, 0, 0.6),
+      rgba(230, 0, 0, 0.6) 2px,
+      rgba(0, 0, 0, 0.4) 2px,
+      rgba(0, 0, 0, 0.4) 4px);
   transform: skewY(-5deg);
   z-index: 1;
   border-radius: 3px;
@@ -840,8 +882,10 @@ p {
 }
 
 footer {
-  background-color: #000; /* negro puro para máximo contraste */
-  color: #f2f2f2; /* texto más suave pero contrastado */
+  background-color: #000;
+  /* negro puro para máximo contraste */
+  color: #f2f2f2;
+  /* texto más suave pero contrastado */
   padding: 2rem;
   text-align: center;
   font-size: 0.9rem;
@@ -849,7 +893,8 @@ footer {
 }
 
 footer a {
-  color: #e60000; /* rojo corporativo */
+  color: #e60000;
+  /* rojo corporativo */
   text-decoration: underline;
   font-weight: bold;
 }
@@ -879,7 +924,7 @@ footer a:focus {
   border: 3px solid #e60000;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.5);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 
 .map iframe {
@@ -948,6 +993,7 @@ footer a:focus {
   font-size: 1rem;
   line-height: 1.6;
 }
+
 .legal-content h2 {
   font-family: 'Rubik Glitch', sans-serif;
   color: #e60000;
@@ -970,7 +1016,7 @@ footer a:focus {
   width: 100dvw;
   height: 100dvh;
   overflow: auto;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   align-items: center;
   justify-content: center;
 }
@@ -1026,7 +1072,7 @@ footer a:focus {
   border: 3px solid #e60000;
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
@@ -1101,39 +1147,46 @@ footer a:focus {
 }
 
 #modalBandaBody h3 {
-    font-family: 'Rubik Glitch', sans-serif;
-    font-weight: 300;
-    font-size: 2.5rem;
-    color: #e60000;
-    margin-bottom: 1rem;
-    margin-top: 1.5rem; /* Added spacing */
+  font-family: 'Rubik Glitch', sans-serif;
+  font-weight: 300;
+  font-size: 2.5rem;
+  color: #e60000;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  /* Added spacing */
 }
 
 #modalBandaBody p {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem; /* Increased spacing */
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  /* Increased spacing */
 }
 
-.banda-video { /* New style for the video/link container */
-  margin-top: 2rem; /* Added spacing */
-  text-align: center; /* Center the button */
+.banda-video {
+  /* New style for the video/link container */
+  margin-top: 2rem;
+  /* Added spacing */
+  text-align: center;
+  /* Center the button */
 }
 
 #modalBandaBody .banda-social-links {
-    margin-top: 2rem; /* Added spacing */
-    text-align: center; /* Center the icons */
+  margin-top: 2rem;
+  /* Added spacing */
+  text-align: center;
+  /* Center the icons */
 }
 
 #modalBandaBody .banda-social-links a {
-    color: #e60000;
-    text-decoration: none;
-    font-size: 1.5rem;
-    margin-right: 1rem;
+  color: #e60000;
+  text-decoration: none;
+  font-size: 1.5rem;
+  margin-right: 1rem;
 }
 
 #modalBandaBody .banda-social-links a:hover {
-    color: #fff;
+  color: #fff;
 }
 
 /* === ESTILOS MENÚ PUNK === */
@@ -1158,7 +1211,8 @@ footer a:focus {
   background: black;
   border: 2px solid white;
   border-radius: 50%;
-  width: 60px; /* Tamaño aumentado */
+  width: 60px;
+  /* Tamaño aumentado */
   height: 60px;
   padding: 0;
   cursor: pointer;
@@ -1172,18 +1226,20 @@ footer a:focus {
 }
 
 #menu-trigger.hidden {
-    opacity: 0;
-    pointer-events: none;
+  opacity: 0;
+  pointer-events: none;
 }
 
 #menu-trigger:hover,
 #menu-trigger:focus-visible {
   background: #e60000;
-  animation-play-state: paused; /* Pausar pulso en hover */
+  animation-play-state: paused;
+  /* Pausar pulso en hover */
 }
 
 #menu-trigger img {
-  width: 40px; /* Tamaño de imagen aumentado */
+  width: 40px;
+  /* Tamaño de imagen aumentado */
   height: 40px;
 }
 
@@ -1197,12 +1253,13 @@ footer a:focus {
   backdrop-filter: blur(8px);
   z-index: 10000;
   display: flex;
-  flex-direction: column; /* Cambiado para responsive */
+  flex-direction: column;
+  /* Cambiado para responsive */
   justify-content: center;
   align-items: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.2s ease;
   overflow: hidden;
 }
 
@@ -1224,7 +1281,8 @@ footer a:focus {
   background: none;
   border: none;
   color: white;
-  font-size: 4rem; /* Más grande para ser más visible */
+  font-size: 4rem;
+  /* Más grande para ser más visible */
   font-family: 'Rubik Glitch', sans-serif;
   cursor: pointer;
   text-shadow: 0 0 5px #e60000;
@@ -1238,7 +1296,8 @@ footer a:focus {
 }
 
 .menu-link {
-  position: relative; /* Cambiado para layout responsive */
+  position: relative;
+  /* Cambiado para layout responsive */
   color: white;
   font-family: 'Rubik Glitch', sans-serif;
   font-weight: 300;
@@ -1257,11 +1316,7 @@ footer a:focus {
   text-shadow: 0 0 10px #fff;
 }
 
-/* Transiciones con retraso para los enlaces */
-#punk-menu-overlay.visible .menu-link:nth-child(4) { transition-delay: 0.4s; }
-#punk-menu-overlay.visible .menu-link:nth-child(5) { transition-delay: 0.5s; }
-#punk-menu-overlay.visible .menu-link:nth-child(6) { transition-delay: 0.6s; }
-#punk-menu-overlay.visible .menu-link:nth-child(7) { transition-delay: 0.7s; }
+/* Delays removidos para mejor UX */
 
 
 /* === ANIMACIONES NUEVAS === */
@@ -1283,21 +1338,47 @@ footer a:focus {
   animation: splatter-effect 1.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
-body.forceful-shake {
-  animation: forceful-shake 0.8s cubic-bezier(.36,.07,.19,.97) both;
-}
+/* forceful-shake removido por causar resets de scroll */
 
 @keyframes pulse-animation {
-  0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
-  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(230, 0, 0, 0.7); }
-  100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
+
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(230, 0, 0, 0.7);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  }
 }
 
 @keyframes forceful-shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-1deg); }
-  20%, 80% { transform: translate3d(2px, 0, 0) rotate(2deg); }
-  30%, 50%, 70% { transform: translate3d(-4px, 0, 0) rotate(-4deg); }
-  40%, 60% { transform: translate3d(4px, 0, 0) rotate(4deg); }
+
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0) rotate(-1deg);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0) rotate(2deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0) rotate(-4deg);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0) rotate(4deg);
+  }
 }
 
 @keyframes splatter-effect {
@@ -1305,14 +1386,17 @@ body.forceful-shake {
     transform: scale(0.5) rotate(-30deg);
     opacity: 0;
   }
+
   40% {
     transform: scale(1.2) rotate(10deg);
     opacity: 0.8;
   }
+
   70% {
     transform: scale(1.3) rotate(-5deg);
     opacity: 0.7;
   }
+
   100% {
     transform: scale(1.8) rotate(0deg);
     opacity: 0;
@@ -1322,4 +1406,158 @@ body.forceful-shake {
 
 .galeria-grid .cta-button {
   margin-top: 5rem;
+}
+
+/* === BANNER DE COOKIES ROCK STYLE === */
+.cookie-banner-wrapper {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  right: 2rem;
+  background: #111;
+  border: 3px solid #e60000;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4), 10px 10px 0px #000;
+  z-index: 100000;
+  padding: 2rem;
+  border-radius: 4px;
+  /* Menos redondeado para look más punk */
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cookie-content {
+  position: relative;
+  text-align: center;
+}
+
+.cookie-punk-paint {
+  position: absolute;
+  top: -40px;
+  left: -20px;
+  width: 100px;
+  height: 100px;
+  background: url('../images/logo/menu1.svg') no-repeat center;
+  opacity: 0.1;
+  filter: invert(1);
+  pointer-events: none;
+}
+
+.cookie-banner-wrapper h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #e60000;
+  border-bottom: none;
+  /* Sobrescribimos el h2/h3 genérico */
+  display: block;
+}
+
+.cookie-banner-wrapper p {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+.cookie-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cookie-buttons .cta-button {
+  margin: 0;
+  padding: 0.8rem 1.5rem;
+  font-weight: bold;
+}
+
+.cookie-buttons .cta-button.secondary {
+  background: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.cookie-buttons .cta-button.secondary:hover {
+  border-color: #e60000;
+  color: #e60000;
+}
+
+@media (max-width: 768px) {
+  .cookie-banner-wrapper {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    padding: 1.5rem;
+  }
+}
+
+/* === SECCIÓN ACTUALIDAD / FACEBOOK CAROUSEL === */
+.actualidad-facebook {
+  margin-top: 8rem;
+  width: 100%;
+}
+
+.fb-carousel-container {
+  overflow-x: auto;
+  padding: 2rem 0;
+  margin: 0 auto;
+  max-width: 1200px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #e60000 #111;
+}
+
+.fb-carousel-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.fb-carousel-container::-webkit-scrollbar-thumb {
+  background: #e60000;
+  border-radius: 4px;
+}
+
+.fb-carousel {
+  display: flex;
+  gap: 3rem;
+  padding: 0 2rem;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.fb-post-wrapper {
+  background: #fff;
+  /* Facebook embeds look better on white or their own color */
+  border: 2px solid #333;
+  box-shadow: 10px 10px 0px rgba(230, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  height: 500px;
+  width: 350px;
+}
+
+.fb-post-wrapper:hover {
+  transform: translateY(-10px) rotate(1deg);
+  border-color: #e60000;
+}
+
+.actualidad-facebook .cta-button {
+  margin-top: 4rem;
+}
+
+@media (max-width: 1200px) {
+  .fb-carousel {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .fb-post-wrapper {
+    width: 320px;
+    height: 480px;
+  }
+
+  .fb-carousel {
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
 }

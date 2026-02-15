@@ -15,14 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     menuTrigger.classList.add('hidden');
     menuOverlay.classList.add('visible');
-    body.classList.add('forceful-shake');
     menuTrigger.setAttribute('aria-expanded', 'true');
     setTimeout(() => {
-      body.classList.remove('forceful-shake');
-    }, 800);
-    setTimeout(() => {
-        menuClose.focus();
-    }, 100);
+      menuClose.focus();
+    }, 50);
   };
 
   const closeMenu = () => {
@@ -36,15 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
   menuClose.addEventListener('click', closeMenu);
   menuLinks.forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault();
       const targetId = link.getAttribute('href');
-      const targetElement = document.querySelector(targetId);
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth'
-        });
+      if (targetId.startsWith('#')) {
+        e.preventDefault();
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+        closeMenu();
       }
-      closeMenu();
+      // If it's a page (e.g., pages/tienda.html), let the default navigation happen
     });
   });
   menuOverlay.addEventListener('click', (e) => {
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* === CONTADOR === */
   const countdownElement = document.getElementById("countdown");
   if (countdownElement) {
-    const targetDate = new Date("2025-10-18T20:00:00");
+    const targetDate = new Date("2026-11-21T18:00:00");
     const updateCountdown = () => {
       const now = new Date();
       const diff = targetDate - now;
@@ -150,11 +149,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* === MODAL LEGAL === */
   const modalLegal = document.getElementById("modalLegal");
-  if(modalLegal) {
+  if (modalLegal) {
     const textosLegales = {
-      privacidad: `<h1>Política de Privacidad</h1>...`,
-      aviso: `<h1>Aviso Legal</h1>...`,
-      cookies: `<h1>Política de Cookies</h1>...`
+      privacidad: `
+        <h1>Política de Privacidad</h1>
+        <p>En cumplimiento de lo dispuesto en el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), la <strong>Asociación Jorgazo Rock</strong> informa que los datos personales recabados a través de este sitio web, incluyendo datos de navegación y analítica, serán tratados para gestionar la relación con socios y usuarios, así como para informar sobre las actividades del festival.</p>
+        <p><strong>Responsable:</strong> Asociación Jorgazo Rock. <strong>Fines:</strong> Comunicación, gestión de actividades y analítica web. <strong>Tienda:</strong> En caso de transacciones comerciales futuras, se tratarán datos identificativos y de pago exclusivamente para la gestión del pedido. <strong>Legitimación:</strong> Consentimiento del interesado y ejecución de contrato/relación asociativa. <strong>Destinatarios:</strong> No se cederán datos a terceros salvo obligación legal o proveedores técnicos necesarios. <strong>Derechos:</strong> Acceso, rectificación, supresión y portabilidad enviando un correo a la dirección de contacto.</p>
+        <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+      `,
+      aviso: `
+        <h1>Aviso Legal</h1>
+        <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se exponen los siguientes datos identificativos:</p>
+        <p><strong>Titular:</strong> Asociación Jorgazo Rock<br>
+        <strong>CIF/NIF:</strong> [Pendiente Incluir si procede]<br>
+        <strong>Domicilio:</strong> Cabeza la Vaca, 06293, Badajoz (Extremadura)<br>
+        <strong>Correo electrónico:</strong> <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+        <p>La asociación está inscrita en el Registro de Asociaciones de la Junta de Extremadura. El acceso a este sitio web atribuye la condición de USUARIO e implica la plena aceptación de las condiciones de uso publicadas.</p>
+      `,
+      cookies: `
+        <h1>Política de Cookies</h1>
+        <p>Este sitio web utiliza cookies propias y de terceros para mejorar la experiencia de navegación, realizar análisis estadísticos de uso y ofrecer contenidos de interés.</p>
+        <p><strong>Tipos de cookies utilizadas:</strong><br>
+        - <strong>Técnicas:</strong> Esenciales para el funcionamiento correcto de la web.<br>
+        - <strong>Analíticas:</strong> Utilizamos herramientas de medición (como Google Analytics o similares) para entender cómo interactúan los usuarios con la web, siempre respetando su privacidad.<br>
+        - <strong>Preferencias:</strong> Permiten recordar opciones como el idioma o la aceptación del banner de cookies.</p>
+        <p>Puedes revocar tu consentimiento o configurar tus preferencias en cualquier momento a través del banner de inicio o limpiando los datos de tu navegador.</p>
+      `
     };
     const abrirModalLegal = (tipo) => {
       const contenido = document.getElementById("contenidoLegal");
@@ -165,13 +185,15 @@ document.addEventListener("DOMContentLoaded", () => {
       modalLegal.style.display = "none";
     }
     document.getElementById("cerrarLegalModal").addEventListener("click", cerrarModalLegal);
-    document.querySelectorAll("footer a[href*='pages/']").forEach(enlace => {
+    document.querySelectorAll("footer a").forEach(enlace => {
       enlace.addEventListener("click", e => {
-        e.preventDefault();
-        const href = e.target.getAttribute("href");
-        if (href.includes('privacidad')) abrirModalLegal("privacidad");
-        else if (href.includes('avisolegal')) abrirModalLegal("aviso");
-        else if (href.includes('cookies')) abrirModalLegal("cookies");
+        const href = enlace.getAttribute("href");
+        if (href && href.includes('pages/')) {
+          e.preventDefault();
+          if (href.includes('privacidad')) abrirModalLegal("privacidad");
+          else if (href.includes('avisolegal')) abrirModalLegal("aviso");
+          else if (href.includes('cookies')) abrirModalLegal("cookies");
+        }
       });
     });
   }
@@ -250,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
         link: "https://ehtagente.bandcamp.com/",
         linkType: "website",
         social: {
-          youtube: "https://www.youtube.com/@ehtagente15", 
+          youtube: "https://www.youtube.com/@ehtagente15",
           instagram: "https://www.instagram.com/ehta.gente/",
         }
       },
@@ -385,7 +407,53 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error loading gallery teaser:", error);
         homeGalleryContainer.innerHTML = '<p>No se pudo cargar la galería de avance.</p>';
       }
-    };
+    }
     loadHomeGallery();
+  }
+
+  /* === LÓGICA COOKIE BANNER === */
+  const cookieBanner = document.getElementById('cookie-banner');
+  const acceptBtn = document.getElementById('cookie-accept');
+  const rejectBtn = document.getElementById('cookie-reject');
+
+  if (cookieBanner) {
+    if (!localStorage.getItem('jorgazo-cookies')) {
+      cookieBanner.style.display = 'block';
+    }
+
+    acceptBtn.addEventListener('click', () => {
+      localStorage.setItem('jorgazo-cookies', 'accepted');
+      cookieBanner.style.display = 'none';
+    });
+
+    rejectBtn.addEventListener('click', () => {
+      localStorage.setItem('jorgazo-cookies', 'rejected');
+      cookieBanner.style.display = 'none';
+    });
+  }
+
+  /* === AUTOMATIZACIÓN CAROUSEL NOTICIAS === */
+  const fbCarouselContainer = document.querySelector('.fb-carousel-container');
+  if (fbCarouselContainer) {
+    let scrollAmount = 0;
+    const scrollStep = 1;
+    const delay = 30;
+    let isPaused = false;
+
+    const autoScroll = () => {
+      if (!isPaused) {
+        fbCarouselContainer.scrollLeft += scrollStep;
+        if (fbCarouselContainer.scrollLeft >= (fbCarouselContainer.scrollWidth - fbCarouselContainer.clientWidth)) {
+          fbCarouselContainer.scrollLeft = 0;
+        }
+      }
+    };
+
+    let scrollInterval = setInterval(autoScroll, delay);
+
+    fbCarouselContainer.addEventListener('mouseenter', () => isPaused = true);
+    fbCarouselContainer.addEventListener('mouseleave', () => isPaused = false);
+    fbCarouselContainer.addEventListener('touchstart', () => isPaused = true);
+    fbCarouselContainer.addEventListener('touchend', () => isPaused = false);
   }
 });

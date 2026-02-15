@@ -30,12 +30,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Initialize Lightbox
     function initializeLightbox() {
-        lightbox = new SimpleLightbox('.gallery-container a', {
-            captionsData: 'title',
-            captionDelay: 250,
-            close: true, // Explicitly show close button
-            docClose: true // Explicitly close on document click
-        });
+        if (typeof SimpleLightbox !== 'undefined') {
+            lightbox = new SimpleLightbox('.gallery-container a', {
+                captionsData: 'title',
+                captionDelay: 250,
+                close: true,
+                docClose: true,
+                swipeTolerance: 50,
+                scrollZoom: false
+            });
+            console.log('Lightbox initialized successfully');
+        } else {
+            console.error('SimpleLightbox is not defined!');
+        }
     }
 
     // 3. Filtering logic
@@ -45,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         galleryItems.forEach(item => {
             const yearMatch = selectedYear === 'all' || item.dataset.year === selectedYear;
-            const tagMatch = selectedTag === 'all' || item.dataset.tags.includes(selectedTag);
-            
+            const tagMatch = selectedTag === 'all' || item.dataset.tags.split(',').includes(selectedTag);
+
             if (yearMatch && tagMatch) {
                 item.style.display = ''; // Show item
             } else {

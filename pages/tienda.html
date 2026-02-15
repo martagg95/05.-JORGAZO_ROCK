@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Tienda | Jorgazo Rock</title>
+    <meta name="description"
+        content="La tienda oficial del Jorgazo Rock. Consigue tu merchandising y apoya el festival. Próximamente disponible.">
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/estilos-responsive-jorgazo.css">
+    <link rel="stylesheet" href="../assets/css/gallery.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="../images/logo/favicon.ico" type="image/x-icon">
+    <style>
+        .tienda-proximamente {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .tienda-proximamente h1 {
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: 5rem;
+            color: #e60000;
+            margin-bottom: 2rem;
+            text-shadow: 5px 5px 0px #000;
+        }
+
+        .tienda-proximamente p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .tienda-proximamente h1 {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="galeria-page">
+    <!-- === MENÚ PUNK ROCK === -->
+    <button id="menu-trigger" title="Menú" aria-label="Abrir menú" aria-haspopup="true"
+        aria-controls="punk-menu-overlay">
+        <img src="../images/logo/menu1.svg" alt="Icono del menú">
+    </button>
+
+    <nav id="punk-menu-overlay" class="punk-nav">
+        <div id="paint-splatter"></div>
+        <button id="menu-close" title="Cerrar menú">&times;</button>
+        <a href="../index.html" class="menu-link">INICIO</a>
+        <a href="../index.html#noticias" class="menu-link">ÚLTIMAS NOTICIAS</a>
+        <a href="../index.html#cartelazo" class="menu-link">EL CARTELAZO</a>
+        <a href="../index.html#historia" class="menu-link">EL JORGAZO</a>
+        <a href="../index.html#fuente-lunara" class="menu-link">LA FUENTE LUNARA</a>
+        <a href="galeria.html" class="menu-link">GALERÍA</a>
+        <a href="tienda.html" class="menu-link">LA TIENDA</a>
+        <a href="../index.html#contacto" class="menu-link">CONTACTO</a>
+    </nav>
+    <!-- === FIN MENÚ PUNK ROCK === -->
+
+    <!-- Cabecera simple similar a galeria -->
+    <header class="main-header">
+        <a href="../index.html" class="logo-link" aria-label="Volver a la página de inicio">
+            <img src="../images/logo/img43-sin-fondo.png" alt="Logo Jorgazo Rock" class="header-logo">
+        </a>
+    </header>
+
+    <main>
+        <section class="tienda-proximamente">
+            <h1 data-aos="glitch">LA TIENDA</h1>
+            <p data-aos="fade-up">Estamos preparando el mejor merchandising para que lleves el espíritu del Jorgazo a
+                todas partes.</p>
+            <div class="proximamente-badge"
+                style="margin-top: 3rem; font-family: 'Rubik Mono One', sans-serif; background: #e60000; padding: 1rem 2rem; transform: rotate(-3deg); box-shadow: 5px 5px 0 #000;">
+                PRÓXIMAMENTE...
+            </div>
+        </section>
+    </main>
+
+    <footer class="section-footer">
+        <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
+        <a href="https://www.instagram.com/fefa.rock/" target="_blank">
+            <img src="../images/logo/logo_fefa.png" alt="logo Federación Extremeña de Festivales Autogestionados"
+                id="logoFefa" style="width: 200px; height: auto; margin-top: 1rem;">
+        </a>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="../js/principal.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+</body>
+
+</html>
