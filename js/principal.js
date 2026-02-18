@@ -441,7 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (blogContainer) {
       const renderNewsHome = (news) => {
         let newsHtml = '';
-        news.slice(0, 5).forEach(item => {
+        news.slice(0, 1).forEach(item => {
           newsHtml += `
             <article class="blog-card-mini" data-aos="fade-right" data-id="${item.id}">
               <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="Noticia" class="card-img">
