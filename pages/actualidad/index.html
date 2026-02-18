@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Altavoz del Jorgazo | Blog Punk-Rock Rural</title>
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../../css/home.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -20,24 +20,28 @@
         }
 
         .hero-altavoz {
-            padding: 10rem 2rem 5rem;
+            padding: 8rem 1rem 3rem;
             text-align: center;
             border-bottom: 5px solid #e60000;
+            width: 100%;
+            overflow: hidden;
         }
 
         .hero-altavoz h1 {
             font-family: 'Rubik Glitch', sans-serif;
-            font-size: 5rem;
+            font-size: clamp(2.5rem, 8vw, 5rem);
             margin-bottom: 1rem;
             letter-spacing: 2px;
+            line-height: 1.1;
         }
 
         .hero-altavoz p {
-            font-size: 1.3rem;
+            font-size: clamp(0.9rem, 4vw, 1.3rem);
             color: #e60000;
             text-transform: uppercase;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            padding: 0 1rem;
         }
 
         .blog-container-full {
@@ -212,7 +216,7 @@
 
 <body>
 
-    <a href="../index.html" class="back-home">← VOLVER AL JORGAZO</a>
+    <a href="../../" class="back-home">← VOLVER AL JORGAZO</a>
 
     <header class="hero-altavoz">
         <h1 class="section-title">EL ALTAVOZ</h1>
@@ -223,7 +227,7 @@
         <!-- Cargado dinámicamente -->
     </main>
 
-    <script src="../data/news_data.js"></script>
+    <script src="../../data/news_data.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -270,7 +274,7 @@
 
                 try {
                     // Cargar comentarios base
-                    const response = await fetch('../data/comments.json');
+                    const response = await fetch('../../data/comments.json');
                     let allComments = [];
                     if (response.ok) {
                         allComments = await response.json();
