@@ -435,25 +435,35 @@ document.addEventListener("DOMContentLoaded", () => {
   /* === AUTOMATIZACIÓN CAROUSEL NOTICIAS === */
   const fbCarouselContainer = document.querySelector('.fb-carousel-container');
   if (fbCarouselContainer) {
-    let scrollAmount = 0;
-    const scrollStep = 1;
-    const delay = 30;
     let isPaused = false;
+    let scrollPos = fbCarouselContainer.scrollLeft;
+    const speed = 1; // Ajustado para suavidad
 
     const autoScroll = () => {
       if (!isPaused) {
-        fbCarouselContainer.scrollLeft += scrollStep;
-        if (fbCarouselContainer.scrollLeft >= (fbCarouselContainer.scrollWidth - fbCarouselContainer.clientWidth)) {
-          fbCarouselContainer.scrollLeft = 0;
+        scrollPos += speed;
+        // Reiniciar si llegamos al final
+        if (scrollPos >= (fbCarouselContainer.scrollWidth - fbCarouselContainer.clientWidth)) {
+          scrollPos = 0;
         }
+        fbCarouselContainer.scrollLeft = scrollPos;
       }
+      requestAnimationFrame(autoScroll);
     };
 
-    let scrollInterval = setInterval(autoScroll, delay);
+    // Iniciar el loop de animación
+    requestAnimationFrame(autoScroll);
 
     fbCarouselContainer.addEventListener('mouseenter', () => isPaused = true);
     fbCarouselContainer.addEventListener('mouseleave', () => isPaused = false);
     fbCarouselContainer.addEventListener('touchstart', () => isPaused = true);
     fbCarouselContainer.addEventListener('touchend', () => isPaused = false);
+
+    // Sincronizar posición si el usuario hace scroll manual mientras está pausado
+    fbCarouselContainer.addEventListener('scroll', () => {
+      if (isPaused) {
+        scrollPos = fbCarouselContainer.scrollLeft;
+      }
+    });
   }
 });
