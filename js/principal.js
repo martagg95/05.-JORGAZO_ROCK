@@ -77,7 +77,9 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("load", function () {
       const cartelImg = document.getElementById("cartelImg");
       const fallback = document.getElementById("fallbackFecha");
-      const cartelURL = "assets/gallery/full/cartel/Jorgazo-Rock_X.webp";
+      const isSubpage = window.location.pathname.includes('/pages/');
+      const basePath = isSubpage ? '../../' : '';
+      const cartelURL = basePath + "assets/gallery/full/cartel/Jorgazo-Rock_X.webp";
       fetch(cartelURL, { method: 'HEAD' })
         .then(res => {
           if (res.ok) {
@@ -451,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${item.summary || ''}</p>
                 <div class="card-actions">
                   <a href="${item.link}" target="_blank" class="read-more">Fuente original →</a>
-                  <a href="pages/actualidad/" class="read-more" style="border: 2px solid #e60000; color: #e60000; padding: 6px 12px; display: inline-block; margin-top: 8px; font-weight: bold; text-decoration: none; transition: all 0.2s ease;">Ver El Altavoz completo →</a>
+                  <a href="${isSubpage ? '../actualidad/' : 'pages/actualidad/'}" class="read-more" style="border: 2px solid #e60000; color: #e60000; padding: 6px 12px; display: inline-block; margin-top: 8px; font-weight: bold; text-decoration: none; transition: all 0.2s ease;">Ver El Altavoz completo →</a>
                 </div>
               </div>
             </article>
