@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${item.summary || ''}</p>
                 <div class="card-actions">
                   <a href="${item.link}" target="_blank" class="read-more">Fuente original →</a>
-                  <a href="pages/actualidad.html" class="read-more" style="background:#e60000; color:#fff; padding: 4px 10px; border-radius: 4px; border: none; margin-left: 10px;">Ver en el Blog →</a>
+                  <a href="pages/actualidad.html" class="read-more" style="border: 2px solid #e60000; color: #e60000; padding: 6px 12px; display: inline-block; margin-top: 8px; font-weight: bold; text-decoration: none; transition: all 0.2s ease;">Ver El Altavoz completo →</a>
                 </div>
               </div>
             </article>
