@@ -451,6 +451,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${item.summary || ''}</p>
                 <div class="card-actions">
                   <a href="${item.link}" target="_blank" class="read-more">Fuente original →</a>
+                  <a href="pages/actualidad.html" class="read-more" style="background:#e60000; color:#fff; padding: 4px 10px; border-radius: 4px; border: none; margin-left: 10px;">Ver en el Blog →</a>
                 </div>
               </div>
             </article>
