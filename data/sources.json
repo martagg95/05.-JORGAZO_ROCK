@@ -1,0 +1,65 @@
+{
+  "instituciones": [
+    {
+      "nombre": "Diputación de Badajoz - Cultura",
+      "url": "https://www.dip-badajoz.es/cultura/cultura/noticias.php",
+      "tipo": "web"
+    },
+    {
+      "nombre": "Diputación de Cáceres - Cultura",
+      "url": "https://www.dip-caceres.es/cultura/",
+      "tipo": "web"
+    },
+    {
+      "nombre": "Canal Extremadura - Música",
+      "url": "https://www.canalextremadura.es/noticias/musica",
+      "tipo": "web"
+    }
+  ],
+  "blogs_y_medios": [
+    {
+      "nombre": "LaCarne Magazine",
+      "url": "https://lacarnemagazine.com/cat/punk/",
+      "tipo": "web"
+    },
+    {
+      "nombre": "El Salto - Extremadura",
+      "url": "https://www.elsaltodiario.com/extremadura",
+      "tipo": "web"
+    },
+    {
+      "nombre": "MondoSonoro - Punk",
+      "url": "https://www.mondosonoro.com/generos-musicales/punk/",
+      "tipo": "web"
+    }
+  ],
+  "festivales_amigos": [
+    {
+      "nombre": "Bellota Rock",
+      "url": "https://bellotarock.com/noticias/",
+      "tipo": "web"
+    },
+    {
+      "nombre": "Rock in Pino",
+      "url": "https://www.facebook.com/rockinpino",
+      "tipo": "facebook"
+    }
+  ],
+  "bandas_colaboradoras": [
+    {
+      "nombre": "26/H",
+      "url": "https://www.instagram.com/26h_bdjz/",
+      "tipo": "instagram"
+    },
+    {
+      "nombre": "Któlicos",
+      "url": "https://www.facebook.com/ktolicos",
+      "tipo": "facebook"
+    },
+    {
+      "nombre": "Los Jacobos",
+      "url": "https://www.facebook.com/losjacobos",
+      "tipo": "facebook"
+    }
+  ]
+}

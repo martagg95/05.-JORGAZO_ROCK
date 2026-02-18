@@ -1,0 +1,28 @@
+name: Jorgazo News Crawler
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Una vez al día a medianoche
+  workflow_dispatch: # Permite ejecución manual
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Run Crawler
+        run: node scripts/news_crawler.js
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update news staging [automated]"
+          file_pattern: "data/news_staging.json"
+          branch: feb2026

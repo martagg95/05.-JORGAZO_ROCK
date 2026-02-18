@@ -1,0 +1,53 @@
+name: Publish Comment
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  publish:
+    if: github.event.label.name == 'aprobado'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Process Comment
+        shell: bash
+        run: |
+          BODY="${{ github.event.issue.body }}"
+          # Parse simple "Nombre: Valor" and "Comentario: Valor"
+          NAME=$(echo "$BODY" | grep -i "Nombre:" | cut -d':' -f2- | xargs)
+          TEXT=$(echo "$BODY" | grep -i "Comentario:" | cut -d':' -f2- | xargs)
+          DATE=$(date +'%b %d, %Y')
+          
+          # Escapar comillas para JSON
+          TEXT_ESCAPED=$(echo "$TEXT" | sed 's/"/\\"/g')
+          
+          # Añadir al archivo JSON de comentarios
+          # Si no existe, crear uno básico
+          if [ ! -f data/comments.json ]; then
+            echo "[]" > data/comments.json
+          fi
+          
+          # Usar python para manipular JSON de forma segura en bash
+          python3 -c "
+          import json, os
+          path = 'data/comments.json'
+          data = json.load(open(path))
+          data.append({'name': '$NAME', 'text': '$TEXT_ESCAPED', 'date': '$DATE'})
+          with open(path, 'w') as f:
+              json.dump(data, f, indent=2)
+          "
+
+      - name: Commit and Push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "feat: publish approved comment from issue #${{ github.event.issue.number }}"
+          file_pattern: "data/comments.json"
+          branch: feb2026
+
+      - name: Close Issue
+        run: gh issue close ${{ github.event.issue.number }} --comment "¡Publicado en la web! 🤘"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

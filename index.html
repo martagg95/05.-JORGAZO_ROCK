@@ -30,12 +30,13 @@
 
   <!-- Hoja de estilos principal -->
 
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css" />
+  <link rel="stylesheet" href="css/home.css?v=1.2">
+  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=1.2" />
 
 
   <!-- Fuentes punk desde Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Rubik+Glitch&family=Rubik+Mono+One&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap"
     rel="stylesheet">
 
   <!-- AOS CSS -->
@@ -123,7 +124,7 @@
     <h2 id="menu-heading" class="visually-hidden">Navegación Principal</h2>
     <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
     <a href="#inicio" class="menu-link">INICIO</a>
-    <a href="#noticias" class="menu-link">ÚLTIMAS NOTICIAS</a>
+    <a href="#altavoz" class="menu-link">EL ALTAVOZ</a>
     <a href="#cartelazo" class="menu-link">EL CARTELAZO</a>
     <a href="#historia" class="menu-link">EL JORGAZO</a>
     <a href="#fuente-lunara" class="menu-link">LA FUENTE LUNARA</a>
@@ -193,66 +194,73 @@
 
   <!-- <center><a href="#" class="cta-button">Hazte soci@</a></center> -->
 
-  <!-- SECCIÓN DEL CONTADOR -->
+  </div>
+  </center>
+  </section>
 
-  <section class="section countdown-jorgazo" data-aos="fade-up">
+  <!-- === SECCIÓN DE RESEÑAS / SOCIAL PROOF === -->
+  <section id="altavoz" class="section altavoz-jorgazo" data-aos="fade-up">
     <center>
-      <h2>¡PREPÁRATE PARA EL JORGAZO ROCK 2026!</h2>
-      <p class="fecha-confirmada">Sábado, 21 de Noviembre de 2026 | Fuente Lunara</p>
+      <h2 class="section-title">El Altavoz del Jorgazo</h2>
+      <p class="section-subtitle">Lo que se cuece en nuestrxs pueblos y la escena independiente</p>
+    </center>
 
-      <div id="countdown" class="countdown-wrapper">
-        <div class="countdown-item">
-          <span id="days">00</span>
-          <small>Días</small>
-        </div>
-        <div class="countdown-item">
-          <span id="hours">00</span>
-          <small>Horas</small>
-        </div>
-        <div class="countdown-item">
-          <span id="minutes">00</span>
-          <small>Minutos</small>
-        </div>
-        <div class="countdown-item">
-          <span id="seconds">00</span>
-          <small>Segundos</small>
-        </div>
-      </div>
-
-      <div id="noticias" class="actualidad-facebook">
-        <h3>ÚLTIMAS NOTICIAS</h3>
-        <div class="fb-carousel-container">
-          <div class="fb-carousel">
-            <!-- Post Real 1 (Feb 12, 2026 - Kastaña Festival) -->
-            <div class="fb-post-wrapper">
-              <iframe
-                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FJorgazoRock%2Fposts%2Fpfbid033kHfzpEnymngULW9iMNyZL4aQQzpkbFx9gvB9EynjqjYMgXSpBsmxNA4aQUPG58Xl&show_text=true&width=350"
-                width="350" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                allowfullscreen="true"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            </div>
-            <!-- Post Real 2 (Jan 12, 2026 - Cover Photo Update) -->
-            <div class="fb-post-wrapper">
-              <iframe
-                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FJorgazoRock%2Fposts%2F1411940567382552&show_text=true&width=350"
-                width="350" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                allowfullscreen="true"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            </div>
-            <!-- Post Real 3 (Dec 31, 2025 - Cover Photo Update / New Year) -->
-            <div class="fb-post-wrapper">
-              <iframe
-                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FJorgazoRock%2Fposts%2F1406836471226295&show_text=true&width=350"
-                width="350" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                allowfullscreen="true"
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            </div>
+    <div class="altavoz-grid">
+      <!-- Columna 1: Lxs Sonidos (Noticias) -->
+      <div class="noticias-col">
+        <div class="destacado-noticia">
+          <h3 class="mini-title-glitch">LO ÚLTIMO</h3>
+          <div id="blog-container" class="blog-list">
+            <!-- Cargado dinámicamente -->
+            <article class="blog-card-mini">
+              <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600&auto=format&fit=crop"
+                alt="Punk Rock" class="card-img">
+              <div class="card-text">
+                <h3>Lo que se comenta</h3>
+                <p>Las últimas noticias del festival y la escena rural, con el filtro Jorgazo. ¡Apoyando a las
+                  bandas locales!</p>
+                <a href="pages/actualidad.html" class="read-more">Ver El Altavoz completo →</a>
+              </div>
+            </article>
           </div>
         </div>
-        <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="cta-button">
-          VER MÁS EN FACEBOOK
-        </a>
+
+        <div class="redes-sociales-destacado">
+          <h3 class="mini-title-glitch">DIFUNDE EL RUIDO</h3>
+          <p>Síguenos para no perderte ni un pogo:</p>
+          <div class="redes-btns">
+            <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="btn-red"><i
+                class="fab fa-facebook"></i> FACEBOOK</a>
+            <a href="https://www.instagram.com/jorgazorock/" target="_blank" class="btn-red"><i
+                class="fab fa-instagram"></i> INSTAGRAM</a>
+          </div>
+        </div>
       </div>
+
+      <!-- Columna 2: Lo que dice la peña (Reseñas) -->
+      <div class="comunidad-col">
+        <h3 class="mini-title-glitch">LO QUE DICE LA PEÑA</h3>
+        <div class="reseñas-grid-mini">
+          <div class="fanzine-style">
+            <p>"El mejor festival rural de España. Sin postureo, solo rock y buena gente."</p>
+            <cite>— Juanma P. (Facebook)</cite>
+          </div>
+          <div class="fanzine-style inverse">
+            <p>"Cabeza la Vaca tiembla cada año. Una organización de 10 y música de 11."</p>
+            <cite>— Laura G. (Instagram)</cite>
+          </div>
+          <div class="fanzine-style">
+            <p>"Resistencia cultural en estado puro. ¡Larga vida al Jorgazo!"</p>
+            <cite>— RockerX Extremadura</cite>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <center>
+      <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="cta-button" style="margin-top: 4rem;">
+        VER MÁS EN FACEBOOK
+      </a>
     </center>
   </section>
 
@@ -360,7 +368,7 @@
       <h2 style="text-align: right;">Libertad, igualdad y solidaridad</h2>
       <p>Organizado por la Asociación Jorgazo Rock, un colectivo de más de 15 personas que creemos en la música como
         herramienta para conectar, reivindicar y celebrar la vida rural.</p>
-      <p>Además, colaboramos con Ecologistas en Acción para montar actividades para peques. Este año celebramos nuestro
+      <p>Además, colaboramos con Ecologistas en Acción para montar actividades para peques. Este año celebramos nuestrx
         X aniversario.</p>
     </div>
   </section>
@@ -426,7 +434,7 @@
       <center>
         <h2>Revive el Jorgazo Rock</h2>
         <p class="video-desc">
-          Te dejamos un breve vídeo resumen de lo que se vive en nuestro festival. Si aún no has venido... vas tarde.
+          Te dejamos un breve vídeo resumen de lo que se vive en nuestrx festival. Si aún no has venido... vas tarde.
         </p>
       </center>
       <div class="video-wrapper">
@@ -484,7 +492,7 @@
 
       </center>
       <p class="intro" style="font-size: 1.5rem;">
-        Nuestro pueblo no es solo escenario, es protagonista. Sin su gente, sin sus calles, sin su apoyo... el Jorgazo
+        Nuestrx pueblo no es solo escenario, es protagonista. Sin su gente, sin sus calles, sin su apoyo... el Jorgazo
         Rock no existiría.
       </p>
 
@@ -606,6 +614,7 @@
 
     <!-- Archivo script principal -->
 
+    <script src="data/news_data.js"></script>
     <script src="js/principal.js"></script>
     <footer id="contacto" class="section-footer">
       <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Altavoz del Jorgazo | Blog Punk-Rock Rural</title>
+    <link rel="stylesheet" href="../css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Rubik+Glitch&family=Shadows+Into+Light&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: #050505;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .hero-altavoz {
+            padding: 10rem 2rem 5rem;
+            text-align: center;
+            border-bottom: 5px solid #e60000;
+        }
+
+        .hero-altavoz h1 {
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero-altavoz p {
+            font-size: 1.3rem;
+            color: #e60000;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .blog-container-full {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .post-blog {
+            background: #111;
+            border: 2px solid #333;
+            margin-bottom: 4rem;
+            box-shadow: 15px 15px 0px #000;
+            transition: all 0.3s ease;
+        }
+
+        .post-blog:hover {
+            transform: translate(-5px, -5px);
+            border-color: #e60000;
+            box-shadow: 20px 20px 0px #e60000;
+        }
+
+        .post-blog img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: filter 0.3s;
+        }
+
+        .post-blog:hover img {
+            filter: grayscale(0);
+        }
+
+        .post-content {
+            padding: 3rem;
+        }
+
+        .post-meta {
+            font-size: 0.8rem;
+            color: #e60000;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .post-blog h2 {
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            color: #fff;
+            letter-spacing: 1px;
+            text-align: left;
+        }
+
+        .post-blog p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #222;
+            padding-top: 1.5rem;
+        }
+
+        .back-home {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: #e60000;
+            color: white;
+            padding: 1rem;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 1000;
+            box-shadow: 5px 5px 0px #000;
+        }
+
+        .back-home:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .comentarios-btn {
+            background: transparent;
+            border: 2px solid #e60000;
+            color: #e60000;
+            padding: 0.5rem 1rem;
+            font-family: 'Rubik Glitch', sans-serif;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+        }
+
+        .comentarios-btn:hover {
+            background: #e60000;
+            color: #fff;
+        }
+
+        .inner-comments {
+            margin-top: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos Formulario de Comentarios */
+        .comment-form {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #111;
+            border: 1px dashed #444;
+        }
+
+        .comment-form h4 {
+            font-family: 'Rubik Glitch', cursive;
+            color: #e60000;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            background: #000;
+            border: 1px solid #333;
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #e60000;
+        }
+
+        .comment-form button {
+            background: #e60000;
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-family: 'Rubik Glitch', cursive;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .comment-form button:hover {
+            transform: scale(1.05);
+            background: #ff1a1a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../index.html" class="back-home">← VOLVER AL JORGAZO</a>
+
+    <header class="hero-altavoz">
+        <h1 class="section-title">EL ALTAVOZ</h1>
+        <p>Crónicas, Ruido y Resistencia Rural</p>
+    </header>
+
+    <main id="blog-feed" class="blog-container-full">
+        <!-- Cargado dinámicamente -->
+    </main>
+
+    <script src="../data/news_data.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const feed = document.getElementById('blog-feed');
+
+            const renderNews = (news) => {
+                let html = '';
+                news.forEach(item => {
+                    html += `
+            <article class="post-blog" id="${item.id}">
+              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="Noticia">
+              <div class="post-content">
+                <span class="post-meta">${item.source.toUpperCase()} // ${new Date(item.date).toLocaleDateString()}</span>
+                <h2>${item.title}</h2>
+                <p>${item.summary}</p>
+                <div class="post-footer">
+                  <a href="${item.link}" target="_blank" class="read-more" style="color:#e60000; font-weight:bold; text-decoration:none;">FUENTE ORIGINAL →</a>
+                  <button class="comentarios-btn" onclick="toggleComments('${item.id}')">Ver los comentarios de la peña</button>
+                </div>
+                <div id="comments-${item.id}" class="post-comments-section" style="display:none;">
+                   <div class="comments-loading">Buscando el ruido...</div>
+                </div>
+              </div>
+            </article>
+          `;
+                });
+                feed.innerHTML = html;
+            };
+
+            // Lógica de comentarios por noticia
+            window.toggleComments = async (newsId) => {
+                const container = document.getElementById(`comments-${newsId}`);
+                if (container.style.display === 'block') {
+                    container.style.display = 'none';
+                    return;
+                }
+                container.style.display = 'block';
+                loadComments(newsId);
+            };
+
+            const loadComments = async (newsId) => {
+                const container = document.getElementById(`comments-${newsId}`);
+                container.innerHTML = '<div class="comments-loading">Buscando el ruido...</div>';
+
+                try {
+                    // Cargar comentarios base
+                    const response = await fetch('../data/comments.json');
+                    let allComments = [];
+                    if (response.ok) {
+                        allComments = await response.json();
+                    }
+
+                    // Cargar comentarios de localStorage (simulando persistencia)
+                    const localComments = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                    const combinedComments = [...allComments, ...localComments].filter(c => c.news_id === newsId || (!c.news_id && newsId === 'noticia-1')); // Fallback para los viejos
+
+                    let cHtml = '<div class="inner-comments" style="padding-top:1.5rem; border-top:1px dashed #444;">';
+
+                    if (combinedComments.length === 0) {
+                        cHtml += '<p style="padding:1rem; color:#888;">Nadie ha dicho nada todavía, sé el/la primerx.</p>';
+                    } else {
+                        combinedComments.forEach(c => {
+                            cHtml += `
+                                <div class="mini-comment" style="margin-bottom:1rem; border-left:3px solid #e60000; padding-left:1rem;">
+                                    <strong style="color:#e60000; font-size:0.9rem;">${c.name}</strong>
+                                    <p style="font-size:0.9rem; margin-top:0.3rem;">${c.text}</p>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    // Añadir Formulario
+                    cHtml += `
+                        <div class="comment-form">
+                            <h4>Si tu opinión es tan anárquica como la nuestra, déjala por aquí</h4>
+                            <input type="text" id="name-${newsId}" placeholder="¿Quién eres?" required>
+                            <textarea id="text-${newsId}" placeholder="Escribe tu mensaje..." rows="3" required></textarea>
+                            <button onclick="submitComment('${newsId}')">ENVIAR COMENTARIO</button>
+                        </div>
+                    `;
+
+                    cHtml += '</div>';
+                    container.innerHTML = cHtml;
+
+                } catch (e) {
+                    container.innerHTML = '<p>Error cargando las voces rurales.</p>';
+                }
+            };
+
+            window.submitComment = (newsId) => {
+                const nameInput = document.getElementById(`name-${newsId}`);
+                const textInput = document.getElementById(`text-${newsId}`);
+
+                if (!nameInput.value || !textInput.value) {
+                    alert("¡Eh! Lxs campos no pueden estar vacíos. Rock y respeto.");
+                    return;
+                }
+
+                const newComment = {
+                    news_id: newsId,
+                    name: nameInput.value,
+                    text: textInput.value,
+                    date: new Date().toISOString()
+                };
+
+                // Guardar local
+                const localComments = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                localComments.push(newComment);
+                localStorage.setItem('jorgazo_local_comments', JSON.stringify(localComments));
+
+                // Recargar
+                loadComments(newsId);
+            };
+
+            // Si tenemos los datos cargados por el script (bypass CORS)
+            if (typeof JORGAZO_NEWS !== 'undefined') {
+                renderNews(JORGAZO_NEWS);
+            } else {
+                feed.innerHTML = '<p>Error de sintonización. El rock rural es difícil de domar.</p>';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -432,28 +432,87 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* === AUTOMATIZACIÓN CAROUSEL NOTICIAS === */
-  const fbCarouselContainer = document.querySelector('.fb-carousel-container');
-  if (fbCarouselContainer) {
-    let scrollAmount = 0;
-    const scrollStep = 1;
-    const delay = 30;
-    let isPaused = false;
+  /* === LÓGICA EL ALTAVOZ DEL JORGAZO (NOTICIAS Y COMENTARIOS) === */
+  const loadAltavozContent = async () => {
+    const blogContainer = document.getElementById('blog-container');
+    const comentariosLista = document.getElementById('comentarios-lista');
 
-    const autoScroll = () => {
-      if (!isPaused) {
-        fbCarouselContainer.scrollLeft += scrollStep;
-        if (fbCarouselContainer.scrollLeft >= (fbCarouselContainer.scrollWidth - fbCarouselContainer.clientWidth)) {
-          fbCarouselContainer.scrollLeft = 0;
+    // Cargar Noticias
+    if (blogContainer) {
+      const renderNewsHome = (news) => {
+        let newsHtml = '';
+        news.slice(0, 5).forEach(item => {
+          newsHtml += `
+            <article class="blog-card-mini" data-aos="fade-right" data-id="${item.id}">
+              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="Noticia" class="card-img">
+              <div class="card-text">
+                <span class="tag">${item.source.toUpperCase()}</span>
+                <h3>${item.title}</h3>
+                <p>${item.summary || ''}</p>
+                <div class="card-actions">
+                  <a href="${item.link}" target="_blank" class="read-more">Fuente original →</a>
+                </div>
+              </div>
+            </article>
+          `;
+        });
+        blogContainer.innerHTML = newsHtml;
+      };
+
+      // Si tenemos los datos cargados por el script (bypass CORS)
+      if (typeof JORGAZO_NEWS !== 'undefined') {
+        renderNewsHome(JORGAZO_NEWS);
+      } else {
+        // Fallback fetch
+        try {
+          const response = await fetch('data/news_staging.json');
+          if (response.ok) {
+            const news = await response.json();
+            renderNewsHome(news);
+          }
+        } catch (e) {
+          console.error("Error cargando noticias:", e);
         }
       }
-    };
+    }
 
-    let scrollInterval = setInterval(autoScroll, delay);
+    // Cargar Comentarios
+    if (comentariosLista) {
+      try {
+        const response = await fetch('data/comments.json');
+        if (response.ok) {
+          const comments = await response.json();
+          let commentsHtml = '';
+          // En la home mostramos los últimos 10 comentarios generales
+          comments.slice(-10).reverse().forEach(c => {
+            commentsHtml += `
+              <div class="comentario-item" data-news-id="${c.news_id || ''}">
+                <strong style="color:#e60000;">${c.name}</strong> 
+                <p>${c.text}</p>
+              </div>
+            `;
+          });
+          if (comments.length > 0) {
+            comentariosLista.innerHTML = commentsHtml;
+          }
+        }
+      } catch (e) {
+        console.error("Error cargando comentarios:", e);
+      }
+    }
+  };
 
-    fbCarouselContainer.addEventListener('mouseenter', () => isPaused = true);
-    fbCarouselContainer.addEventListener('mouseleave', () => isPaused = false);
-    fbCarouselContainer.addEventListener('touchstart', () => isPaused = true);
-    fbCarouselContainer.addEventListener('touchend', () => isPaused = false);
+  loadAltavozContent();
+
+  const commentForm = document.getElementById('comment-form');
+  if (commentForm) {
+    commentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = commentForm.querySelector('input[name="nombre"]').value;
+
+      // Simulación de envío punky
+      alert(`¡Gracias ${name}! Hemos recibido tu mensaje. Lo revisaremos pronto para publicarlo en el Muro. 🤘`);
+      commentForm.reset();
+    });
   }
 });
