@@ -173,6 +173,52 @@
   .map iframe {
     height: 200px;
   }
+
+  /* === COOKIE BANNER MOBILE === */
+  .cookie-banner-wrapper {
+      bottom: 10px !important;
+      left: 10px !important;
+      right: 10px !important;
+      padding: 1rem !important;
+      width: auto !important;
+      max-width: none !important;
+  }
+
+  .cookie-banner-wrapper h3 {
+      font-size: 1.4rem !important;
+      margin-bottom: 0.5rem !important;
+  }
+
+  .cookie-banner-wrapper p {
+      font-size: 0.9rem !important;
+      margin-bottom: 1rem !important;
+      text-align: center !important;
+  }
+
+  .cookie-buttons {
+      flex-direction: column;
+      gap: 0.5rem;
+  }
+
+  .cookie-buttons .cta-button {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 0.9rem;
+      margin: 0;
+  }
+
+  /* Menu Icon adjustments */
+  #menu-trigger {
+      top: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+  }
+
+  #menu-trigger img {
+      width: 28px;
+      height: 28px;
+  }
 }
 
 /* Si algún elemento individual causa desbordamiento, lo recortamos automáticamente */
@@ -318,9 +364,9 @@
     /* Body y html */
   
     body, html {
-      width: 100dvw;
-      height: 100dvh;
-      object-fit: contain;
+      width: 100%;
+      height: auto;
+      overflow-x: hidden;
     }
 
     /* Headers */
