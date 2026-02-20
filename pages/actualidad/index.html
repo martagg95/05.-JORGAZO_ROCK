@@ -211,6 +211,117 @@
             transform: scale(1.05);
             background: #ff1a1a;
         }
+
+        /* === RESPONSIVE FIXES PARA MÓVIL === */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            .back-home {
+                position: relative;
+                top: 0;
+                left: 0;
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+                font-size: 1rem;
+                max-width: 100%;
+                box-shadow: none;
+                border-bottom: 2px solid #000;
+            }
+
+            .hero-altavoz {
+                padding: 3rem 1rem 2rem;
+            }
+
+            .blog-container-full {
+                margin: 0 auto 2rem;
+                padding: 0 1rem;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            .post-blog {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+
+            .post-content {
+                padding: 1.5rem 1rem;
+                width: 100%;
+            }
+
+            .post-blog h2 {
+                font-size: clamp(1.5rem, 6vw, 2.2rem);
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+
+            .post-blog p {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .post-blog img {
+                height: 250px;
+                width: 100%;
+                object-fit: cover;
+            }
+
+            .post-footer {
+                flex-direction: column;
+                gap: 1.2rem;
+                align-items: stretch;
+            }
+
+            .post-footer .read-more {
+                text-align: center;
+                display: block;
+                padding: 0.8rem;
+                background: #222;
+                border-radius: 4px;
+                border: 1px solid #444;
+            }
+
+            .comentarios-btn {
+                width: 100%;
+                font-size: 0.95rem;
+                padding: 0.8rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-altavoz h1 {
+                font-size: clamp(1.8rem, 9vw, 2.5rem);
+            }
+
+            .hero-altavoz p {
+                font-size: clamp(0.8rem, 4vw, 1rem);
+            }
+
+            .post-blog {
+                box-shadow: 8px 8px 0px #000;
+                border-width: 1px;
+            }
+
+            .post-blog:hover {
+                transform: translate(-3px, -3px);
+                box-shadow: 10px 10px 0px #e60000;
+            }
+
+            .post-blog h2 {
+                font-size: clamp(1.3rem, 7vw, 1.8rem);
+            }
+        }
     </style>
 </head>
 
