@@ -28,10 +28,9 @@
   <!-- Tema del navegador en dispositivos móviles -->
   <meta name="theme-color" content="#e60000">
 
-  <!-- Hoja de estilos principal -->
-
-  <link rel="stylesheet" href="css/home.css">
-  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css" />
+  <!-- CSS PRINCIPAL Y RESPONSIVE (con cache-busting) -->
+  <link rel="stylesheet" href="css/home.css?v=2" />
+  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=2" />
 
 
   <!-- Fuentes punk desde Google Fonts -->
@@ -198,6 +197,30 @@
   </center>
   </section>
 
+  <!-- === COUNTDOWN PUNK AGRESIVO === -->
+  <section id="countdown-section" class="agresivo-countdown" data-aos="zoom-in">
+    <div class="countdown-copy">EL JORGAZO ROCK EMPIEZA EN...</div>
+    <div id="countdown" class="punk-countdown-grid">
+      <div class="time-block">
+        <span class="time-num" id="days">00</span>
+        <span class="time-label">DÍAS</span>
+      </div>
+      <div class="time-block">
+        <span class="time-num" id="hours">00</span>
+        <span class="time-label">HORAS</span>
+      </div>
+      <div class="time-block">
+        <span class="time-num" id="minutes">00</span>
+        <span class="time-label">MINUTOS</span>
+      </div>
+      <div class="time-block">
+        <span class="time-num" id="seconds">00</span>
+        <span class="time-label">SEGS</span>
+      </div>
+    </div>
+    <div class="countdown-question">¿Estás preparadx?</div>
+  </section>
+
   <!-- === SECCIÓN DE RESEÑAS / SOCIAL PROOF === -->
   <section id="altavoz" class="section altavoz-jorgazo" data-aos="fade-up">
     <center>
@@ -257,11 +280,14 @@
       </div>
     </div>
 
-    <center>
-      <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="cta-button" style="margin-top: 4rem;">
-        VER MÁS EN FACEBOOK
-      </a>
-    </center>
+    <!-- BOTÓN HACIA FACEBOOK (CON WRAPPER PARA EVITAR OVERLAP) -->
+    <div class="btn-altavoz-wrapper">
+      <center>
+        <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="cta-button">
+          VER MÁS EN FACEBOOK
+        </a>
+      </center>
+    </div>
   </section>
 
 
@@ -488,7 +514,7 @@
 
     <section class="section pueblo-celebra" data-aos="fade-up">
       <center>
-        <h2>Cabeza la Vaca también es punk</h2>
+        <h2 class="section-title">Cabeza la Vaca también es punk</h2>
 
       </center>
       <p class="intro" style="font-size: 1.5rem;">

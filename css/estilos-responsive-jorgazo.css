@@ -37,22 +37,25 @@
     padding: 3rem 1.5rem;
   }
 
-  #countdown {
+  .punk-countdown-grid {
     gap: 1rem;
-    max-width: 100%;
   }
 
-  #countdown div {
+  .time-block {
     padding: 1rem;
-    width: 100px;
+    min-width: 120px;
   }
 
-  #countdown span {
+  .time-num {
     font-size: 2.2rem;
   }
 
-  #countdown small {
+  .time-label {
     font-size: 0.8rem;
+  }
+
+  .countdown-copy {
+    font-size: 2rem;
   }
 
   /* === AJUSTES RESPONSIVE MODAL DE BANDAS === */
@@ -134,20 +137,19 @@
     padding: 0 0.5rem;
   }
 
-  #countdown {
+  .punk-countdown-grid {
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
-  #countdown div {
+  .time-block {
     width: 80%;
-    max-width: 220px;
+    max-width: 250px;
     padding: 1.2rem;
   }
 
-  #countdown span {
-    font-size: 2rem;
+  .time-num {
+    font-size: 3rem;
   }
 
   .cta-button {
@@ -170,11 +172,6 @@
 
   .fake-img {
     height: 150px;
-  }
-
-  #countdown {
-    flex-direction: column;
-    align-items: center;
   }
 
   .map {

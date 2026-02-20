@@ -463,68 +463,123 @@ p {
   margin-bottom: 1rem;
 }
 
-/* === CONTADOR RESPONSIVE Y CENTRADO === */
-.countdown-jorgazo {
-  color: white;
-  padding: 4rem 2rem;
-  background-color: #11111146;
+/* === CONTADOR PUNK AGRESIVO === */
+.agresivo-countdown {
+  background: #000;
+  border-top: 6px solid #e60000;
+  border-bottom: 6px solid #e60000;
+  padding: 6rem 1rem;
   text-align: center;
   position: relative;
-  top: 0;
-  z-index: 9999;
+  z-index: 10;
+  overflow: hidden;
 }
 
-.countdown-wrapper {
+/* Fondo rasgado opcional: pseudo-elemento para ensuciar el fondo */
+.agresivo-countdown::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 10px,
+      rgba(230, 0, 0, 0.05) 10px,
+      rgba(230, 0, 0, 0.05) 20px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.countdown-copy {
+  font-family: 'Rubik Glitch', sans-serif !important;
+  color: #fff;
+  font-size: clamp(2rem, 5vw, 4rem);
+  text-transform: uppercase;
+  margin-bottom: 3rem;
+  letter-spacing: 2px;
+  line-height: 1.1;
+  text-shadow: 4px 4px 0 #e60000;
+}
+
+.punk-countdown-grid {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin: 3rem auto;
-  flex-wrap: wrap;
   max-width: 1200px;
+  margin: 0 auto 3rem;
+  flex-wrap: wrap;
 }
 
-@media (max-width: 991px) {
-  .countdown-wrapper {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-
-.countdown-item {
+.time-block {
   background-color: #e60000;
-  padding: 2rem 1.5rem;
-  border-radius: 4px;
-  box-shadow: 8px 8px 0px #000;
-  font-family: 'Rubik Mono One', sans-serif;
-  min-width: 180px;
-  /* Increased for better presence */
+  padding: 1.5rem 1rem;
+  box-shadow: 10px 10px 0px #fff;
+  font-family: 'Rubik Mono One', sans-serif !important;
+  min-width: 160px;
   text-align: center;
-  border: 4px solid #000;
+  border: 4px solid #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  /* Prevent overflow */
+  transform: rotate(-2deg);
+  transition: transform 0.2s ease;
 }
 
-.countdown-item span {
+.time-block:nth-child(even) {
+  transform: rotate(2deg);
+  background-color: #fff;
+  color: #000;
+  border-color: #e60000;
+  box-shadow: 10px 10px 0px #e60000;
+}
+
+.time-block:hover {
+  transform: scale(1.05) rotate(0deg);
+}
+
+.time-num {
   display: block;
-  font-size: 3.5rem;
-  /* Larger numbers */
+  font-size: clamp(3rem, 6vw, 5rem);
   font-weight: bold;
   line-height: 1;
   margin-bottom: 0.5rem;
+  color: inherit;
 }
 
-.countdown-item small {
-  font-size: 1.2rem;
-  /* Larger labels */
+.time-block:nth-child(odd) .time-num {
   color: #fff;
+}
+
+.time-block:nth-child(even) .time-num {
+  color: #000;
+}
+
+.time-label {
+  font-size: 1.2rem;
   font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: inherit;
+}
+
+.countdown-question {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #e60000;
   text-transform: uppercase;
   letter-spacing: 1px;
+  margin-top: 2rem;
+  display: inline-block;
+  background: #000;
+  padding: 0.5rem 2rem;
+  border: 4px dashed #fff;
+  transform: rotate(1deg);
 }
 
 /* === VÍDEO REVIVE JORGAZO === */
@@ -699,43 +754,56 @@ p {
 
 .pueblo-img {
   background: #111;
-  border: 2px solid #e60000;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  border: 4px dashed #e60000;
+  border-radius: 0;
+  box-shadow: 10px 10px 0px #000;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 0;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.pueblo-img:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+
+.pueblo-img:nth-child(even) {
+  transform: rotate(2deg);
 }
 
 .pueblo-img:hover {
-  transform: scale(1.03);
+  transform: scale(1.05) rotate(0deg);
+  border-color: #fff;
+  box-shadow: 15px 15px 0px #e60000;
 }
 
 .pueblo-img img {
   width: 100%;
   height: 280px;
   object-fit: cover;
-  border-radius: 16px 16px 0 0;
+  border-radius: 0;
+  border-bottom: 4px dashed #e60000;
 }
 
 .pueblo-img-content {
-  padding: 1.2rem 1.5rem;
+  padding: 1.5rem;
 }
 
 .pueblo-img h3 {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   margin-bottom: 0.8rem;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Rubik Mono One', sans-serif;
   color: white;
+  letter-spacing: 1px;
 }
 
 .pueblo-img p {
   font-size: 1rem;
   line-height: 1.6;
   color: #ccc;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Distribución específica de tarjetas (como en diseños tipo Medium o Behance) */
@@ -1607,6 +1675,13 @@ footer a:focus {
   margin: 0 auto !important;
   width: 100%;
   align-items: stretch;
+}
+
+.btn-altavoz-wrapper {
+  margin-top: 5rem;
+  /* Separación clara para descanibalizar */
+  width: 100%;
+  clear: both;
 }
 
 /* BREAKPOINT TABLET/MÓVIL */
