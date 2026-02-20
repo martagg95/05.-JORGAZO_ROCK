@@ -18,19 +18,29 @@
   ],
   "blogs_y_medios": [
     {
-      "nombre": "LaCarne Magazine",
+      "nombre": "LaCarne Magazine (Extremadura)",
       "url": "https://lacarnemagazine.com/cat/punk/",
-      "tipo": "web"
+      "tipo": "rss"
     },
     {
       "nombre": "El Salto - Extremadura",
       "url": "https://www.elsaltodiario.com/extremadura",
-      "tipo": "web"
+      "tipo": "rss"
     },
     {
       "nombre": "MondoSonoro - Punk",
       "url": "https://www.mondosonoro.com/generos-musicales/punk/",
-      "tipo": "web"
+      "tipo": "rss"
+    },
+    {
+      "nombre": "RockZone (Punk)",
+      "url": "https://www.rockzonemag.com/category/noticias/punk/",
+      "tipo": "rss"
+    },
+    {
+      "nombre": "Science of Noise",
+      "url": "https://www.scienceofnoise.net/",
+      "tipo": "rss"
     }
   ],
   "festivales_amigos": [
