@@ -5,6 +5,33 @@ const path = require('path');
 const SOURCES_PATH = path.join(__dirname, '../data/sources.json');
 const STAGING_PATH = path.join(__dirname, '../data/news_staging.json');
 
+/**
+ * Filter to strictly focus on Extremadura punk/rock or female bands.
+ */
+function isRelevantContent(title, description) {
+    const text = (title + " " + description).toLowerCase();
+
+    // Palabras clave Extremadura (geografía, festivales, bandas locales)
+    const keywordsExtremadura = [
+        'extremadura', 'cáceres', 'caceres', 'badajoz', 'plasencia', 'mérida', 'merida',
+        'bellota', 'guadiana', 'jerte', 'almendralejo', 'don benito', 'villanueva',
+        'zarza de granadilla', 'valdencín', 'ceclavín', 'pinofranqueado',
+        'extremúsika', 'extremusika', 'bellota rock', 'sanguijuelas', 'sinkope',
+        'extremoduro', 'uoho', 'buitre', 'ama'
+    ];
+
+    // Palabras clave Punk-Rock femenino
+    const keywordsMujeres = [
+        'mujer', 'mujeres', 'femenino', 'femenina', 'chica', 'chicas', 'girl', 'girls',
+        'riot grrrl', 'bala', 'ginebras', 'lisasinson', 'hinds', 'cariño', 'dover',
+        'ampuero', 'mafia', 'viudas', 'banda femenina', 'vocalista', 'cantante', 'bajista', 'batería'
+    ];
+
+    const allKeywords = [...keywordsExtremadura, ...keywordsMujeres];
+
+    return allKeywords.some(kw => text.includes(kw));
+}
+
 async function fetchRSS(url) {
     try {
         console.log(`Buscando RSS en: ${url}`);
@@ -54,8 +81,13 @@ async function fetchRSS(url) {
                 }
             }
 
+            // Aplicar el filtro estricto antes de aceptar la noticia
+            if (!isRelevantContent(title, description)) {
+                return null;
+            }
+
             return { title, link, pubDate, image, description, source: url, type: 'rss' };
-        });
+        }).filter(item => item !== null); // Eliminar los nulls del filtro
     } catch (e) {
         console.error(`Error fetching RSS from ${url}:`, e.message);
         return [];
@@ -186,6 +218,19 @@ async function main() {
         "../../assets/gallery/full/grupo1_jorgazorock_2024.webp"
     ];
 
+    const intros = [
+        `Desde {source} nos traen ruido fresco`,
+        `El radar del Jorgazo ha captado munición pesada en {source}`,
+        `Atención a lo que acaban de publicar lxs compañerxs de {source}`,
+        `Se masca la tragedia sonando desde {source}`,
+        `Nuevos acordes y actitud a la vista vía {source}`,
+        `Rompiendo amplificadores con esta novedad en {source}`,
+        `Desde la trinchera informativa de {source} nos cuentan esto`,
+        `Noticias que queman desde el altavoz de {source}`,
+        `Puro veneno musical directo de la portada de {source}`,
+        `Apuntad esto que nos manda la gente de {source}`
+    ];
+
     // Aplicar filtro de lenguaje inclusivo y DERECHO DE CITA
     const processedNews = newNews.map(n => {
         const inclusiveTitle = applyInclusiveLanguage(n.title);
@@ -193,7 +238,8 @@ async function main() {
         // Extraer max 20 palabras de la descripción para Derecho de Cita
         const shortExtract = truncateToWords(n.description || n.title, 20);
 
-        const blogIntro = `Desde ${n.source} nos traen ruido fresco: "${applyInclusiveLanguage(shortExtract)}". Apoya al periodismo e iniciativas rurales y lee el resto en la fuente original. 👇`;
+        const randomIntro = intros[Math.floor(Math.random() * intros.length)].replace('{source}', n.source);
+        const blogIntro = `${randomIntro}: "${applyInclusiveLanguage(shortExtract)}". Apoya al periodismo e iniciativas rurales y lee el resto en la fuente original. 👇`;
 
         // Si por algún motivo se corrompió la imagen en el proceso, le damos una muy puntual de muestra local
         let finalImage = n.image;
