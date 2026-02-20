@@ -130,20 +130,29 @@
 }
 
 /* SimpleLightbox Close Button Customization */
+.sl-overlay {
+    z-index: 100050 !important;
+}
+
+.sl-wrapper {
+    z-index: 100060 !important;
+}
+
 .sl-close {
     font-size: 2rem !important;
     color: #fff !important;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    width: 60px;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border-radius: 50% !important;
+    width: 60px !important;
     /* Increased for mobile */
-    height: 60px;
+    height: 60px !important;
     line-height: 55px !important;
-    text-align: center;
+    text-align: center !important;
+    z-index: 100070 !important;
 }
 
 .sl-close:hover {
-    background-color: rgba(230, 0, 0, 0.8);
+    background-color: rgba(230, 0, 0, 0.8) !important;
 }
 
 .gallery-item:hover img {

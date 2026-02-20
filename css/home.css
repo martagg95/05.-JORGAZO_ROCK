@@ -985,6 +985,31 @@ footer a:focus {
   height: 200px;
 }
 
+/* === BOTÓN CERRAR LIGHTBOX === */
+.sl-overlay {
+  z-index: 100050 !important;
+}
+
+.sl-wrapper {
+  z-index: 100060 !important;
+}
+
+.sl-close {
+  font-size: 2rem !important;
+  color: #fff !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border-radius: 50% !important;
+  width: 60px !important;
+  height: 60px !important;
+  line-height: 55px !important;
+  text-align: center !important;
+  z-index: 100070 !important;
+}
+
+.sl-close:hover {
+  background-color: rgba(230, 0, 0, 0.8) !important;
+}
+
 /* === MAPA FESTIVAL === */
 .map {
   width: 100%;
@@ -1292,6 +1317,14 @@ footer a:focus {
   transition: background 0.2s ease, transform 0.3s ease, opacity 0.3s ease;
   animation: pulse-animation 2s infinite;
   transform: translateZ(0);
+}
+
+/* Ocultar el botón del menú cuando SimpleLightbox está abierto */
+body.hidden-scroll #menu-trigger,
+.sl-wrapper~#menu-trigger {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 #menu-trigger.hidden {

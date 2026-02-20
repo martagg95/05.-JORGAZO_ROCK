@@ -39,6 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 swipeTolerance: 50,
                 scrollZoom: false
             });
+
+            // Ocultar el botón del menú cuando se abre el lightbox
+            lightbox.on('show.simplelightbox', function () {
+                const menuTrigger = document.getElementById('menu-trigger');
+                if (menuTrigger) menuTrigger.style.visibility = 'hidden';
+            });
+            lightbox.on('close.simplelightbox', function () {
+                const menuTrigger = document.getElementById('menu-trigger');
+                if (menuTrigger) menuTrigger.style.visibility = 'visible';
+            });
+
             console.log('Lightbox initialized successfully');
         } else {
             console.error('SimpleLightbox is not defined!');

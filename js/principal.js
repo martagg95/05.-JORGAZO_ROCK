@@ -200,22 +200,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* === MODAL AMPLIACIÓN IMÁGENES === */
-  const imageModal = document.getElementById("imageModal");
-  if (imageModal) {
-    const openModal = (src) => {
-      const modalImg = document.getElementById("modalImage");
-      imageModal.style.display = "flex";
-      modalImg.src = src;
-    }
-    const closeModal = () => {
-      imageModal.style.display = "none";
-    }
-    document.querySelectorAll(".grid-jorgazo img, .storytelling-img img").forEach(img => {
-      img.style.cursor = "zoom-in";
-      img.addEventListener("click", () => openModal(img.src));
+  /* === MODAL AMPLIACIÓN IMÁGENES (SimpleLightbox) === */
+  if (typeof SimpleLightbox !== 'undefined') {
+    const lightboxHome = new SimpleLightbox('.grid-jorgazo a, .storytelling-img a, .storytelling-horizontal-img a', {
+      captionsData: 'title',
+      captionDelay: 250,
+      close: true,
+      docClose: true,
+      swipeTolerance: 50,
+      scrollZoom: false
     });
-    imageModal.querySelector('.modal-close').addEventListener('click', closeModal);
+
+    // Ocultar el botón del menú cuando se abre el lightbox
+    lightboxHome.on('show.simplelightbox', function () {
+      const menuTrigger = document.getElementById('menu-trigger');
+      if (menuTrigger) menuTrigger.style.visibility = 'hidden';
+    });
+    lightboxHome.on('close.simplelightbox', function () {
+      const menuTrigger = document.getElementById('menu-trigger');
+      if (menuTrigger) menuTrigger.style.visibility = 'visible';
+    });
   }
 
   /* === MODAL DE BANDAS Y ACCESIBILIDAD TARJETAS === */
