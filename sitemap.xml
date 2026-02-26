@@ -8,27 +8,37 @@
 
 <url>
   <loc>https://jorgazorock.es/</loc>
-  <lastmod>2025-10-11T12:00:00+00:00</lastmod>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://jorgazorock.es/pages/galeria.html</loc>
-  <lastmod>2025-10-11T12:00:00+00:00</lastmod>
+  <loc>https://jorgazorock.es/pages/actualidad/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://jorgazorock.es/pages/avisolegal.html</loc>
-  <lastmod>2025-10-11T12:00:00+00:00</lastmod>
+  <loc>https://jorgazorock.es/pages/galeria/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jorgazorock.es/pages/tienda/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://jorgazorock.es/pages/avisolegal/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>
 <url>
-  <loc>https://jorgazorock.es/pages/cookies.html</loc>
-  <lastmod>2025-10-11T12:00:00+00:00</lastmod>
+  <loc>https://jorgazorock.es/pages/cookies/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>
 <url>
-  <loc>https://jorgazorock.es/pages/privacidad.html</loc>
-  <lastmod>2025-10-11T12:00:00+00:00</lastmod>
+  <loc>https://jorgazorock.es/pages/privacidad/</loc>
+  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>
 
