@@ -10,8 +10,6 @@ body {
   /* Ajustado para el menu flotante */
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
 body {
   background: linear-gradient(180deg, #000 0%, rgba(26, 26, 26, 0.8) 50%, #000 100%);
   font-family: "Montserrat", sans-serif;
