@@ -5,7 +5,6 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Gemini -->
-
 <url>
   <loc>https://jorgazorock.es/</loc>
   <lastmod>2026-02-26T12:00:00+00:00</lastmod>
@@ -41,5 +40,4 @@
   <lastmod>2026-02-26T12:00:00+00:00</lastmod>
   <priority>0.50</priority>
 </url>
-
 </urlset>

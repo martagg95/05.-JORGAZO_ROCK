@@ -41,11 +41,19 @@
     rel="stylesheet">
 
   <!-- AOS CSS -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  </noscript>
 
   <!-- SimpleLightbox CSS & JS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
+      crossorigin="anonymous" referrerpolicy="no-referrer">
+  </noscript>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"
     crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 
@@ -53,7 +61,11 @@
 
   <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  </noscript>
 
   <script type="application/ld+json">
 {
@@ -141,7 +153,8 @@
   </nav>
   <!-- === FIN MENÚ PUNK ROCK === -->
   <section id="inicio" class="section-logo-intro">
-    <img id="scroll-logo" src="images/logo/img43-sin-fondo.png" alt="Logo Jorgazo Rock" fetchpriority="high">
+    <img id="scroll-logo" src="images/logo/img43-sin-fondo.png" alt="Logo Jorgazo Rock" width="400" height="400"
+      fetchpriority="high">
   </section><br><br><br><br><br><br><br><br><br><br>
   <div class="grid-background">
     <div class="grid-square black"></div>
@@ -337,7 +350,7 @@
       </div>
       <!-- Tarjeta de Banda 6 -->
       <div class="banda-card" role="button" tabindex="0" data-banda="banda-6">
-        <img src="assets/gallery/full/kana_bambu.webp" alt="Kaña Bambú">
+        <img src="assets/gallery/full/kana_bambu.jpg" alt="Kaña Bambú" loading="lazy" width="300" height="365">
         <div class="banda-nombre">Kaña Bambú</div>
       </div>
       <!-- Tarjeta de Banda 7 -->
@@ -563,8 +576,8 @@
       <div class="pueblo-grid">
 
         <div class="pueblo-img grande" data-aos="fade-right">
-          <img src="assets/gallery/full/fuente_lunara.webp"
-            alt="La Fuente Lunara, un paraje natural con árboles y un arroyo" loading="lazy">
+          <img src="assets/gallery/full/fuente_lunara.jpg"
+            alt="La Fuente Lunara, un paraje natural con árboles y un arroyo" width="600" height="451" loading="lazy">
           <div class="pueblo-img-content">
             <h3>La Fuente Lunara</h3>
             <p>Donde cada otoño se convierte en templo de diversión y abrazos, al aire libre, bajo las estrellas y hasta
@@ -634,8 +647,9 @@
       <div class="fake-video-wrapper">
         <a href="https://www.facebook.com/AytoCabezaLaVaca/videos/1226769235829694" target="_blank"
           rel="noopener noreferrer" aria-label="Ver vídeo de la Fuente Lunara en Facebook">
-          <img src="assets/gallery/full/fuente_lunara.webp"
-            alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" />
+          <img src="assets/gallery/full/fuente_lunara.jpg"
+            alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" width="600"
+            height="451" loading="lazy" />
           <div class="play-icon-overlay" style="pointer-events: none;">
             <svg width="60" height="60" viewBox="0 0 24 24" fill="#fff">
               <path d="M8 5v14l11-7z" />
@@ -712,8 +726,8 @@
     </footer>
 
     <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="js/aos-init.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+    <script src="js/aos-init.js" defer></script>
 
 
 
