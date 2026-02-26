@@ -130,6 +130,15 @@
       pointer-events: none;
       transition: opacity 0.3s;
     }
+
+    /* Prevent layout collapse while async CSS loads, which triggers lazy iframe */
+    .banda-card {
+      min-height: 250px;
+    }
+
+    .grid-item {
+      min-height: 300px;
+    }
   </style>
 
   <!-- CSS PRINCIPAL Y RESPONSIVE (De-prioritized for initial render) -->
