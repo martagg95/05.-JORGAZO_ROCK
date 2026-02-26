@@ -34,17 +34,126 @@
   <link rel="preload" as="image" href="images/logo/img43-sin-fondo.webp" fetchpriority="high">
   <link rel="preload" as="image" href="images/logo/mancha_pintura1.webp">
 
-  <!-- CSS PRINCIPAL Y RESPONSIVE (con cache-busting) -->
-  <link rel="stylesheet" href="css/home.css?v=2" />
-  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=2" />
+  <!-- CRITICAL CSS INLINED -->
+  <style>
+    body,
+    html {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      overflow-x: hidden;
+      height: 100%;
+    }
 
+    body {
+      background: linear-gradient(180deg, #000 0%, rgba(26, 26, 26, 0.8) 50%, #000 100%);
+      font-family: "Montserrat", sans-serif;
+      color: white;
+    }
+
+    .section-logo-intro {
+      background-color: #000;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start;
+    }
+
+    #scroll-logo {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      transform: scale(0.5);
+      opacity: 0.8;
+      display: block;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 1024px) {
+      #scroll-logo {
+        transform: scale(0.7);
+      }
+
+      body {
+        padding-top: 80px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #scroll-logo {
+        transform: scale(0.6);
+      }
+    }
+
+    @media (max-width: 400px) {
+      #scroll-logo {
+        transform: scale(0.6);
+      }
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    #menu-trigger {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      z-index: 100;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 5px;
+    }
+
+    #punk-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+  </style>
+
+  <!-- CSS PRINCIPAL Y RESPONSIVE (De-prioritized for initial render) -->
+  <link rel="preload" href="css/home.css?v=2" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="css/home.css?v=2">
+  </noscript>
+
+  <link rel="preload" href="css/estilos-responsive-jorgazo.css?v=2" as="style"
+    onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=2">
+  </noscript>
 
   <!-- Fuentes punk desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
+  <link rel="preload"
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap"
-    rel="stylesheet">
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap">
+  </noscript>
 
   <!-- AOS CSS -->
   <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
@@ -698,8 +807,8 @@
 
     <!-- Archivo script principal -->
 
-    <script src="data/news_data.js?v=1.4"></script>
-    <script src="js/principal.js?v=1.4"></script>
+    <script src="data/news_data.js?v=1.4" defer></script>
+    <script src="js/principal.js?v=1.4" defer></script>
     <footer id="contacto" class="section-footer">
       <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
       <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank">Instagram</a> y <a
