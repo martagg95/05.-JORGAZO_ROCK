@@ -1,0 +1,77 @@
+[
+  {
+    "edicion": "XI",
+    "year": 2026,
+    "date": "2026-11-21",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": null,
+    "current": true,
+    "bands": [
+      {
+        "name": "ElMuerto",
+        "bio": "Banda de rap metal extremo. ¡Confirmados para hacer reventar la Fuente Lunara en 2026!",
+        "image": null,
+        "social": {}
+      },
+      {
+        "name": "Por confirmar",
+        "bio": "Pronto más bandas...",
+        "image": null,
+        "social": {}
+      }
+    ]
+  },
+  {
+    "edicion": "X",
+    "year": 2025,
+    "date": "2025-10-18",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_X.webp",
+    "current": false,
+    "bands": [
+      { "name": "Delírium Clownico Cirkabaret Musikal" },
+      { "name": "Vila MC YeuH" },
+      { "name": "River Hakes" },
+      { "name": "Bellotaris Fallecidos" },
+      { "name": "26/H" },
+      { "name": "Kaña Bambú" },
+      { "name": "Ehta Gente" },
+      { "name": "Chicalapapa" },
+      { "name": "Ermitaño" },
+      { "name": "Gatos Lokos" }
+    ]
+  },
+  {
+    "edicion": "VIII",
+    "year": 2023,
+    "date": "2023",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": null,
+    "current": false,
+    "bands": []
+  },
+  {
+    "edicion": "VII",
+    "year": 2022,
+    "date": "2022-11-18",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": null,
+    "current": false,
+    "bands": []
+  },
+  {
+    "edicion": "IV",
+    "year": 2018,
+    "date": "2018-11-17",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": null,
+    "current": false,
+    "bands": [
+      { "name": "Ruido Bruto" },
+      { "name": "Los Tiestos" },
+      { "name": "Fetxorias" },
+      { "name": "Guillotina" },
+      { "name": "Comando Paco Martínez Soria" }
+    ]
+  }
+]

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ediciones del Festival | Jorgazo Rock</title>
+    <link rel="canonical" href="https://jorgazorock.es/pages/ediciones/" />
+    <meta name="description" content="Histórico de todas las ediciones del Jorgazo Rock, carteles y bandas que han pasado por la Fuente Lunara.">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../css/estilos-responsive-jorgazo.css">
+    <link rel="stylesheet" href="../../css/ediciones.css">
+    <link rel="icon" href="../../images/logo/favicon.ico" type="image/x-icon">
+    <!-- Fuentes punk desde Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <style>
+        .menu-link {
+            font-family: 'Rubik Glitch', sans-serif !important;
+            text-transform: uppercase;
+        }
+        #punk-menu-overlay .menu-link {
+            font-family: 'Rubik Glitch', sans-serif !important;
+        }
+    </style>
+</head>
+
+<body class="galeria-page">
+    <!-- === MENÚ PUNK ROCK === -->
+    <button id="menu-trigger" title="Menú" aria-label="Abrir menú" aria-haspopup="true"
+        aria-controls="punk-menu-overlay">
+        <img src="../../images/logo/menu1.svg" alt="Icono del menú">
+    </button>
+
+    <nav id="punk-menu-overlay" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
+        <div id="paint-splatter"></div>
+        <h2 id="menu-heading" class="visually-hidden">Navegación Principal</h2>
+        <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
+        <a href="../../" class="menu-link">INICIO</a>
+        <a href="../actualidad/" class="menu-link">EL ALTAVOZ</a>
+        <a href="../../#cartelazo" class="menu-link">EL CARTELAZO</a>
+        <a href="../../#historia" class="menu-link">EL JORGAZO</a>
+        <a href="../../#fuente-lunara" class="menu-link">LA FUENTE LUNARA</a>
+        <a href="../galeria/" class="menu-link">GALERÍA</a>
+        <a href="../tienda/" class="menu-link">LA TIENDA</a>
+        <a href="../../#contacto" class="menu-link">CONTACTO</a>
+    </nav>
+    <!-- === FIN MENÚ PUNK ROCK === -->
+
+    <header class="main-header">
+        <a href="../../" class="logo-link" aria-label="Volver a la página de inicio">
+            <img src="../../images/logo/img43-sin-fondo.webp" alt="Logo Jorgazo Rock" class="header-logo">
+        </a>
+    </header>
+
+    <main>
+        <section class="ediciones-header">
+            <h1>EL ARCHIVO DEL JORGAZO</h1>
+            <p>Un repaso por el ruido, los carteles y las bandas de las ediciones pasadas.</p>
+        </section>
+
+        <div id="ediciones-list" class="ediciones-container">
+            <p style="text-align:center;">Cargando archivos clasificados...</p>
+        </div>
+    </main>
+
+    <footer class="section-footer">
+        <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
+        <a href="https://www.instagram.com/fefa.rock/" target="_blank">
+            <img src="../../images/logo/logo_fefa.webp" alt="logo Fefa" id="logoFefa">
+        </a>
+    </footer>
+
+    <script src="../../js/principal.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const container = document.getElementById('ediciones-list');
+            try {
+                const res = await fetch('../../data/ediciones.json');
+                const data = await res.json();
+                
+                let html = '';
+                data.forEach(ed => {
+                    const posterHtml = ed.poster 
+                        ? `<img src="../../${ed.poster}" alt="Cartel Edición ${ed.edicion}">` 
+                        : `<div class="no-poster">Cartel pendiente de escanear<br><br>Si lo tienes, ¡contáctanos!</div>`;
+                    
+                    const bandsHtml = ed.bands && ed.bands.length > 0 
+                        ? `<ul class="band-list">${ed.bands.map(b => `<li>${b.name}</li>`).join('')}</ul>`
+                        : `<p>Bandas en investigación... ¡La memoria del pogo es frágil!</p>`;
+
+                    html += `
+                        <div class="edicion-block">
+                            <h2 class="edicion-title">EDICIÓN ${ed.edicion} (${ed.year})</h2>
+                            <p style="margin-top:-1rem; color:#aaa; margin-bottom: 1rem;">${ed.date} | ${ed.location}</p>
+                            <div class="edicion-content">
+                                <div class="edicion-poster">
+                                    ${posterHtml}
+                                </div>
+                                <div class="edicion-bands">
+                                    <h3>Bandas</h3>
+                                    ${bandsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<p>Error al cargar el archivo de ediciones.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

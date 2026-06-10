@@ -1,0 +1,112 @@
+/* === ESTILOS EDICIONES JORGAZO === */
+.ediciones-header {
+  text-align: center;
+  padding: 4rem 2rem 2rem;
+}
+
+.ediciones-header h1 {
+  font-family: 'Rubik Glitch', sans-serif;
+  font-size: 4rem;
+  color: #e60000;
+  text-shadow: 4px 4px 0 #000;
+  margin-bottom: 1rem;
+}
+
+.ediciones-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.edicion-block {
+  background: #111;
+  border: 4px dashed #e60000;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  box-shadow: 10px 10px 0 #000;
+  transition: transform 0.3s ease;
+}
+.edicion-block:nth-child(even) {
+  border-color: #fff;
+  transform: rotate(1deg);
+}
+.edicion-block:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+
+.edicion-title {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 2rem;
+  color: #fff;
+  border-bottom: 2px solid #e60000;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.edicion-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.edicion-poster {
+  flex: 1;
+  min-width: 250px;
+  max-width: 400px;
+}
+.edicion-poster img {
+  width: 100%;
+  height: auto;
+  border: 3px solid #fff;
+  box-shadow: 5px 5px 0 #e60000;
+}
+.no-poster {
+  width: 100%;
+  height: 300px;
+  background: #000;
+  border: 3px dashed #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888;
+  font-family: 'Rubik Mono One', sans-serif;
+  text-align: center;
+  padding: 1rem;
+}
+
+.edicion-bands {
+  flex: 2;
+  min-width: 300px;
+}
+
+.band-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.band-list li {
+  background: #e60000;
+  color: #fff;
+  padding: 0.8rem;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  border: 2px solid #fff;
+  box-shadow: 3px 3px 0 #000;
+}
+
+@media (max-width: 768px) {
+  .edicion-content {
+    flex-direction: column;
+  }
+  .edicion-poster {
+    max-width: 100%;
+  }
+}

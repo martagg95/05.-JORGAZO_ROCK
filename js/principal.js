@@ -222,142 +222,91 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* === MODAL DE BANDAS Y ACCESIBILIDAD TARJETAS === */
+  /* === MODAL DE BANDAS Y CARGA DINÁMICA DE CARTELAZO === */
+  const bandasGridContainer = document.getElementById("bandas-grid-container");
   const modalBanda = document.getElementById("modalBanda");
-  if (modalBanda) {
-    const bandasData = {
-      "banda-1": {
-        nombre: "Delírium Clownico Cirkabaret Musikal",
-        bio: "¡Primera Actuación Jorgazo Rock! Ellos son los encargados de abrir la 10ª edición. Directamente desde Huelva, este dúo de payasos mezcla circo, teatro y música en un espectáculo único. ¡Humor y arte para empezar con fuerza!",
-        link: "https://www.facebook.com/story.php?story_fbid=1202388761927602&id=100064694679305&mibextid=wwXIfr&rdid=CzLXXZl9IAw7Cj8B#",
-        linkType: "facebook",
-      },
-      "banda-2": {
-        nombre: "Vila MC YeuH",
-        bio: "Vila MC YeuH es un artista de rap combativo, con letras potentes y un mensaje directo que resuena con la esencia del Jorgazo Rock. Su música es un puñetazo de libertad en cada rima.",
-        link: "https://www.youtube.com/user/VilaMcyoou",
-        linkType: "youtube",
-        social: {
-          instagram: "https://www.instagram.com/villa.mc/",
-          facebook: "https://www.facebook.com/VilaMCYeuH/"
+  const modalBandaBody = document.getElementById("modalBandaBody");
+  
+  if (bandasGridContainer && modalBanda) {
+    let currentBands = [];
+
+    const loadCartelazo = async () => {
+      try {
+        const response = await fetch('data/ediciones.json');
+        if (!response.ok) throw new Error("No se pudo cargar el archivo");
+        const ediciones = await response.json();
+        
+        const currentEdition = ediciones.find(ed => ed.current === true);
+        if (!currentEdition || !currentEdition.bands || currentEdition.bands.length === 0) {
+          bandasGridContainer.innerHTML = '<p style="text-align:center;">Pronto anunciaremos el cartel...</p>';
+          return;
         }
-      },
-      "banda-3": {
-        nombre: "River Hakes",
-        bio: "Desde Cáceres, Extremadura, River Hakes trae su potente hardcore-metal al Jorgazo Rock. Formados en 2019, su energía en el escenario y sus letras contundentes prometen un directo inolvidable, fiel al espíritu rebelde del festival.",
-        link: "https://www.youtube.com/@riverhakes",
-        linkType: "youtube",
-        social: {
-          instagram: "https://www.instagram.com/riverhakes/",
-          facebook: "https://www.facebook.com/riverhakescc"
-        }
-      },
-      "banda-4": {
-        nombre: "Bellotaris Fallecidos",
-        bio: "Bellotaris Fallecidos es una banda de punk rock de Plasencia, Extremadura. Con un estilo enérgico y letras cargadas de humor y crítica social, son un guiño a bandas como The Dead Kennedys y Lendakaris Muertos. ¡Prepárate para una dosis de punk rock directo y sin filtros!",
-        link: "https://bellotarisfallecidos.bandcamp.com/",
-        linkType: "website",
-        social: {
-        }
-      },
-      "banda-5": {
-        nombre: "26/H",
-        bio: "26/H es una banda de hardcore punk de Badajoz. Fundada en 2011 y reformada en 2023, su sonido potente y sus letras directas son un reflejo de la escena hardcore de la región. ¡No te pierdas su energía en el Jorgazo Rock!",
-        link: "https://www.youtube.com/@26HC",
-        linkType: "youtube",
-        social: {
-          instagram: "https://www.instagram.com/26h_bdjz/",
-          facebook: "https://www.facebook.com/veintiseis.barrah",
-          spotify: "https://shre.ink/Spotify26H",
-          bandcamp: "https://26hardcore.bandcamp.com/"
-        }
-      },
-      "banda-6": {
-        nombre: "Kaña Bambú",
-        bio: "Rock extremeño de pura cepa para hacer temblar el suelo. ¡Kaña Bambú nos trae su fuerza al Jorgazo Rock!",
-        link: "#",
-        linkType: "website",
-        social: {}
-      },
-      "banda-7": {
-        nombre: "Ehta Gente",
-        bio: "Power trío sensacional de punk-rock, extremeños hasta la médula. Su música es un reflejo de la escena musical más alternativa y el movimiento okupa.",
-        link: "https://ehtagente.bandcamp.com/",
-        linkType: "website",
-        social: {
-          youtube: "https://www.youtube.com/@ehtagente15",
-          instagram: "https://www.instagram.com/ehta.gente/",
-        }
-      },
-      "banda-8": {
-        nombre: "Chicalapapa",
-        bio: "Artista musical con un estilo único. Sus canciones como \"Mil maneras de palmarla\" y \"Plástico y plastilina\" muestran su versatilidad y originalidad.",
-        link: "https://www.youtube.com/@chicalapapa4853",
-        linkType: "youtube",
-        social: {
-          instagram: "https://www.instagram.com/chicalapapaoficial"
-        }
-      },
-      "banda-9": {
-        nombre: "Ermitaño",
-        bio: "Banda de rock fusión que vienen a darlo todo desde Ayamonte hasta Cabeza La Vaca. ¿Te los vas a perder?",
-        link: "https://www.youtube.com/@srwilliestudios8849",
-        linkType: "youtube",
-        social: {
-          instagram: "https://www.instagram.com/ermitano_music"
-        }
-      },
-      "banda-10": {
-        nombre: "Gatos Lokos",
-        bio: "¡10ª actuación y última del Festival! El día 18/10 en Cabeza la Vaca, son los encargados de poner el broche final con su rave. ¡También son Extremeños!",
-        link: "https://www.facebook.com/100064694679305/posts/1214059404093871/?mibextid=wwXIfr&rdid=Diw87T0suYPEZ2ry",
-        linkType: "facebook",
-        social: {
-        }
+
+        currentBands = currentEdition.bands;
+        let gridHtml = '';
+        currentBands.forEach((banda, index) => {
+          // Si no tiene imagen, ponemos un placeholder punk
+          const imgSrc = banda.image ? banda.image : 'images/logo/img43-sin-fondo.webp';
+          const styleName = banda.style || 'Confirmado';
+          
+          gridHtml += `
+            <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}" tabindex="0">
+              <div class="banda-imagen-wrapper">
+                <img src="${imgSrc}" alt="${banda.name}" loading="lazy" style="${!banda.image ? 'object-fit:contain; background:#111;' : ''}">
+              </div>
+              <div class="banda-info">
+                <h3>${banda.name}</h3>
+                <span class="banda-estilo">${styleName}</span>
+              </div>
+            </article>
+          `;
+        });
+        
+        bandasGridContainer.innerHTML = gridHtml;
+
+        // Listeners for cards
+        document.querySelectorAll(".banda-card").forEach(card => {
+          const index = parseInt(card.getAttribute("data-index"));
+          card.addEventListener("click", () => openBandaModal(index));
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              openBandaModal(index);
+            }
+          });
+        });
+
+      } catch (error) {
+        console.error("Error al cargar el cartelazo:", error);
+        bandasGridContainer.innerHTML = '<p style="text-align:center;">Error al cargar las bandas confirmadas.</p>';
       }
     };
 
-    const modalBandaBody = document.getElementById("modalBandaBody");
-    const closeModalBanda = document.querySelector(".close-modal-banda");
-
-    const openBandaModal = (bandaId) => {
-      const banda = bandasData[bandaId];
+    const openBandaModal = (index) => {
+      const banda = currentBands[index];
       let externalLinkContent = '';
       if (banda.link) {
-        let buttonText = '';
-        if (banda.linkType === 'facebook') {
-          buttonText = 'Ver publicación en Facebook';
-        } else if (banda.linkType === 'youtube') {
-          buttonText = 'Ver canal de YouTube';
-        } else if (banda.linkType === 'website') {
-          buttonText = 'Ver sitio web';
-        } else {
-          buttonText = 'Ver más';
-        }
+        let buttonText = 'Ver más';
+        if (banda.linkType === 'facebook') buttonText = 'Ver publicación';
+        else if (banda.linkType === 'youtube') buttonText = 'Ver canal de YouTube';
+        else if (banda.linkType === 'website') buttonText = 'Ver sitio web';
+        
         externalLinkContent = `<a href="${banda.link}" target="_blank" class="cta-button">${buttonText}</a>`;
       }
 
       let socialLinksContent = '';
-      if (banda.social) {
+      if (banda.social && Object.keys(banda.social).length > 0) {
         socialLinksContent = '<div class="banda-social-links">';
-        if (banda.social.spotify && banda.social.spotify !== '#') {
-          socialLinksContent += `<a href="${banda.social.spotify}" target="_blank"><i class="fab fa-spotify"></i></a>`;
-        }
-        if (banda.social.instagram && banda.social.instagram !== '#') {
-          socialLinksContent += `<a href="${banda.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
-        }
-        if (banda.social.facebook && banda.social.facebook !== '#') {
-          socialLinksContent += `<a href="${banda.social.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>`;
-        }
-        if (banda.social.bandcamp && banda.social.bandcamp !== '#') {
-          socialLinksContent += `<a href="${banda.social.bandcamp}" target="_blank"><i class="fab fa-bandcamp"></i></a>`;
-        }
+        if (banda.social.spotify) socialLinksContent += `<a href="${banda.social.spotify}" target="_blank"><i class="fab fa-spotify"></i></a>`;
+        if (banda.social.instagram) socialLinksContent += `<a href="${banda.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
+        if (banda.social.facebook) socialLinksContent += `<a href="${banda.social.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>`;
+        if (banda.social.bandcamp) socialLinksContent += `<a href="${banda.social.bandcamp}" target="_blank"><i class="fab fa-bandcamp"></i></a>`;
         socialLinksContent += '</div>';
       }
 
       modalBandaBody.innerHTML = `
-        <h3>${banda.nombre}</h3>
-        <p>${banda.bio}</p>
+        <h3>${banda.name}</h3>
+        <p>${banda.bio || 'Preparando ruido para la próxima edición.'}</p>
         <div class="banda-video">
           ${externalLinkContent}
         </div>
@@ -365,28 +314,20 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
 
       modalBanda.style.display = "flex";
-    }
+    };
 
-    document.querySelectorAll(".banda-card").forEach(card => {
-      const bandaId = card.getAttribute("data-banda");
-      card.addEventListener("click", () => openBandaModal(bandaId));
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openBandaModal(bandaId);
-        }
-      });
-    });
-
-    closeModalBanda.addEventListener("click", () => {
-      modalBanda.style.display = "none";
-    });
-
-    window.addEventListener("click", (e) => {
-      if (e.target === modalBanda) {
+    // Cerrar modal
+    const closeModalBanda = document.querySelector(".close-modal-banda");
+    if (closeModalBanda) {
+      closeModalBanda.addEventListener("click", () => {
         modalBanda.style.display = "none";
-      }
+      });
+    }
+    window.addEventListener("click", (e) => {
+      if (e.target === modalBanda) modalBanda.style.display = "none";
     });
+
+    loadCartelazo();
   }
 
 
