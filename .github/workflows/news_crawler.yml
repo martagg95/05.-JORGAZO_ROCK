@@ -17,6 +17,11 @@ jobs:
         with:
           node-version: '24'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Run Crawler
         run: node scripts/news_crawler.js
 
@@ -25,4 +30,4 @@ jobs:
         with:
           commit_message: "chore: update news staging [automated]"
           file_pattern: "data/news_staging.json"
-          branch: feb2026
+          branch: main

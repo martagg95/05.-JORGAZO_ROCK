@@ -1,5 +1,12 @@
 .DS_Store
-.DS_Store
+*.report.html
+local-report*.json
+report*.json
+=
+node_modules/
+.env
+.env.*
+.pnpm-store/
 
 # Archivo de estrategia SEO, no incluir en el repositorio público
 ESTRATEGIA_SEO.md

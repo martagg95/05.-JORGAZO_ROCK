@@ -212,30 +212,7 @@ p {
   }
 }
 
-/* === IMAGEN HORIZONTAL === */
-.storytelling-horizontal-img {
-  width: 100%;
-  padding: 4rem 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  scroll-snap-align: start;
-  margin-top: 2rem;
-  /* pequeña separación para evitar solapamientos */
-  z-index: 1;
-  position: relative;
 
-}
-
-.storytelling-horizontal-img img {
-  width: 90vw;
-  max-width: 1200px;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  border: 3px solid #e60000;
-
-}
 
 /* === NUEVA SECCIÓN DE STORYTELLING CONTINUADA === */
 .storytelling-alt {

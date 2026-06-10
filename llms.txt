@@ -78,4 +78,4 @@ key_content:
     url: https://jorgazorock.es/#fuente-lunara
   - section: Galería
     description: A photo gallery of past festival editions.
-    url: https://jorgazorock.es/pages/galeria.html
+    url: https://jorgazorock.es/pages/galeria/

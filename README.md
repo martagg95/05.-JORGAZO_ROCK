@@ -33,13 +33,13 @@ Este repositorio contiene la web del festival punk-rock **Jorgazo Rock**, un eve
 
 ## 📁 Estructura del proyecto
 
-├── index.html # Página principal
-├── style.css # Estilos principales del sitio
-├── scripts/
-│ └── main.js # Funcionalidades JS (modal, scroll, contador...)
-├── images/ # Imágenes del festival
-├── pages/ # Páginas legales cargadas en modal
-└── README.md # Este documento
+├── index.html       # Página principal
+├── css/             # Estilos del sitio
+├── js/              # Funcionalidades JS
+├── images/          # Imágenes de la web
+├── assets/          # Galería y otros assets
+├── pages/           # Secciones (tienda, galería, actualidad...)
+└── README.md        # Este documento
 
 ---
 
