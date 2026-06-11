@@ -30,7 +30,7 @@ const JORGAZO_NEWS = [
     "title": "Entrevista a Michael «J.J.» Kogler, vocalista de Harakiri for the Sky: &#8216;Enterré a alguien que ya no soy hoy, pero al mismo tiempo también renací de alguna forma&#8217;",
     "link": "https://www.scienceofnoise.net/entrevista-a-michael-j-j-kogler-vocalista-de-harakiri-for-the-sky/?utm_source=rss&#038;utm_medium=rss&#038;utm_campaign=entrevista-a-michael-j-j-kogler-vocalista-de-harakiri-for-the-sky",
     "date": "Thu, 19 Feb 2026 12:00:30 +0000",
-    "image": "https://images.unsplash.com/photo-1459749411177-042180ec75c0?q=80&w=800&auto=format&fit=crop",
+    "image": "../../assets/gallery/blog/harakiri_interview.png",
     "summary": "Desde Science of Noise nos traen ruido fresco: \"Entrevista a Michael «J.J.» Kogler, vocalista de Harakiri for the Sky: &#8216;Enterré a alguien que ya no soy hoy, pero...\". Apoya al periodismo e iniciativas rurales y lee el resto en la fuente original. 👇",
     "source": "Science of Noise",
     "type": "rss"
