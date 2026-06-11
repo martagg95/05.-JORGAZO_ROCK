@@ -52,15 +52,5 @@ jobs:
             Por favor, revisa el archivo `data/blog.json` para ajustar cualquier detalle antes de hacer merge. Si quieres que se publique en la web, cambia su estado de `"draft"` a `"published"` si tu sistema de blog lo requiere, o haz merge si la simple integración es suficiente.
             
           labels: "content, ai-generated"
-
-      - name: Notificar por email a Marta
-        uses: dawidd6/action-send-mail@v3
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          username: ${{ secrets.MAIL_USERNAME }}
-          password: ${{ secrets.MAIL_PASSWORD }}
-          subject: "🎸 ¡Nuevo post generado en Jorgazo Rock! (Requiere revisión)"
-          to: martabbaway@gmail.com
-          from: "Jorgazo Bot <${{ secrets.MAIL_USERNAME }}>"
-          body: "Se ha generado un nuevo Pull Request con un artículo del blog y su imagen (por IA). Por favor, entra al repositorio para revisar y aprobar la publicación."
+          reviewers: "martagg95"
+          assignees: "martagg95"
