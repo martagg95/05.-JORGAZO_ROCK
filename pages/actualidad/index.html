@@ -389,6 +389,13 @@
             let itemsPerPage = window.innerWidth < 768 ? 10 : 20;
             let currentNewsData = [];
 
+            // Resolve image paths: if relative (assets/...), prefix with ../../
+            const resolveImg = (src) => {
+                if (!src) return 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600';
+                if (src.startsWith('http')) return src;
+                return '../../' + src;
+            };
+
             window.addEventListener('resize', () => {
                 const newItemsPerPage = window.innerWidth < 768 ? 10 : 20;
                 if (newItemsPerPage !== itemsPerPage) {
@@ -424,7 +431,7 @@
 
                     html += `
             <article class="post-blog" id="${uniqueId}">
-              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="${safeAlt}">
+              <img src="${resolveImg(item.image)}" alt="${safeAlt}">
               <div class="post-content">
                 <span class="post-meta">${utils.escapeHtml(item.source).toUpperCase()} // ${utils.escapeHtml(new Date(item.date).toLocaleDateString())}</span>
                 <h2>${utils.escapeHtml(item.title)}</h2>

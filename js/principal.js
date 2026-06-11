@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  const isSubpage = window.location.pathname.includes('/pages/');
+  const basePath = isSubpage ? '../../' : '';
+
   /* === LÓGICA MENÚ PUNK === */
   const menuTrigger = document.getElementById('menu-trigger');
   const menuOverlay = document.getElementById('punk-menu-overlay');
@@ -77,8 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("load", function () {
       const cartelImg = document.getElementById("cartelImg");
       const fallback = document.getElementById("fallbackFecha");
-      const isSubpage = window.location.pathname.includes('/pages/');
-      const basePath = isSubpage ? '../../' : '';
       const cartelURL = basePath + "assets/gallery/full/cartel/Jorgazo-Rock_X.webp";
       fetch(cartelURL, { method: 'HEAD' })
         .then(res => {
@@ -251,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const loadCartelazo = async () => {
       try {
-        const response = await fetch('data/ediciones.json');
+        const response = await fetch(basePath + 'data/ediciones.json');
         if (!response.ok) throw new Error("No se pudo cargar el archivo");
         const ediciones = await response.json();
         
@@ -270,7 +271,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           gridHtml += `
             <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 4) * 80}" tabindex="0">
-              ${banda.image ? `<img src="${banda.image}" alt="${banda.name}" class="banda-bg-image">` : ''}
+              ${banda.image ? `<img src="${basePath}${banda.image}" alt="${banda.name}" class="banda-bg-image">` : ''}
               <div class="banda-content-overlay">
                 <span class="banda-order">#${banda.order || (index + 1)}</span>
                 <div class="banda-nombre">${utils.escapeHtml(banda.name)}</div>
@@ -393,7 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
       } else {
         // Fallback fetch
         try {
-          const response = await fetch('data/news_staging.json');
+          const response = await fetch(basePath + 'data/news_staging.json');
           if (response.ok) {
             const news = await response.json();
             renderNewsHome(news);
@@ -407,7 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Cargar Comentarios
     if (comentariosLista) {
       try {
-        const response = await fetch('data/comments.json');
+        const response = await fetch(basePath + 'data/comments.json');
         if (response.ok) {
           const comments = await response.json();
           let commentsHtml = '';
