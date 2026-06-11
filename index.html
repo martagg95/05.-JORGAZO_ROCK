@@ -253,8 +253,8 @@
     <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
     <a href="#inicio" class="menu-link">INICIO</a>
     <a href="pages/actualidad/" class="menu-link">EL ALTAVOZ</a>
-    <a href="../../pages/ediciones/" class="menu-link">EDICIONES</a>
-    <a href="../../#cartelazo" class="menu-link">EL CARTELAZO</a>
+    <a href="pages/ediciones/" class="menu-link">EDICIONES</a>
+    <a href="#cartelazo" class="menu-link">EL CARTELAZO</a>
     <a href="#historia" class="menu-link">EL JORGAZO</a>
     <a href="#fuente-lunara" class="menu-link">LA FUENTE LUNARA</a>
     <a href="pages/galeria/" class="menu-link">GALERÍA</a>
@@ -380,9 +380,9 @@
           <h3 class="mini-title-glitch">DIFUNDE EL RUIDO</h3>
           <p>Síguenos para no perderte ni un pogo:</p>
           <div class="redes-btns">
-            <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="btn-red"><i
+            <a href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer" class="btn-red"><i
                 class="fab fa-facebook"></i> FACEBOOK</a>
-            <a href="https://www.instagram.com/jorgazorock/" target="_blank" class="btn-red"><i
+            <a href="https://www.instagram.com/jorgazorock/" target="_blank" rel="noopener noreferrer" class="btn-red"><i
                 class="fab fa-instagram"></i> INSTAGRAM</a>
           </div>
         </div>
@@ -411,7 +411,7 @@
     <!-- BOTÓN HACIA FACEBOOK (CON WRAPPER PARA EVITAR OVERLAP) -->
     <div class="btn-altavoz-wrapper">
       <center>
-        <a href="https://www.facebook.com/JorgazoRock" target="_blank" class="cta-button">
+        <a href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer" class="cta-button">
           VER MÁS EN FACEBOOK
         </a>
       </center>
@@ -421,20 +421,21 @@
 
   <!-- FIN DE LA SECCIÓN DEL CONTADOR -->
 
-  <!-- === BANDAS CONFIRMADAS JORGAZO ROCK === -->
-  <section id="cartelazo" class="bandas-section" data-aos="fade-up">
-    <h2>El Cartelazo 2026</h2>
-    <div class="bandas-desc">
-      <p>Las confirmaciones que harán vibrar la Fuente Lunara en nuestra XI Edición.</p>
+  <!-- === BANDAS CONFIRMADAS JORGAZO ROCK 2026 (BENTO GRID) === -->
+  <section id="cartelazo" class="section section-cartelazo" data-aos="fade-up">
+    <center>
+      <h2>El Cartelazo 2026</h2>
+      <p class="cartelazo-subtitle">XI Edicion - 21 de noviembre - Fuente Lunara, Cabeza la Vaca</p>
+      <div class="cartelazo-pending">CARTEL OFICIAL PENDIENTE DE PUBLICAR</div>
+    </center>
+
+    <div class="bento-grid" id="bandas-grid-container">
+      <p style="text-align:center; grid-column: 1/-1;">Cargando confirmaciones...</p>
     </div>
 
-    <div class="bandas-grid" id="bandas-grid-container">
-      <p style="text-align:center;">Cargando el cartel...</p>
-    </div>
-
-    <!-- Botón para ver ediciones anteriores -->
+    <!-- Boton para ver ediciones anteriores -->
     <center style="margin-top: 3rem;">
-        <a href="pages/ediciones/" class="cta-button" style="display:inline-block; margin-top:0;">VER HISTÓRICO DE EDICIONES</a>
+        <a href="pages/ediciones/" class="cta-button" style="display:inline-block; margin-top:0;">VER HISTORICO DE EDICIONES</a>
     </center>
   </section>
 
@@ -616,7 +617,7 @@
 
       <center>
         <a class="cta-button" href="https://open.spotify.com/playlist/4YfpcYbOXHBEpHgt7aww8t?si=7-yHlYsYSKmMp6GQR9QVwA"
-          target="_blank">
+          target="_blank" rel="noopener noreferrer">
           Abrir en Spotify
         </a>
       </center>
@@ -706,7 +707,7 @@
       </center>
 
       <div class="fake-video-wrapper">
-        <a href="https://www.facebook.com/AytoCabezaLaVaca/videos/1226769235829694" target="_blank"
+        <a href="https://www.facebook.com/AytoCabezaLaVaca/videos/1226769235829694" target="_blank" rel="noopener noreferrer"
           rel="noopener noreferrer" aria-label="Ver vídeo de la Fuente Lunara en Facebook">
           <img src="assets/gallery/full/fuente_lunara.jpg"
             alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" width="600"
@@ -754,33 +755,29 @@
     <!-- Archivo script principal -->
 
     <script src="data/news_data.js?v=1.4" defer></script>
+    <script src="js/utils.js?v=1.4" defer></script>
     <script src="js/principal.js?v=1.4" defer></script>
     <footer id="contacto" class="section-footer">
       <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
-      <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank">Instagram</a> y <a
-          href="https://www.facebook.com/JorgazoRock" target="_blank">Facebook</a></p>
-      <!-- Links legales de la tienda (comentados temporalmente)
-    <p>
-      <a href="#">Condiciones de Venta</a> | 
-      <a href="#">Envíos y Devoluciones</a> | 
-      <a href="#">Política de Reembolso</a>
-    </p>
-    -->
+      <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank" rel="noopener noreferrer">Instagram</a> y <a
+          href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer">Facebook</a></p>
       <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
       <p><a href="pages/privacidad/">Política de privacidad</a></p>
       <p><a href="pages/avisolegal/">Aviso legal</a></p>
       <p><a href="pages/cookies/">Política de cookies</a></p>
+      <p><a href="pages/condiciones-venta/">Condiciones de Venta de Merchandising</a></p>
       <noscript>
         <div class="enlaces-legales-noscript">
           <p>Si tu navegador no permite JavaScript, puedes acceder a nuestras políticas legales aquí:</p>
           <ul>
-            <li><a href="pages/privacidad/" target="_blank">Política de Privacidad</a></li>
-            <li><a href="pages/avisolegal/" target="_blank">Aviso Legal</a></li>
-            <li><a href="pages/cookies/" target="_blank">Política de Cookies</a></li>
+            <li><a href="pages/privacidad/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
+            <li><a href="pages/avisolegal/" target="_blank" rel="noopener noreferrer">Aviso Legal</a></li>
+            <li><a href="pages/cookies/" target="_blank" rel="noopener noreferrer">Política de Cookies</a></li>
+            <li><a href="pages/condiciones-venta/" target="_blank" rel="noopener noreferrer">Condiciones de Venta de Merchandising</a></li>
           </ul>
         </div>
       </noscript>
-      <a href="https://www.instagram.com/fefa.rock/" target="_blank">
+      <a href="https://www.instagram.com/fefa.rock/" target="_blank" rel="noopener noreferrer">
         <img src="images/logo/logo_fefa.webp" alt="logo Federación Extremeña de Festivales Autogestionados"
           id="logoFefa">
       </a>

@@ -375,6 +375,7 @@
         <button id="next-btn" class="pagination-btn" onclick="changePage(1)">SIGUIENTE</button>
     </div>
 
+    <script src="../../js/utils.js"></script>
     <script src="../../data/news_data.js"></script>
 
     <script>
@@ -419,18 +420,18 @@
                 let html = '';
                 pageNews.forEach((item, idx) => {
                     const uniqueId = item.id || `news-${startIndex + idx}`;
-                    const safeAlt = (item.title || "Noticia punk-rock").replace(/"/g, '&quot;');
+                    const safeAlt = utils.escapeHtml(item.title || "Noticia punk-rock");
 
                     html += `
             <article class="post-blog" id="${uniqueId}">
               <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="${safeAlt}">
               <div class="post-content">
-                <span class="post-meta">${item.source.toUpperCase()} // ${new Date(item.date).toLocaleDateString()}</span>
-                <h2>${item.title}</h2>
-                <p>${item.summary}</p>
+                <span class="post-meta">${utils.escapeHtml(item.source).toUpperCase()} // ${utils.escapeHtml(new Date(item.date).toLocaleDateString())}</span>
+                <h2>${utils.escapeHtml(item.title)}</h2>
+                <p>${utils.escapeHtml(item.summary)}</p>
                 <div class="post-footer">
-                  <a href="${item.link}" target="_blank" class="read-more" style="color:#e60000; font-weight:bold; text-decoration:none;">FUENTE ORIGINAL →</a>
-                  <button class="comentarios-btn" onclick="toggleComments('${uniqueId}')">Ver los comentarios de la peña</button>
+                  <a href="${utils.sanitizeUrl(item.link)}" target="_blank" rel="noopener noreferrer" class="read-more" style="color:#e60000; font-weight:bold; text-decoration:none;">FUENTE ORIGINAL →</a>
+                  <button class="comentarios-btn" onclick="toggleComments('${utils.escapeHtml(uniqueId)}')">Ver los comentarios de la peña</button>
                 </div>
                 <div id="comments-${uniqueId}" class="post-comments-section" style="display:none;">
                    <div class="comments-loading">Buscando el ruido...</div>
@@ -487,8 +488,8 @@
                         combinedComments.forEach(c => {
                             cHtml += `
                                 <div class="mini-comment" style="margin-bottom:1rem; border-left:3px solid #e60000; padding-left:1rem;">
-                                    <strong style="color:#e60000; font-size:0.9rem;">${c.name}</strong>
-                                    <p style="font-size:0.9rem; margin-top:0.3rem;">${c.text}</p>
+                                    <strong style="color:#e60000; font-size:0.9rem;">${utils.escapeHtml(c.name)}</strong>
+                                    <p style="font-size:0.9rem; margin-top:0.3rem;">${utils.escapeHtml(c.text)}</p>
                                 </div>
                             `;
                         });
@@ -537,7 +538,6 @@
                 loadComments(newsId);
             };
 
-            // Si tenemos los datos cargados por el script (bypass CORS)
             if (typeof JORGAZO_NEWS !== 'undefined') {
                 currentNewsData = JORGAZO_NEWS;
                 renderNews();
@@ -546,6 +546,32 @@
             }
         });
     </script>
+
+    <footer id="contacto" class="section-footer">
+        <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
+        <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank" rel="noopener noreferrer">Instagram</a> y <a
+            href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+        <p><a href="../privacidad/">Política de privacidad</a></p>
+        <p><a href="../avisolegal/">Aviso legal</a></p>
+        <p><a href="../cookies/">Política de cookies</a></p>
+        <p><a href="../condiciones-venta/">Condiciones de Venta de Merchandising</a></p>
+        <noscript>
+        <div class="enlaces-legales-noscript">
+            <p>Si tu navegador no permite JavaScript, puedes acceder a nuestras políticas legales aquí:</p>
+            <ul>
+            <li><a href="../privacidad/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
+            <li><a href="../avisolegal/" target="_blank" rel="noopener noreferrer">Aviso Legal</a></li>
+            <li><a href="../cookies/" target="_blank" rel="noopener noreferrer">Política de Cookies</a></li>
+            <li><a href="../condiciones-venta/" target="_blank" rel="noopener noreferrer">Condiciones de Venta de Merchandising</a></li>
+            </ul>
+        </div>
+        </noscript>
+        <a href="https://www.instagram.com/fefa.rock/" target="_blank" rel="noopener noreferrer">
+            <img src="../../images/logo/logo_fefa.webp" alt="logo Federación Extremeña de Festivales Autogestionados"
+                id="logoFefa">
+        </a>
+    </footer>
 
 </body>
 

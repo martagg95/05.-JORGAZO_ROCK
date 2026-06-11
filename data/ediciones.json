@@ -2,76 +2,224 @@
   {
     "edicion": "XI",
     "year": 2026,
-    "date": "2026-11-21",
+    "date": "21 de noviembre de 2026",
     "location": "Fuente Lunara, Cabeza la Vaca",
     "poster": null,
+    "posterPending": true,
     "current": true,
     "bands": [
       {
-        "name": "ElMuerto",
-        "bio": "Banda de rap metal extremo. ¡Confirmados para hacer reventar la Fuente Lunara en 2026!",
-        "image": null,
+        "name": "Barracuda",
+        "order": 1,
+        "bio": "Desde las entrañas del rock mas autentico llega Barracuda de Madrid, una banda que derrocha actitud, energia y puro sonido directo. Con un estilo contundente y sin filtros, prometen hacer vibrar el escenario como se merece. Si lo tuyo es el punk rock sin concesiones, este concierto es para ti.",
+        "origin": "Ciempozuelos (Madrid)",
+        "style": "Punk Rock",
+        "image": "assets/gallery/full/bandas/barracuda_2026.png",
+        "social": {
+          "instagram": "https://www.instagram.com/barracuda_oficial"
+        }
+      },
+      {
+        "name": "Extorsion",
+        "order": 2,
+        "bio": "Directos desde la Plaza del Pumarejo (Sevilla) y activos desde 1994, llegan con su inconfundible punk rock directo, crudo y con mensaje. Letras con conciencia de clase, actitud autogestionada y un sonido que no deja indiferente. Han compartido escenario con bandas como Kaotiko y siguen mas vivos que nunca, reventando salas y festivales.",
+        "origin": "Sevilla",
+        "style": "Punk Rock",
+        "image": "assets/gallery/full/bandas/extorsion_2026.png",
+        "social": {
+          "instagram": "https://www.instagram.com/extorsionrock/"
+        }
+      },
+      {
+        "name": "El Muerto",
+        "order": 3,
+        "bio": "Desde Huelva llega El Muerto, una banda que pisa fuerte con su sonido contundente y actitud arrolladora sobre el escenario. Su mezcla de riffs pesados, energia cruda y presencia escenica promete no dejar a nadie indiferente. Preparate para un directo intenso, de esos que se sienten en el pecho y se recuerdan mucho despues de que termine.",
+        "origin": "Huelva",
+        "style": "Rap Metal",
+        "image": "assets/gallery/full/bandas/el_muerto_2026.png",
+        "social": {
+          "instagram": "https://www.instagram.com/elmuerto_oficial/"
+        }
+      },
+      {
+        "name": "Ramoninos",
+        "order": 4,
+        "bio": "Desde Navalmoral de la Mata, Ramoninos es una banda de rock formada en 2014 por jovenes musicos que, desde muy temprana edad, empezaron a dar cana versionando a grandes del rock y el punk como Ramones, Sex Pistols, The Clash, Eskorbuto o Siniestro Total. Con un directo cargado de fuerza, dinamismo y pura energia, han recorrido escenarios de toda la geografia nacional.",
+        "origin": "Navalmoral de la Mata (Caceres)",
+        "style": "Punk Rock",
+        "image": "assets/gallery/full/bandas/ramoninos_2026.png",
+        "social": {
+          "instagram": "https://www.instagram.com/ramoninos/",
+          "facebook": "https://www.facebook.com/ramoninos/",
+          "youtube": "https://www.youtube.com/@ramoninosextremadura9081"
+        }
+      },
+      {
+        "name": "Kalerizo",
+        "order": 5,
+        "bio": "Directos desde Caceres, Kalerizo llega con una mezcla explosiva de punk-rock, rap-metal y actitud combativa que no deja indiferente a nadie. Formados en 2020, esta banda de seis miembros ha sabido hacerse un hueco en la escena extremena a base de distorsion, energia y letras que golpean donde duele. Con temas como Extremadura explota y su potente album debut Repartiendo Bellotas, traen un sonido que es pura reivindicacion.",
+        "origin": "Caceres",
+        "style": "Punk / Rap Metal",
+        "image": "assets/gallery/full/bandas/kalerizo_2026.png",
+        "social": {
+          "youtube": "https://www.youtube.com/@KalerizoEnfermizo",
+          "instagram": "https://www.instagram.com/kalerizo/"
+        }
+      },
+      {
+        "name": "Las moSKAs Retrompeteras",
+        "order": 6,
+        "bio": "Desde Navarra llegan Las moSKAs Retrompeteras, una autentica descarga de Punk-Rock-Ska que no deja a nadie quieto. Nacidos como homenaje a Las MoSKAs Trompeteras y al recuerdo de Xabi Flores y Mikel Lasa, traen un directo lleno de energia y fiesta. Con mas de 50 conciertos en apenas dos anos, aterrizan en Cabeza la Vaca para liarla bien gorda.",
+        "origin": "Dicastillo (Navarra)",
+        "style": "Punk Rock Ska",
+        "image": "assets/gallery/full/bandas/las_moskas_2026.png",
+        "social": {
+          "instagram": "https://www.instagram.com/las_moskas_retrompeteras/"
+        }
+      },
+      {
+        "name": "Punk Kon Txorizo",
+        "order": 7,
+        "bio": "Directos desde Zahinos (Badajoz), vuelve una de las bandas mas miticas y peculiares del punk underground extremenu. Nacidos entre frontera, campo y carbon, supieron hacerse un hueco en la escena alternativa extremena gracias a su sonido crudo, rapido y sin filtros, acompanado de letras cargadas de ironia, critica social y mucha esencia de la tierra. Sera su segunda vez descargando metralleta en nuestro festival.",
+        "origin": "Zahinos (Badajoz)",
+        "style": "Punk",
+        "image": "assets/gallery/full/bandas/punk_kon_txorizo_2026.png",
         "social": {}
       },
       {
-        "name": "Por confirmar",
-        "bio": "Pronto más bandas...",
-        "image": null,
-        "social": {}
+        "name": "Liposo+ Pa Tu Jeto",
+        "order": 8,
+        "bio": "Directamente desde Barcelona y nacidos en la escena underground de los anos 90, Liposo+ Pa Tu Jeto llevan decadas defendiendo el punk mas crudo, rapido y visceral. Con una potente voz femenina al frente, guitarras afiladas y letras cargadas de rabia y critica social, la banda se ha convertido en un referente para quienes entienden el punk como actitud, resistencia y forma de vida. Vienen a presentar su ultimo trabajo H.L.M.S.K.",
+        "origin": "Barcelona",
+        "style": "Punk Combativo",
+        "image": "assets/gallery/full/bandas/liposo_2026.png",
+        "social": {
+          "youtube": "https://www.youtube.com/@liposomaspatujetooficial",
+          "instagram": "https://www.instagram.com/losliposomaspatujeto/"
+        }
       }
     ]
   },
   {
     "edicion": "X",
     "year": 2025,
-    "date": "2025-10-18",
+    "date": "18 de octubre de 2025",
     "location": "Fuente Lunara, Cabeza la Vaca",
     "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_X.webp",
     "current": false,
+    "subtitle": "X Aniversario",
     "bands": [
-      { "name": "Delírium Clownico Cirkabaret Musikal" },
-      { "name": "Vila MC YeuH" },
-      { "name": "River Hakes" },
-      { "name": "Bellotaris Fallecidos" },
-      { "name": "26/H" },
-      { "name": "Kaña Bambú" },
-      { "name": "Ehta Gente" },
-      { "name": "Chicalapapa" },
-      { "name": "Ermitaño" },
-      { "name": "Gatos Lokos" }
+      { "name": "Delirium Clownico Cirkabaret Musikal", "image": "assets/gallery/full/bandas/delirium_clowniko.webp", "bio": "Banda local.", "social": {} },
+      { "name": "Vila MC YeuH", "image": "assets/gallery/full/bandas/vilamc_yeuh.webp", "social": {} },
+      { "name": "Kaña Bambú", "image": "assets/gallery/full/kana_bambu.jpg", "social": {} },
+      { "name": "Ermitaño", "image": "assets/gallery/full/bandas/ermitano.webp", "social": {"instagram": "https://www.instagram.com/ermitano_music", "youtube": "https://www.youtube.com/@srwilliestudios8849"} },
+      { "name": "Chicalapapa", "image": "assets/gallery/full/bandas/chicalapapa.webp", "social": {"instagram": "https://www.instagram.com/chicalapapaoficial"} },
+      { "name": "26/H", "image": "assets/gallery/full/bandas/hardcore_badajoz.webp", "social": {} },
+      { "name": "Ehta Gente", "image": "assets/gallery/full/bandas/ehta_gente.webp", "social": {} },
+      { "name": "River Hakes", "image": "assets/gallery/full/bandas/river_hakes.webp", "social": {} },
+      { "name": "Bellotaris Fallecidos", "image": "assets/gallery/full/bandas/bellotaris.webp", "social": {} },
+      { "name": "Gatos Lokos (Rave)", "image": "assets/gallery/full/bandas/gatos_lokos.webp", "social": {} }
+    ]
+  },
+  {
+    "edicion": "IX",
+    "year": 2024,
+    "date": "30 de noviembre de 2024",
+    "location": "Fuente Lunara, Cabeza la Vaca",
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_IX.png",
+    "current": false,
+    "subtitle": "Homenaje a Juandy VR",
+    "bands": [
+      { "name": "Hermanos Bastardos" },
+      { "name": "Kalerizo" },
+      { "name": "Pitch4" },
+      { "name": "Miikka" },
+      { "name": "NVDO" },
+      { "name": "Tavi Chin Pum!" },
+      { "name": "Escrullo" },
+      { "name": "DLB y Slayed" }
     ]
   },
   {
     "edicion": "VIII",
     "year": 2023,
-    "date": "2023",
+    "date": "18 de noviembre de 2023",
     "location": "Fuente Lunara, Cabeza la Vaca",
-    "poster": null,
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_VIII.png",
     "current": false,
-    "bands": []
+    "bands": [
+      { "name": "Ruido Bruto" },
+      { "name": "Des14tes" },
+      { "name": "Restillos" },
+      { "name": "Tendinitis Cronika" },
+      { "name": "Ehta Gente" },
+      { "name": "Guillotina Express" },
+      { "name": "Faces con Almejes" }
+    ]
   },
   {
     "edicion": "VII",
     "year": 2022,
-    "date": "2022-11-18",
+    "date": "19 de noviembre de 2022",
     "location": "Fuente Lunara, Cabeza la Vaca",
-    "poster": null,
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_VII.jpg",
     "current": false,
-    "bands": []
+    "bands": [
+      { "name": "Restillos" },
+      { "name": "Faces con Almejes" },
+      { "name": "6PK" },
+      { "name": "Guillotina Express" },
+      { "name": "Delirium Clownico" },
+      { "name": "DJ Er Yerga Sound" },
+      { "name": "Deskartes" }
+    ]
   },
   {
-    "edicion": "IV",
+    "edicion": "V",
     "year": 2018,
-    "date": "2018-11-17",
-    "location": "Fuente Lunara, Cabeza la Vaca",
-    "poster": null,
+    "date": "17 de noviembre de 2018",
+    "location": "Fuente Lunara, Cabeza la Vaca (Badajoz)",
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_V.png",
     "current": false,
     "bands": [
       { "name": "Ruido Bruto" },
-      { "name": "Los Tiestos" },
+      { "name": "Perro Kostra" },
       { "name": "Fetxorias" },
       { "name": "Guillotina" },
-      { "name": "Comando Paco Martínez Soria" }
+      { "name": "Comando Paco Martinez Soria" },
+      { "name": "DJ Kulebra" }
+    ]
+  },
+  {
+    "edicion": "IV",
+    "year": 2017,
+    "date": "25 de noviembre de 2017",
+    "location": "Fuente Lunara, Cabeza la Vaca (Badajoz)",
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_IV.png",
+    "current": false,
+    "bands": [
+      { "name": "Molestando a los Vecinos" },
+      { "name": "Ruido Bruto" },
+      { "name": "Xmen" },
+      { "name": "De Bragas + AleDesbarres" },
+      { "name": "Comando Paco Martinez Soria" },
+      { "name": "Rebeka Puesta" },
+      { "name": "DJ Santi Aekas" }
+    ]
+  },
+  {
+    "edicion": "III",
+    "year": 2016,
+    "date": "19 de noviembre de 2016",
+    "location": "Fuente Lunara, Cabeza la Vaca (Badajoz)",
+    "poster": "assets/gallery/full/carteles_anteriores/Jorgazo-Rock_III.png",
+    "current": false,
+    "bands": [
+      { "name": "Lowdown" },
+      { "name": "Molestando a los Vecinos" },
+      { "name": "Ruido Bruto" },
+      { "name": "Comando Paco Martinez Soria" },
+      { "name": "Bombo Clap Elements" }
     ]
   }
 ]

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/estilos-responsive-jorgazo.css">
     <link rel="stylesheet" href="../../assets/css/gallery.css">
+    <link rel="stylesheet" href="../../css/tienda.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="../../images/logo/favicon.ico" type="image/x-icon">
     <!-- Fuentes punk desde Google Fonts -->
@@ -60,7 +61,16 @@
     </style>
 </head>
 
-<body class="galeria-page">
+<body class="galeria-page tienda-locked">
+    
+    <!-- MODAL "EN CONSTRUCCIÓN" -->
+    <div id="coming-soon-modal" class="tienda-coming-soon-overlay">
+        <div class="tienda-coming-soon-modal">
+            <h2>Próximamente</h2>
+            <p>La tienda oficial del Jorgazo Rock está casi lista, pero aún estamos preparando los últimos detalles de nuestro inventario y logística.<br><br>¡Vuelve pronto para conseguir el mejor merchandising punk!</p>
+            <a href="../../" style="display:inline-block; margin-top: 2rem; padding: 1rem 2rem; background: #e60000; color: #fff; text-decoration: none; font-family: 'Rubik Mono One', sans-serif; border-radius: 8px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(230,0,0,0.5);">VOLVER AL INICIO</a>
+        </div>
+    </div>
     <!-- === MENÚ PUNK ROCK === -->
     <button id="menu-trigger" title="Menú" aria-label="Abrir menú" aria-haspopup="true"
         aria-controls="punk-menu-overlay">
@@ -90,27 +100,108 @@
     </header>
 
     <main>
-        <section class="tienda-proximamente">
+        <section class="tienda-header">
             <h1 data-aos="glitch">LA TIENDA</h1>
-            <p data-aos="fade-up">Estamos preparando el mejor merchandising para que lleves el espíritu del Jorgazo a
-                todas partes.</p>
-            <div class="proximamente-badge"
-                style="margin-top: 3rem; font-family: 'Rubik Mono One', sans-serif; background: #e60000; padding: 1rem 2rem; transform: rotate(-3deg); box-shadow: 5px 5px 0 #000;">
-                PRÓXIMAMENTE...
-            </div>
+            <p data-aos="fade-up">Consigue el merchandising oficial y apoya el festival. Todo lo recaudado va directo a hacer mas grande el Jorgazo Rock.</p>
         </section>
+
+        <!-- Filtros -->
+        <nav id="category-filters" class="tienda-filters">
+            <!-- Renderizados por JS -->
+        </nav>
+
+        <!-- Contenedor del Grid de Productos -->
+        <div id="products-grid" class="tienda-bento-grid">
+            <p style="text-align:center; width:100%; grid-column:1/-1;">Cargando productos...</p>
+        </div>
     </main>
 
-    <footer class="section-footer">
+    <!-- Botón flotante del carrito -->
+    <button id="floating-cart-btn" class="floating-cart-btn" aria-label="Abrir carrito">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-badge" class="cart-badge">0</span>
+    </button>
+
+    <!-- Overlay oscuro para cuando se abre el carrito -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+
+    <!-- Panel Lateral del Carrito -->
+    <aside id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h2>TU CESTA PUNK</h2>
+            <button id="close-cart-btn" class="close-cart" aria-label="Cerrar carrito">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items">
+            <p class="cart-empty-msg">Tu carrito esta mas vacio que la cartera de un musico.</p>
+        </div>
+        
+        <div class="cart-options-section">
+            <div class="delivery-group">
+                <label for="delivery-select">Forma de entrega</label>
+                <select id="delivery-select" class="custom-select">
+                    <option value="recogida">Recogida en festival (21 nov 2026)</option>
+                    <option value="envio">Envío a domicilio</option>
+                </select>
+            </div>
+            
+            <div id="address-fields" class="address-group">
+                <label for="delivery-address">Dirección completa</label>
+                <input type="text" id="delivery-address" class="custom-select" placeholder="Calle, Número, Piso...">
+                <label for="delivery-cp">Código Postal</label>
+                <input type="text" id="delivery-cp" class="custom-select" placeholder="00000">
+                <label for="delivery-city">Localidad y Provincia</label>
+                <input type="text" id="delivery-city" class="custom-select" placeholder="Localidad (Provincia)">
+            </div>
+
+            <div class="legal-checkbox-group">
+                <input type="checkbox" id="legal-checkbox">
+                <label for="legal-checkbox">He leído y acepto las <a href="../condiciones-venta/" id="link-condiciones-venta">condiciones de venta</a></label>
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>TOTAL:</span>
+                <span id="cart-total-price">0.00€</span>
+            </div>
+            <button id="checkout-btn" class="checkout-btn" disabled>
+                FINALIZAR COMPRA
+            </button>
+            <p class="checkout-notice" id="checkout-notice-text">Pago seguro 100% punk. Te redirigiremos al formulario de pago por Bizum.</p>
+        </div>
+    </aside>
+
+    <footer id="contacto" class="section-footer">
         <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
-        <a href="https://www.instagram.com/fefa.rock/" target="_blank">
+        <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank" rel="noopener noreferrer">Instagram</a> y <a
+            href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+        <p><a href="../privacidad/">Política de privacidad</a></p>
+        <p><a href="../avisolegal/">Aviso legal</a></p>
+        <p><a href="../cookies/">Política de cookies</a></p>
+        <p><a href="../condiciones-venta/">Condiciones de Venta de Merchandising</a></p>
+        <noscript>
+        <div class="enlaces-legales-noscript">
+            <p>Si tu navegador no permite JavaScript, puedes acceder a nuestras políticas legales aquí:</p>
+            <ul>
+            <li><a href="../privacidad/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
+            <li><a href="../avisolegal/" target="_blank" rel="noopener noreferrer">Aviso Legal</a></li>
+            <li><a href="../cookies/" target="_blank" rel="noopener noreferrer">Política de Cookies</a></li>
+            <li><a href="../condiciones-venta/" target="_blank" rel="noopener noreferrer">Condiciones de Venta de Merchandising</a></li>
+            </ul>
+        </div>
+        </noscript>
+        <a href="https://www.instagram.com/fefa.rock/" target="_blank" rel="noopener noreferrer">
             <img src="../../images/logo/logo_fefa.webp" alt="logo Federación Extremeña de Festivales Autogestionados"
-                id="logoFefa" style="width: 200px; height: auto; margin-top: 1rem;">
+                id="logoFefa">
         </a>
     </footer>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="../../js/utils.js"></script>
     <script src="../../js/principal.js"></script>
+    <script src="../../js/tienda.js"></script>
     <script>
         AOS.init({
             duration: 800,

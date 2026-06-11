@@ -62,13 +62,32 @@
         </div>
     </main>
 
-    <footer class="section-footer">
+    <footer id="contacto" class="section-footer">
         <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
-        <a href="https://www.instagram.com/fefa.rock/" target="_blank">
+        <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank" rel="noopener noreferrer">Instagram</a> y <a
+            href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer">Facebook</a></p>
+        <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+        <p><a href="../privacidad/">Política de privacidad</a></p>
+        <p><a href="../avisolegal/">Aviso legal</a></p>
+        <p><a href="../cookies/">Política de cookies</a></p>
+        <p><a href="../condiciones-venta/">Condiciones de Venta de Merchandising</a></p>
+        <noscript>
+        <div class="enlaces-legales-noscript">
+            <p>Si tu navegador no permite JavaScript, puedes acceder a nuestras políticas legales aquí:</p>
+            <ul>
+            <li><a href="../privacidad/" target="_blank" rel="noopener noreferrer">Política de Privacidad</a></li>
+            <li><a href="../avisolegal/" target="_blank" rel="noopener noreferrer">Aviso Legal</a></li>
+            <li><a href="../cookies/" target="_blank" rel="noopener noreferrer">Política de Cookies</a></li>
+            <li><a href="../condiciones-venta/" target="_blank" rel="noopener noreferrer">Condiciones de Venta de Merchandising</a></li>
+            </ul>
+        </div>
+        </noscript>
+        <a href="https://www.instagram.com/fefa.rock/" target="_blank" rel="noopener noreferrer">
             <img src="../../images/logo/logo_fefa.webp" alt="logo Fefa" id="logoFefa">
         </a>
     </footer>
 
+    <script src="../../js/utils.js"></script>
     <script src="../../js/principal.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -77,28 +96,31 @@
                 const res = await fetch('../../data/ediciones.json');
                 const data = await res.json();
                 
+                // Filtrar la edicion actual (se ve en la portada)
+                const pastEditions = data.filter(ed => !ed.current);
+
                 let html = '';
-                data.forEach(ed => {
+                pastEditions.forEach(ed => {
+                    // Solo mostrar poster si existe
                     const posterHtml = ed.poster 
-                        ? `<img src="../../${ed.poster}" alt="Cartel Edición ${ed.edicion}">` 
-                        : `<div class="no-poster">Cartel pendiente de escanear<br><br>Si lo tienes, ¡contáctanos!</div>`;
+                        ? `<div class="edicion-poster"><img src="../../${ed.poster}" alt="Cartel Edicion ${ed.edicion}" loading="lazy"></div>` 
+                        : '';
                     
                     const bandsHtml = ed.bands && ed.bands.length > 0 
                         ? `<ul class="band-list">${ed.bands.map(b => `<li>${b.name}</li>`).join('')}</ul>`
-                        : `<p>Bandas en investigación... ¡La memoria del pogo es frágil!</p>`;
+                        : '';
+
+                    const subtitleHtml = ed.subtitle 
+                        ? `<span style="color:#e60000; font-weight:bold;"> — ${ed.subtitle}</span>` 
+                        : '';
 
                     html += `
                         <div class="edicion-block">
-                            <h2 class="edicion-title">EDICIÓN ${ed.edicion} (${ed.year})</h2>
+                            <h2 class="edicion-title">EDICION ${ed.edicion} (${ed.year})${subtitleHtml}</h2>
                             <p style="margin-top:-1rem; color:#aaa; margin-bottom: 1rem;">${ed.date} | ${ed.location}</p>
                             <div class="edicion-content">
-                                <div class="edicion-poster">
-                                    ${posterHtml}
-                                </div>
-                                <div class="edicion-bands">
-                                    <h3>Bandas</h3>
-                                    ${bandsHtml}
-                                </div>
+                                ${posterHtml}
+                                ${bandsHtml ? `<div class="edicion-bands"><h3>Bandas</h3>${bandsHtml}</div>` : ''}
                             </div>
                         </div>
                     `;

@@ -176,6 +176,12 @@ document.addEventListener("DOMContentLoaded", () => {
         - <strong>Analíticas:</strong> Utilizamos herramientas de medición (como Google Analytics o similares) para entender cómo interactúan los usuarios con la web, siempre respetando su privacidad.<br>
         - <strong>Preferencias:</strong> Permiten recordar opciones como el idioma o la aceptación del banner de cookies.</p>
         <p>Puedes revocar tu consentimiento o configurar tus preferencias en cualquier momento a través del banner de inicio o limpiando los datos de tu navegador.</p>
+      `,
+      condicionesVenta: `
+        <h1>Condiciones de Venta</h1>
+        <p>Las siguientes condiciones regulan la venta de merchandising de la <strong>Asociación Jorgazo Rock</strong>.</p>
+        <p>El proceso de pago se realiza mediante <strong>Bizum</strong> tras la confirmación de la reserva. Los envíos se gestionarán según la opción seleccionada (Recogida en festival o Envío a domicilio).</p>
+        <p><a href="pages/condiciones-venta/">Lee el texto completo de las condiciones de venta aquí</a>.</p>
       `
     };
     const abrirModalLegal = (tipo) => {
@@ -195,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (href.includes('privacidad')) abrirModalLegal("privacidad");
           else if (href.includes('avisolegal')) abrirModalLegal("aviso");
           else if (href.includes('cookies')) abrirModalLegal("cookies");
+          else if (href.includes('condiciones-venta')) abrirModalLegal("condicionesVenta");
         }
       });
     });
@@ -222,13 +229,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* === MODAL DE BANDAS Y CARGA DINÁMICA DE CARTELAZO === */
+  /* === MODAL DE BANDAS Y CARGA DINÁMICA DE CARTELAZO (BENTO) === */
   const bandasGridContainer = document.getElementById("bandas-grid-container");
   const modalBanda = document.getElementById("modalBanda");
   const modalBandaBody = document.getElementById("modalBandaBody");
   
   if (bandasGridContainer && modalBanda) {
     let currentBands = [];
+
+    const buildSocialIcons = (social, useNofollow) => {
+      if (!social || Object.keys(social).length === 0) return '';
+      const rel = useNofollow ? 'rel="nofollow noopener noreferrer"' : 'rel="noopener noreferrer"';
+      let html = '';
+      if (social.instagram) html += `<a href="${social.instagram}" target="_blank" ${rel} title="Instagram"><i class="fab fa-instagram"></i></a>`;
+      if (social.facebook) html += `<a href="${social.facebook}" target="_blank" ${rel} title="Facebook"><i class="fab fa-facebook"></i></a>`;
+      if (social.youtube) html += `<a href="${social.youtube}" target="_blank" ${rel} title="YouTube"><i class="fab fa-youtube"></i></a>`;
+      if (social.spotify) html += `<a href="${social.spotify}" target="_blank" ${rel} title="Spotify"><i class="fab fa-spotify"></i></a>`;
+      if (social.bandcamp) html += `<a href="${social.bandcamp}" target="_blank" ${rel} title="Bandcamp"><i class="fab fa-bandcamp"></i></a>`;
+      return html;
+    };
 
     const loadCartelazo = async () => {
       try {
@@ -238,25 +257,26 @@ document.addEventListener("DOMContentLoaded", () => {
         
         const currentEdition = ediciones.find(ed => ed.current === true);
         if (!currentEdition || !currentEdition.bands || currentEdition.bands.length === 0) {
-          bandasGridContainer.innerHTML = '<p style="text-align:center;">Pronto anunciaremos el cartel...</p>';
+          bandasGridContainer.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Pronto anunciaremos el cartel...</p>';
           return;
         }
 
-        currentBands = currentEdition.bands;
+        // Ordenar por order si existe
+        currentBands = currentEdition.bands.sort((a, b) => (a.order || 99) - (b.order || 99));
+        
         let gridHtml = '';
         currentBands.forEach((banda, index) => {
-          // Si no tiene imagen, ponemos un placeholder punk
-          const imgSrc = banda.image ? banda.image : 'images/logo/img43-sin-fondo.webp';
-          const styleName = banda.style || 'Confirmado';
+          const socialHtml = buildSocialIcons(banda.social, true);
           
           gridHtml += `
-            <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}" tabindex="0">
-              <div class="banda-imagen-wrapper">
-                <img src="${imgSrc}" alt="${banda.name}" loading="lazy" style="${!banda.image ? 'object-fit:contain; background:#111;' : ''}">
-              </div>
-              <div class="banda-info">
-                <h3>${banda.name}</h3>
-                <span class="banda-estilo">${styleName}</span>
+            <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 4) * 80}" tabindex="0">
+              ${banda.image ? `<img src="${banda.image}" alt="${banda.name}" class="banda-bg-image">` : ''}
+              <div class="banda-content-overlay">
+                <span class="banda-order">#${banda.order || (index + 1)}</span>
+                <div class="banda-nombre">${utils.escapeHtml(banda.name)}</div>
+                ${banda.origin ? `<div class="banda-origin">${utils.escapeHtml(banda.origin)}</div>` : ''}
+                ${banda.style ? `<span class="banda-style-tag">${utils.escapeHtml(banda.style)}</span>` : ''}
+                ${socialHtml ? `<div class="banda-social-icons">${socialHtml}</div>` : ''}
               </div>
             </article>
           `;
@@ -264,10 +284,14 @@ document.addEventListener("DOMContentLoaded", () => {
         
         bandasGridContainer.innerHTML = gridHtml;
 
-        // Listeners for cards
+        // Listeners para abrir modal al clicar
         document.querySelectorAll(".banda-card").forEach(card => {
           const index = parseInt(card.getAttribute("data-index"));
-          card.addEventListener("click", () => openBandaModal(index));
+          card.addEventListener("click", (e) => {
+            // No abrir modal si clican en un enlace social
+            if (e.target.closest('a')) return;
+            openBandaModal(index);
+          });
           card.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -278,39 +302,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
       } catch (error) {
         console.error("Error al cargar el cartelazo:", error);
-        bandasGridContainer.innerHTML = '<p style="text-align:center;">Error al cargar las bandas confirmadas.</p>';
+        bandasGridContainer.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Error al cargar las bandas confirmadas.</p>';
       }
     };
 
     const openBandaModal = (index) => {
       const banda = currentBands[index];
-      let externalLinkContent = '';
-      if (banda.link) {
-        let buttonText = 'Ver más';
-        if (banda.linkType === 'facebook') buttonText = 'Ver publicación';
-        else if (banda.linkType === 'youtube') buttonText = 'Ver canal de YouTube';
-        else if (banda.linkType === 'website') buttonText = 'Ver sitio web';
-        
-        externalLinkContent = `<a href="${banda.link}" target="_blank" class="cta-button">${buttonText}</a>`;
-      }
 
-      let socialLinksContent = '';
-      if (banda.social && Object.keys(banda.social).length > 0) {
-        socialLinksContent = '<div class="banda-social-links">';
-        if (banda.social.spotify) socialLinksContent += `<a href="${banda.social.spotify}" target="_blank"><i class="fab fa-spotify"></i></a>`;
-        if (banda.social.instagram) socialLinksContent += `<a href="${banda.social.instagram}" target="_blank"><i class="fab fa-instagram"></i></a>`;
-        if (banda.social.facebook) socialLinksContent += `<a href="${banda.social.facebook}" target="_blank"><i class="fab fa-facebook"></i></a>`;
-        if (banda.social.bandcamp) socialLinksContent += `<a href="${banda.social.bandcamp}" target="_blank"><i class="fab fa-bandcamp"></i></a>`;
-        socialLinksContent += '</div>';
-      }
+      const socialLinksHtml = buildSocialIcons(banda.social, true);
+      const socialBlock = socialLinksHtml ? `<div class="banda-social-links">${socialLinksHtml}</div>` : '';
 
       modalBandaBody.innerHTML = `
-        <h3>${banda.name}</h3>
-        <p>${banda.bio || 'Preparando ruido para la próxima edición.'}</p>
-        <div class="banda-video">
-          ${externalLinkContent}
-        </div>
-        ${socialLinksContent}
+        <h3>${utils.escapeHtml(banda.name)}</h3>
+        ${banda.origin ? `<p style="color:#aaa; font-style:italic; margin-bottom:0.5rem;">${utils.escapeHtml(banda.origin)}</p>` : ''}
+        ${banda.style ? `<p style="color:#e60000; font-weight:bold; margin-bottom:1.5rem;">${utils.escapeHtml(banda.style)}</p>` : ''}
+        <p>${utils.escapeHtml(banda.bio) || 'Preparando ruido para la proxima edicion.'}</p>
+        ${socialBlock}
       `;
 
       modalBanda.style.display = "flex";
@@ -366,11 +373,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <article class="blog-card-mini" data-aos="fade-right" data-id="${item.id}">
               <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="Noticia" class="card-img">
               <div class="card-text">
-                <span class="tag">${item.source.toUpperCase()}</span>
-                <h3>${item.title}</h3>
-                <p>${item.summary || ''}</p>
+                <span class="tag">${utils.escapeHtml(item.source).toUpperCase()}</span>
+                <h3>${utils.escapeHtml(item.title)}</h3>
+                <p>${utils.escapeHtml(item.summary) || ''}</p>
                 <div class="card-actions">
-                  <a href="${item.link}" target="_blank" class="read-more">Fuente original →</a>
+                  <a href="${utils.sanitizeUrl(item.link)}" target="_blank" rel="noopener noreferrer" class="read-more">Fuente original →</a>
                   <a href="${isSubpage ? '../actualidad/' : 'pages/actualidad/'}" class="read-more" style="border: 2px solid #e60000; color: #e60000; padding: 6px 12px; display: inline-block; margin-top: 8px; font-weight: bold; text-decoration: none; transition: all 0.2s ease;">Ver El Altavoz completo →</a>
                 </div>
               </div>
@@ -407,9 +414,9 @@ document.addEventListener("DOMContentLoaded", () => {
           // En la home mostramos los últimos 10 comentarios generales
           comments.slice(-10).reverse().forEach(c => {
             commentsHtml += `
-              <div class="comentario-item" data-news-id="${c.news_id || ''}">
-                <strong style="color:#e60000;">${c.name}</strong> 
-                <p>${c.text}</p>
+              <div class="comentario-item" data-news-id="${utils.escapeHtml(c.news_id || '')}">
+                <strong style="color:#e60000;">${utils.escapeHtml(c.name)}</strong> 
+                <p>${utils.escapeHtml(c.text)}</p>
               </div>
             `;
           });

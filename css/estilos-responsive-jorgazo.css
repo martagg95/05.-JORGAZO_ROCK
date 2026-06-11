@@ -321,8 +321,8 @@
   /* Logo FEFA */
 
   #logoFefa {
-    width: 100px;
-    height: auto;
+    max-width: 100px;
+    margin-top: 1rem;
     box-sizing: border-box;
     object-fit: contain;
   }
