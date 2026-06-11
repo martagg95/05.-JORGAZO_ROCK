@@ -1,0 +1,41 @@
+[
+  {
+    "id": "camiseta-negra",
+    "name": "Camiseta Oficial Jorgazo",
+    "description": "Camiseta clasica del festival en color negro.",
+    "price": 13,
+    "image": "../../images/logo/img43-sin-fondo.webp",
+    "sizes": ["Hombre", "Mujer", "Niño/a"],
+    "colors": [
+      "Negro",
+      "Morado"
+    ],
+    "category": "Camisetas",
+    "stock": 50,
+    "destacado": true
+  },
+  {
+    "id": "sudadera-morada",
+    "name": "Sudadera Jorgazo",
+    "description": "Sudadera con capucha para el frio de la sierra.",
+    "price": 20.00,
+    "image": "../../images/logo/img43-sin-fondo.webp",
+    "sizes": ["Hombre", "Mujer", "Niño/a"],
+    "colors": ["Morado", "Negro"],
+    "category": "Sudaderas",
+    "stock": 20,
+    "destacado": true
+  },
+  {
+    "id": "parche-tela",
+    "name": "Parche Tela Jorgazo",
+    "description": "Parche termoadhesivo o para coser, logo oficial.",
+    "price": 3.00,
+    "image": "../../images/logo/img43-sin-fondo.webp",
+    "sizes": ["Unica"],
+    "colors": ["Blanco", "Rojo"],
+    "category": "Accesorios",
+    "stock": 100,
+    "destacado": false
+  }
+]

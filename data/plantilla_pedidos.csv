@@ -1,0 +1,3 @@
+fecha,referencia_bizum,nombre_cliente,telefono,email,forma_entrega,direccion_envio,pedido_detalles,total_pagado,estado_pago,estado_envio,notas
+15/06/2026,JORG-2026-1234,"Paco Punk","600123456","paco@punk.es","recogida","","2x Camiseta Oficial Jorgazo (Hombre - M, Negro)",26.00,"Pendiente","Pendiente",""
+16/06/2026,JORG-2026-5678,"Ana Rock","600987654","ana@rock.es","envio","Calle Falsa 123, 28000, Madrid","1x Sudadera Jorgazo (Mujer - L, Morado), 1x Parche Tela Jorgazo (Unica, Blanco)",23.00,"Pagado","Enviado",""
