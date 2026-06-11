@@ -1,0 +1,66 @@
+name: Generar Blog Post con IA
+
+on:
+  schedule:
+    # Se ejecuta todos los lunes a las 10:00 UTC
+    - cron: '0 10 * * 1'
+  workflow_dispatch: # Permite ejecución manual
+
+jobs:
+  generar-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Instalar dependencias
+        run: pnpm install
+
+      - name: Generar Post
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: pnpm run generate:blog
+
+      - name: Crear Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: nuevo borrador de blog generado por IA"
+          branch: "ai-blog-draft-${{ github.run_id }}"
+          title: "🤖 Nuevo borrador de blog para revisar"
+          body: |
+            ## Nuevo post generado por Gemini
+            
+            Se ha generado un nuevo post para el blog de forma automática.
+            Incluye texto adaptado al festival (sin emojis) y una imagen autogenerada.
+            
+            **Revisión requerida**:
+            Por favor, revisa el archivo `data/blog.json` para ajustar cualquier detalle antes de hacer merge. Si quieres que se publique en la web, cambia su estado de `"draft"` a `"published"` si tu sistema de blog lo requiere, o haz merge si la simple integración es suficiente.
+            
+          labels: "content, ai-generated"
+
+      - name: Notificar por email a Marta
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "🎸 ¡Nuevo post generado en Jorgazo Rock! (Requiere revisión)"
+          to: martabbaway@gmail.com
+          from: "Jorgazo Bot <${{ secrets.MAIL_USERNAME }}>"
+          body: "Se ha generado un nuevo Pull Request con un artículo del blog y su imagen (por IA). Por favor, entra al repositorio para revisar y aprobar la publicación."

@@ -1,7 +1,7 @@
 const JORGAZO_NEWS = [
   {
     "title": "Tormenta Fest en Burguillos del Cerro: Reincidentes trae el aguacero",
-    "link": "#",
+    "link": "https://www.facebook.com/tormentafest",
     "date": "2026-06-11T12:00:00Z",
     "source": "Jorgazo AI",
     "type": "web",
@@ -10,7 +10,7 @@ const JORGAZO_NEWS = [
   },
   {
     "title": "Rock in Pino asalta las Hurdes: Non Servium y Parabellum en agosto",
-    "link": "#",
+    "link": "https://www.facebook.com/rockinpino",
     "date": "2026-06-11T12:00:00Z",
     "source": "Jorgazo AI",
     "type": "web",
@@ -19,7 +19,7 @@ const JORGAZO_NEWS = [
   },
   {
     "title": "Araña Rock Fest 2026: Koma regresa para volar cabezas en Navalmoral",
-    "link": "#",
+    "link": "https://www.facebook.com/aranarock",
     "date": "2026-06-11T12:00:00Z",
     "source": "Jorgazo AI",
     "type": "web",
