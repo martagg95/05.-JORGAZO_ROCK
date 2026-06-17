@@ -36,22 +36,13 @@ const JORGAZO_NEWS = [
     "type": "rss"
   },
   {
-    "title": "Extremúsika 2026: El cartel que hará temblar lxs piedras de Cáceres",
-    "link": "https://extremusika.es/",
-    "date": "2026-02-18T10:00:00Z",
+    "title": "Villaembrujada Festival 2026: Tres días de ruido autogestionado en Villagarcía de la Torre",
+    "link": "https://www.facebook.com/villaembrujadafestival",
+    "date": "2026-06-17T10:00:00Z",
     "source": "Jorgazo AI",
     "type": "web",
-    "image": "assets/gallery/blog/extremusika_crowd.png",
-    "summary": "Compañerxs, lxs noticias vuelan. El Extremúsika acaba de cerrar su cartel para mayo y viene cargado de veneno: Narco, Boikot, Reincidentes y lxs míticos Segismundo Toxicómano. En el Recinto Hípico no va a quedar brizna de hierba sana. ¡Extremadura manda en el ruido! 🤘"
-  },
-  {
-    "title": "Rebrote: Iñaki 'Uoho' elige nuestra tierra para su estreno mundial",
-    "link": "https://mariskalrock.com",
-    "date": "2026-02-17T12:00:00Z",
-    "source": "Jorgazo AI",
-    "type": "web",
-    "image": "assets/gallery/blog/uoho_guitar.png",
-    "summary": "Historia viva en el Altavoz. Iñaki Antón 'Uoho' presenta Rebrote, su nuevo proyecto, y ha elegido el Extremúsika para su primer concierto en lxs tierras de Extremadura. Sonarán clásicos de Extremoduro y Platero y Tú que son parte de nuestrx ADN. ¡Piel de gallina, amigxs! 🔥"
+    "image": "assets/gallery/blog/villaembrujada_fest.png",
+    "summary": "Lxs compañerxs de la Asociación Juvenil Villaembrujada lo vuelven a hacer. Los días 2, 3 y 4 de julio, Villagarcía de la Torre (Badajoz) se convierte en epicentro del rock, el punk, el ska y la fiesta autogestionada. Acampada gratuita, mercadillos de artesanía, talleres y un cartelazo que promete poner patas arriba la campiña. Otro festival hermanx que demuestra que en lxs pueblos de Extremadura la cultura resiste y el ruido no se apaga. ¡Nos vemos allí!"
   },
   {
     "title": "Resistencia Rural: 6 festivales autogestionados conquistan lxs pueblos",

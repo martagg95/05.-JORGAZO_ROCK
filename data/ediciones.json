@@ -4,8 +4,8 @@
     "year": 2026,
     "date": "21 de noviembre de 2026",
     "location": "Fuente Lunara, Cabeza la Vaca",
-    "poster": null,
-    "posterPending": true,
+    "poster": "assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg",
+    "posterPending": false,
     "current": true,
     "bands": [
       {
@@ -57,7 +57,7 @@
       {
         "name": "Kalerizo",
         "order": 5,
-        "bio": "Directos desde Caceres, Kalerizo llega con una mezcla explosiva de punk-rock, rap-metal y actitud combativa que no deja indiferente a nadie. Formados en 2020, esta banda de seis miembros ha sabido hacerse un hueco en la escena extremena a base de distorsion, energia y letras que golpean donde duele. Con temas como Extremadura explota y su potente album debut Repartiendo Bellotas, traen un sonido que es pura reivindicacion.",
+        "bio": "Directos desde Caceres, Kalerizo llega con una mezcla explosiva de punk-rock, rap-metal y actitud combativa que no deja indiferente a nadie. Formados en 2020, esta banda de seis miembros ha sabido hacerse un hueco en la escena extremena a base de distorsion, energia y letras que golpean donde duele. Con temas como Extremadura explota y su potente album debut Repartiendo Bellotas, traen un sonido que es pura reivindicacion. Este año aterrizan por segunda vez en el Jorgazo para presentar su nuevo disco.",
         "origin": "Caceres",
         "style": "Punk / Rap Metal",
         "image": "assets/gallery/full/bandas/kalerizo_2026.png",
@@ -97,6 +97,24 @@
           "youtube": "https://www.youtube.com/@liposomaspatujetooficial",
           "instagram": "https://www.instagram.com/losliposomaspatujeto/"
         }
+      },
+      {
+        "name": "Tendinitis Crónica",
+        "order": 9,
+        "bio": "Vuelven al Jorgazo lxs incombustibles Tendinitis Crónica, que ya reventaron el escenario en la VIII edición (2023). Punk rock directo, sin filtros y con la actitud que les caracteriza. Canciones cargadas de rabia y letras que van directas al estómago. Si ya estuviste en aquella edición, sabes lo que viene. Si no, prepárate.",
+        "origin": "Extremadura",
+        "style": "Punk Rock",
+        "image": null,
+        "social": {}
+      },
+      {
+        "name": "Delírium Klónico",
+        "order": 10,
+        "bio": "Para lxs más peques del Jorgazo, Delírium Klónico promete sorprender y poner patas arriba la tarde con su espectáculo lleno de locura, risas y diversión para toda la familia. Porque en el Jorgazo Rock nadie se queda fuera de la fiesta, ni lxs más pequeñxs.",
+        "origin": "Extremadura",
+        "style": "Espectáculo Infantil",
+        "image": null,
+        "social": {}
       }
     ]
   },

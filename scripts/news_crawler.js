@@ -12,12 +12,14 @@ function isRelevantContent(title, description) {
     const text = (title + " " + description).toLowerCase();
 
     // Palabras clave Extremadura (geografía, festivales, bandas locales)
+    // NOTA INTERNA: El Extremúsika NO debe aparecer nunca en el Jorgazo Rock.
+    // No incluir 'extremúsika', 'extremusika' ni nada relacionado con este festival.
     const keywordsExtremadura = [
         'extremadura', 'cáceres', 'caceres', 'badajoz', 'plasencia', 'mérida', 'merida',
         'bellota', 'guadiana', 'jerte', 'almendralejo', 'don benito', 'villanueva',
         'zarza de granadilla', 'valdencín', 'ceclavín', 'pinofranqueado',
-        'extremúsika', 'extremusika', 'bellota rock', 'sanguijuelas', 'sinkope',
-        'extremoduro', 'uoho', 'buitre', 'ama'
+        'bellota rock', 'sanguijuelas', 'sinkope',
+        'extremoduro', 'buitre', 'ama'
     ];
 
     // Palabras clave Punk-Rock femenino

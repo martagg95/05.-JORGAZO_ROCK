@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("load", function () {
       const cartelImg = document.getElementById("cartelImg");
       const fallback = document.getElementById("fallbackFecha");
-      const cartelURL = basePath + "assets/gallery/full/cartel/Jorgazo-Rock_X.webp";
+      const cartelURL = basePath + "assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg";
       fetch(cartelURL, { method: 'HEAD' })
         .then(res => {
           if (res.ok) {
