@@ -12,3 +12,10 @@ node_modules/
 ESTRATEGIA_SEO.md
 LOG_SEO.md
 .internal_docs/
+
+# Backend y datos privados de reservas / pedidos (Google Drive / Apps Script)
+scripts/apps-script/
+data/*pedidos*.csv
+data/orders*.json
+data/pedidos*.json
+

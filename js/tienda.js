@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const CFG = window.TIENDA_CONFIG || {};
+
     // DOM Elements
     const productsGrid = document.getElementById('products-grid');
     const categoryFilters = document.getElementById('category-filters');
@@ -7,339 +9,421 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartOverlay = document.getElementById('cart-overlay');
     const cartSidebar = document.getElementById('cart-sidebar');
     const closeCartBtn = document.getElementById('close-cart-btn');
+    const clearCartBtn = document.getElementById('clear-cart-btn');
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalPrice = document.getElementById('cart-total-price');
+    const cartSubtotalPrice = document.getElementById('cart-subtotal-price');
+    const cartItemsCountBadge = document.getElementById('cart-items-count-badge');
     const checkoutBtn = document.getElementById('checkout-btn');
-    const deliverySelect = document.getElementById('delivery-select');
-    const addressFields = document.getElementById('address-fields');
     const legalCheckbox = document.getElementById('legal-checkbox');
+    const reservaForm = document.getElementById('reserva-form');
+    const formError = document.getElementById('form-error');
+    const okModal = document.getElementById('reserva-ok-modal');
+    const okRef = document.getElementById('reserva-ok-ref');
+    const okEmail = document.getElementById('reserva-ok-email');
+    const okWhatsapp = document.getElementById('reserva-ok-whatsapp');
+    const okClose = document.getElementById('reserva-ok-close');
 
-    // Cart State
-    let cart = JSON.parse(sessionStorage.getItem('jorgazo_cart')) || [];
+    // OTP & Verification DOM Elements
+    const sendOtpBtn = document.getElementById('send-otp-btn');
+    const verifyOtpBtn = document.getElementById('verify-otp-btn');
+    const otpWrapper = document.getElementById('otp-wrapper');
+    const otpInput = document.getElementById('res-otp');
+    const otpFeedback = document.getElementById('otp-feedback');
+    const emailHint = document.getElementById('email-hint');
+
+    // Estado
+    const FORM_STARTED_AT = Date.now();
     let products = [];
     let currentCategory = 'Todos';
+    let sending = false;
+    let emailVerified = false;
+    let currentOtpCode = null;
+    let verifiedEmailAddress = '';
 
-    // Constants
-    const BIZUM_PHONE = "PENDIENTE";
-    const CHECKOUT_FORM_URL = "https://forms.gle/j3ASQYjUX1ki21x2A";
+    // Dominios de correo desechable y temporal bloqueados contra fraude
+    const DISPOSABLE_EMAIL_DOMAINS = new Set([
+        'mailinator.com', 'yopmail.com', 'yopmail.fr', 'yopmail.net', 'guerrillamail.com',
+        'tempmail.com', 'temp-mail.org', '10minutemail.com', 'sharklasers.com', 'trashmail.com',
+        'throwawaymail.com', 'getnada.com', 'mohmal.com', 'dispostable.com', 'fakeinbox.com',
+        'tempail.com', 'burnermail.io', 'inboxkitten.com', 'generator.email', 'crazymailing.com',
+        'maildrop.cc', 'cool.fr.nf', 'jetable.fr.nf', 'courriel.fr.nf', 'moncourrier.fr.nf',
+        'monemail.fr.nf', 'monmail.fr.nf', 'hideaddress.net', 'mytrashmail.com', 'mytemp.email',
+        'emailondeck.com', 'getairmail.com', 'mintemail.com', 'trashmail.net', 'discard.email'
+    ]);
 
-    // Initialize Store
+    // El carrito solo guarda referencias (id, talla, color, cantidad).
+    // Precios y nombres se sacan SIEMPRE del catálogo, nunca del almacenamiento del navegador.
+    let cart = [];
+    try {
+        const raw = JSON.parse(sessionStorage.getItem('jorgazo_cart')) || [];
+        cart = Array.isArray(raw) ? raw.filter(i => i && typeof i.id === 'string').map(i => ({
+            id: i.id, size: i.size || null, color: i.color || null,
+            quantity: Math.max(1, Math.min(CFG.MAX_QTY_PER_LINE || 10, parseInt(i.quantity, 10) || 1))
+        })) : [];
+    } catch (e) { cart = []; }
+
+    const tallasPrimark = {
+        "Hombre": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
+        "Mujer": ["2XS", "XS", "S", "M", "L", "XL", "XXL", "3XL"],
+        "Niño/a": ["1.5-2 años", "2-3 años", "3-4 años", "4-5 años", "5-6 años", "7-8 años", "9-10 años", "11-12 años", "13-14 años", "14-15 años", "15-16 años"]
+    };
+
+    const waLink = (text) => `https://wa.me/${encodeURIComponent(CFG.WHATSAPP_NUMBER || '')}?text=${encodeURIComponent(text)}`;
+
+    const findProduct = (id) => products.find(p => p.id === id);
+
+    // Stock por talla (p.ej. FEFA: {"S":1,"L":3}). null si el producto no lo usa.
+    const sizeStockOf = (p) => (p && p.sizeStock && typeof p.sizeStock === 'object' && Object.keys(p.sizeStock).length) ? p.sizeStock : null;
+    const availableSizes = (p) => { const ss = sizeStockOf(p); return ss ? Object.keys(ss).filter(k => (parseInt(ss[k], 10) || 0) > 0) : []; };
+    const unitsOfSize = (id, size) => cart.filter(i => i.id === id && i.size === size).reduce((s, i) => s + i.quantity, 0);
+
+    // Inicializar
+    const loadCatalog = async () => {
+        if (CFG.API_URL) {
+            try {
+                const res = await fetch(`${CFG.API_URL}?action=catalog`, { method: 'GET', credentials: 'omit', redirect: 'follow' });
+                const data = await res.json();
+                if (data && data.ok && Array.isArray(data.products)) return data.products;
+            } catch (e) {
+                console.warn('Catálogo remoto no disponible, usando copia local.', e);
+            }
+        }
+        const response = await fetch('../../data/products.json');
+        if (!response.ok) throw new Error('No se pudo cargar el catalogo');
+        return response.json();
+    };
+
     const init = async () => {
-        if (!productsGrid) return; 
-
+        if (!productsGrid) return;
         try {
-            const response = await fetch('../../data/products.json');
-            if (!response.ok) throw new Error('No se pudo cargar el catalogo');
-            
-            products = await response.json();
-            
-            // Render initial state
+            products = await loadCatalog();
+            cart = cart.filter(i => findProduct(i.id)); // limpia productos que ya no existen
             renderFilters(products);
             renderProducts(products);
             updateCartUI();
         } catch (error) {
             console.error('Error inicializando la tienda:', error);
-            productsGrid.innerHTML = '<p style="text-align:center; color:red; grid-column:1/-1;">Error al cargar el merchandising. Vuelve mas tarde.</p>';
+            productsGrid.innerHTML = '<p style="text-align:center; color:red; grid-column:1/-1;">Error al cargar el merchandising. Vuelve más tarde.</p>';
         }
     };
 
-    const tallasPrimark = {
-        "Hombre": ["XS", "S", "M", "L", "XL", "XXL", "3XL"],
-        "Mujer": ["2XS", "XS", "S", "M", "L", "XL", "XXL"],
-        "Niño/a": ["1.5-2 años", "2-3 años", "3-4 años", "4-5 años", "5-6 años", "7-8 años", "9-10 años", "11-12 años", "13-14 años", "14-15 años", "15-16 años"]
-    };
-
-    // Render Filters
+    // Filtros
     const renderFilters = (allProducts) => {
         if (!categoryFilters) return;
         const categories = ['Todos', ...new Set(allProducts.map(p => p.category).filter(Boolean))];
-        let filterHtml = '';
-        categories.forEach(cat => {
+        categoryFilters.innerHTML = categories.map(cat => {
             const activeClass = currentCategory === cat ? 'active' : '';
-            filterHtml += `<button class="filter-btn ${activeClass}" data-category="${utils.escapeHtml(cat)}">${utils.escapeHtml(cat)}</button>`;
-        });
-        categoryFilters.innerHTML = filterHtml;
+            return `<button class="filter-btn ${activeClass}" data-category="${utils.escapeHtml(cat)}">${utils.escapeHtml(cat)}</button>`;
+        }).join('');
     };
 
-    // Render Products Grid
+    const options = (list) => list.map(v => `<option value="${utils.escapeHtml(v)}">${utils.escapeHtml(v)}</option>`).join('');
+
+    // Grid de productos
     const renderProducts = (allProducts) => {
         if (allProducts.length === 0) {
             productsGrid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">Pronto anunciaremos el merchandising.</p>';
             return;
         }
 
-        const filteredProducts = currentCategory === 'Todos' ? allProducts : allProducts.filter(p => p.category === currentCategory);
-
-        if (filteredProducts.length === 0) {
+        const filtered = currentCategory === 'Todos' ? allProducts : allProducts.filter(p => p.category === currentCategory);
+        if (filtered.length === 0) {
             productsGrid.innerHTML = '<p style="text-align:center; grid-column:1/-1;">No hay productos en esta categoría.</p>';
             return;
         }
 
-        let html = '';
-        filteredProducts.forEach((product, index) => {
-            const isClothing = product.category === 'Camisetas' || product.category === 'Sudaderas';
-            let sizesHtml = '';
-            
-            if (isClothing) {
-                sizesHtml = tallasPrimark["Hombre"].map(size => `<option value="${utils.escapeHtml(size)}">${utils.escapeHtml(size)}</option>`).join('');
-            } else if (product.sizes) {
-                sizesHtml = product.sizes.map(size => `<option value="${utils.escapeHtml(size)}">${utils.escapeHtml(size)}</option>`).join('');
-            }
-            
-            const colorsHtml = product.colors ? product.colors.map(color => `<option value="${utils.escapeHtml(color)}">${utils.escapeHtml(color)}</option>`).join('') : '';
-            
-            // Destacado & Stock
-            const destacadoClass = product.destacado ? 'destacado' : '';
-            const stockVal = parseInt(product.stock) || 0;
-            const isOutOfStock = stockVal <= 0;
-            const stockText = isOutOfStock ? 'AGOTADO' : (stockVal <= 10 ? `¡Últimas ${stockVal} unidades!` : `En stock`);
-            const stockClass = isOutOfStock ? 'out-of-stock' : '';
+        productsGrid.innerHTML = filtered.map((product, index) => {
+            const id = utils.escapeHtml(product.id);
+            const sizeStock = sizeStockOf(product);
+            const fixedSizes = availableSizes(product);
+            const fits = sizeStock ? [] : (product.sizes || []).filter(s => tallasPrimark[s]);
+            const colors = product.colors || [];
+            const stockVal = sizeStock ? fixedSizes.reduce((s, k) => s + (parseInt(sizeStock[k], 10) || 0), 0) : (parseInt(product.stock, 10) || 0);
+            const isBajoDemanda = product.bajoDemanda === true;
+            const out = stockVal <= 0;
+            const dis = out ? 'disabled' : '';
 
-            html += `
-                <article class="product-card ${destacadoClass}" data-aos="fade-up" data-aos-delay="${(index % 4) * 100}">
+            // Texto de disponibilidad
+            let stockText = 'Disponible para reservar';
+            if (out) {
+                stockText = 'AGOTADO';
+            } else if (sizeStock) {
+                stockText = `¡Últimas unidades! Quedan: ${fixedSizes.map(k => `${k} (${sizeStock[k]})`).join(', ')}`;
+            } else if (isBajoDemanda) {
+                stockText = 'Edición oficial (Serigrafía a demanda)';
+            } else if (stockVal <= 10) {
+                stockText = `¡Stock limitado: solo ${stockVal} unidades!`;
+            }
+
+            return `
+                <article class="product-card ${product.destacado ? 'destacado' : ''}" data-aos="fade-up" data-aos-delay="${(index % 4) * 100}">
                     <div class="product-image-container">
-                        <img src="${utils.sanitizeUrl(product.image)}" alt="${utils.escapeHtml(product.name)}" loading="lazy">
+                        <img id="img-${id}" src="${utils.sanitizeUrl(product.image)}" alt="${utils.escapeHtml(product.name)}" loading="lazy">
+                        ${product.destacado ? '<span class="product-ribbon">NOVEDAD XI</span>' : ''}
                     </div>
                     <div class="product-info">
                         <h3 class="product-title">${utils.escapeHtml(product.name)}</h3>
                         <div class="product-price">${Number(product.price).toFixed(2)}€</div>
-                        <div class="product-stock ${stockClass}">${utils.escapeHtml(stockText)}</div>
+                        <div class="product-stock ${out ? 'out-of-stock' : ''}">${utils.escapeHtml(stockText)}</div>
                         <p class="product-description">${utils.escapeHtml(product.description)}</p>
-                        
+
                         <div class="product-options">
-                            ${isClothing ? `
+                            ${sizeStock && fixedSizes.length ? `
                             <div class="option-group">
-                                <label for="genre-${utils.escapeHtml(product.id)}">Tallaje</label>
-                                <select id="genre-${utils.escapeHtml(product.id)}" class="custom-select genre-select" data-id="${utils.escapeHtml(product.id)}" ${isOutOfStock ? 'disabled' : ''}>
-                                    <option value="Hombre">Hombre</option>
-                                    <option value="Mujer">Mujer</option>
-                                    <option value="Niño/a">Niño/a</option>
-                                </select>
+                                <label for="size-${id}">Talla</label>
+                                <select id="size-${id}" class="custom-select size-select" ${dis}>${options(fixedSizes)}</select>
                             </div>` : ''}
-                            ${sizesHtml ? `
+                            ${fits.length ? `
                             <div class="option-group">
-                                <label for="size-${utils.escapeHtml(product.id)}">Talla</label>
-                                <select id="size-${utils.escapeHtml(product.id)}" class="custom-select size-select" ${isOutOfStock ? 'disabled' : ''}>
-                                    ${sizesHtml}
-                                </select>
+                                <label for="genre-${id}">Tallaje</label>
+                                <select id="genre-${id}" class="custom-select genre-select" data-id="${id}" ${dis}>${options(fits)}</select>
+                            </div>
+                            <div class="option-group">
+                                <label for="size-${id}">Talla</label>
+                                <select id="size-${id}" class="custom-select size-select" ${dis}>${options(tallasPrimark[fits[0]])}</select>
                             </div>` : ''}
-                            ${colorsHtml ? `
+                            ${colors.length ? `
                             <div class="option-group">
-                                <label for="color-${utils.escapeHtml(product.id)}">Color</label>
-                                <select id="color-${utils.escapeHtml(product.id)}" class="custom-select" ${isOutOfStock ? 'disabled' : ''}>
-                                    ${colorsHtml}
-                                </select>
+                                <label for="color-${id}">Color</label>
+                                <select id="color-${id}" class="custom-select color-select" data-id="${id}" ${dis}>${options(colors)}</select>
                             </div>` : ''}
                             <div class="option-group">
-                                <label for="qty-${utils.escapeHtml(product.id)}">Cantidad</label>
-                                <input type="number" id="qty-${utils.escapeHtml(product.id)}" class="custom-select" min="1" max="${isOutOfStock ? 0 : Math.min(20, stockVal)}" value="${isOutOfStock ? 0 : 1}" style="text-align:center;" ${isOutOfStock ? 'disabled' : ''}>
+                                <label for="qty-${id}">Cantidad</label>
+                                <input type="number" id="qty-${id}" class="custom-select" min="1" max="${out ? 0 : Math.min(CFG.MAX_QTY_PER_LINE || 10, stockVal)}" value="${out ? 0 : 1}" style="text-align:center;" ${dis}>
                             </div>
                         </div>
-                        
-                        <button class="add-to-cart-btn" data-id="${utils.escapeHtml(product.id)}" ${isOutOfStock ? 'disabled' : ''}>
-                            <i class="fas fa-cart-plus"></i> ${isOutOfStock ? 'Agotado' : 'Añadir a la cesta'}
+
+                        <button class="add-to-cart-btn" data-id="${id}" ${dis}>
+                            <i class="fas fa-cart-plus"></i> ${out ? 'Agotado' : 'Añadir a la cesta'}
                         </button>
                     </div>
-                </article>
-            `;
-        });
-
-        productsGrid.innerHTML = html;
+                </article>`;
+        }).join('');
     };
 
-    // Event Delegation para Tienda
+    // Delegación de eventos de clicks
     document.addEventListener('click', (e) => {
-        // Filter Buttons
-        if (e.target.classList.contains('filter-btn')) {
-            currentCategory = e.target.getAttribute('data-category');
+        const t = e.target;
+        if (t.classList.contains('filter-btn')) {
+            currentCategory = t.getAttribute('data-category');
             renderFilters(products);
             renderProducts(products);
             return;
         }
+        const addBtn = t.closest('.add-to-cart-btn');
+        if (addBtn) { if (!addBtn.disabled) addToCart(addBtn.getAttribute('data-id')); return; }
 
-        // Add to Cart Buttons
-        if (e.target.classList.contains('add-to-cart-btn') || e.target.closest('.add-to-cart-btn')) {
-            const btn = e.target.classList.contains('add-to-cart-btn') ? e.target : e.target.closest('.add-to-cart-btn');
-            if (btn.disabled) return;
-            const productId = btn.getAttribute('data-id');
-            addToCart(productId);
-            return;
-        }
+        const rmBtn = t.closest('.remove-item-btn');
+        if (rmBtn) { removeFromCart(parseInt(rmBtn.getAttribute('data-index'), 10)); return; }
 
-        // Remove from cart buttons
-        if (e.target.classList.contains('remove-item-btn') || e.target.closest('.remove-item-btn')) {
-            const btn = e.target.classList.contains('remove-item-btn') ? e.target : e.target.closest('.remove-item-btn');
-            const index = parseInt(btn.getAttribute('data-index'), 10);
-            removeFromCart(index);
-            return;
-        }
-
-        // Cart Qty Buttons (+/-)
-        if (e.target.classList.contains('qty-btn')) {
-            const index = parseInt(e.target.getAttribute('data-index'), 10);
-            const delta = parseInt(e.target.getAttribute('data-delta'), 10);
-            updateQuantity(index, delta);
-            return;
+        if (t.classList.contains('qty-btn')) {
+            updateQuantity(parseInt(t.getAttribute('data-index'), 10), parseInt(t.getAttribute('data-delta'), 10));
         }
     });
 
-    // Event Delegation para Selects (Cambio de Talla Primark)
+    // Vaciar cesta completa
+    if (clearCartBtn) {
+        clearCartBtn.addEventListener('click', () => {
+            if (cart.length === 0) return;
+            cart = [];
+            saveCart();
+            updateCartUI();
+        });
+    }
+
+    // Delegación de eventos change: tallaje y cambio de imagen según color seleccionado
     document.addEventListener('change', (e) => {
         if (e.target.classList.contains('genre-select')) {
-            const productId = e.target.getAttribute('data-id');
-            const sizeSelect = document.getElementById(`size-${productId}`);
-            if (sizeSelect) {
-                const genre = e.target.value;
-                const tallas = tallasPrimark[genre] || [];
-                sizeSelect.innerHTML = tallas.map(t => `<option value="${utils.escapeHtml(t)}">${utils.escapeHtml(t)}</option>`).join('');
+            const sizeSelect = document.getElementById(`size-${e.target.getAttribute('data-id')}`);
+            if (sizeSelect) sizeSelect.innerHTML = options(tallasPrimark[e.target.value] || []);
+        }
+
+        // Cambio de imagen dinámico si el producto tiene colorImages (ej. X Aniversario morada vs negra)
+        if (e.target.classList.contains('color-select')) {
+            const prodId = e.target.getAttribute('data-id');
+            const product = findProduct(prodId);
+            if (product && product.colorImages && product.colorImages[e.target.value]) {
+                const targetImg = document.getElementById(`img-${prodId}`);
+                if (targetImg) {
+                    targetImg.src = product.colorImages[e.target.value];
+                }
             }
         }
     });
 
-    // Add to Cart Logic
+    // Cesta
+    const saveCart = () => sessionStorage.setItem('jorgazo_cart', JSON.stringify(cart));
+    const unitsOf = (id) => cart.filter(i => i.id === id).reduce((s, i) => s + i.quantity, 0);
+
     const addToCart = (productId) => {
-        const product = products.find(p => p.id === productId);
+        const product = findProduct(productId);
         if (!product) return;
 
         const genreSelect = document.getElementById(`genre-${productId}`);
         const sizeSelect = document.getElementById(`size-${productId}`);
         const colorSelect = document.getElementById(`color-${productId}`);
         const qtyInput = document.getElementById(`qty-${productId}`);
-        
-        let size = sizeSelect ? sizeSelect.value : null;
-        if (genreSelect && size) {
-            size = `${genreSelect.value} - ${size}`;
-        }
-        const color = colorSelect ? colorSelect.value : null;
-        const qty = qtyInput ? parseInt(qtyInput.value) || 1 : 1;
-        const maxStock = parseInt(product.stock) || 0;
 
+        const sizeStock = sizeStockOf(product);
+        const size = sizeStock ? (sizeSelect ? sizeSelect.value : null)
+            : (genreSelect && sizeSelect ? `${genreSelect.value} - ${sizeSelect.value}` : null);
+        const color = colorSelect ? colorSelect.value : null;
+        const qty = Math.min(CFG.MAX_QTY_PER_LINE || 10, parseInt(qtyInput && qtyInput.value, 10) || 1);
+        const maxStock = parseInt(product.stock, 10) || 0;
         if (qty <= 0) return;
 
-        const existingItemIndex = cart.findIndex(item => 
-            item.id === productId && item.size === size && item.color === color
-        );
-
-        let totalQtyEnCarrito = qty;
-        if (existingItemIndex > -1) {
-            totalQtyEnCarrito += cart[existingItemIndex].quantity;
-        }
-
-        // Validar Stock
-        if (totalQtyEnCarrito > maxStock) {
-            alert(`¡Eh! Sólo nos quedan ${maxStock} unidades de este artículo. No puedes añadir más al carrito.`);
+        if (sizeStock) {
+            const left = parseInt(sizeStock[size], 10) || 0;
+            if (unitsOfSize(productId, size) + qty > left) {
+                alert(`¡Eh! De la talla ${size} solo nos quedan ${left}.`);
+                return;
+            }
+        } else if (unitsOf(productId) + qty > maxStock) {
+            alert(`¡Eh! Sólo nos quedan ${maxStock} unidades disponibles de este artículo.`);
             return;
         }
 
-        if (existingItemIndex > -1) {
-            cart[existingItemIndex].quantity += qty;
+        const idx = cart.findIndex(i => i.id === productId && i.size === size && i.color === color);
+        if (idx > -1) {
+            if (cart[idx].quantity + qty > (CFG.MAX_QTY_PER_LINE || 10)) {
+                alert(`Máximo ${CFG.MAX_QTY_PER_LINE || 10} unidades por artículo y talla.`);
+                return;
+            }
+            cart[idx].quantity += qty;
         } else {
-            cart.push({
-                id: productId,
-                name: product.name,
-                price: Number(product.price),
-                image: product.image,
-                size: size,
-                color: color,
-                quantity: qty,
-                maxStock: maxStock
-            });
+            if (cart.length >= (CFG.MAX_LINES || 10)) {
+                alert('Has llegado al máximo de artículos distintos por reserva. ¡Haz otra reserva después!');
+                return;
+            }
+            cart.push({ id: productId, size, color, quantity: qty });
         }
-
         saveCart();
         updateCartUI();
-        openCart();
-    };
 
-    // Cart Management
-    const saveCart = () => {
-        sessionStorage.setItem('jorgazo_cart', JSON.stringify(cart));
+        // Feedback visual en el botón de la tarjeta sin abrir el modal
+        const btn = document.querySelector(`.add-to-cart-btn[data-id="${productId}"]`);
+        if (btn) {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> ¡Añadido a la cesta!';
+            btn.style.background = '#25d366';
+            setTimeout(() => {
+                btn.innerHTML = originalHtml;
+                btn.style.background = '';
+            }, 1200);
+        }
+
+        if (floatingCartBtn) {
+            floatingCartBtn.classList.add('cart-bounce');
+            setTimeout(() => floatingCartBtn.classList.remove('cart-bounce'), 500);
+        }
     };
 
     const removeFromCart = (index) => {
         cart.splice(index, 1);
         saveCart();
         updateCartUI();
-        validateCheckoutState();
     };
 
     const updateQuantity = (index, delta) => {
         const item = cart[index];
+        if (!item) return;
+        const product = findProduct(item.id);
         const newQty = item.quantity + delta;
-
-        if (newQty > 0) {
-            if (newQty > item.maxStock) {
-                alert(`Límite de stock alcanzado (${item.maxStock} unidades).`);
+        if (newQty <= 0) { cart.splice(index, 1); }
+        else {
+            const ss = sizeStockOf(product);
+            const overSize = ss && (unitsOfSize(item.id, item.size) + delta > (parseInt(ss[item.size], 10) || 0));
+            if (delta > 0 && (overSize || unitsOf(item.id) + delta > (parseInt(product.stock, 10) || 0) || newQty > (CFG.MAX_QTY_PER_LINE || 10))) {
+                alert('Límite alcanzado para este artículo.');
                 return;
             }
             item.quantity = newQty;
-        } else {
-            cart.splice(index, 1);
         }
         saveCart();
         updateCartUI();
-        validateCheckoutState();
     };
 
-    const updateCartUI = () => {
-        // Update badge
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        if (cartBadge) cartBadge.textContent = totalItems;
+    const cartTotal = () => cart.reduce((s, i) => {
+        const p = findProduct(i.id);
+        return s + (p ? Number(p.price) * i.quantity : 0);
+    }, 0);
 
-        // Render Cart Sidebar if it exists
+    const updateCartUI = () => {
+        const totalUnits = cart.reduce((s, i) => s + i.quantity, 0);
+        if (cartBadge) cartBadge.textContent = totalUnits;
+        if (cartItemsCountBadge) {
+            cartItemsCountBadge.textContent = `${totalUnits} prenda${totalUnits === 1 ? '' : 's'}`;
+        }
         if (!cartItemsContainer) return;
 
+        // Estado cesta vacía
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="cart-empty-msg">Tu carrito esta mas vacio que la cartera de un musico.</p>';
-            cartTotalPrice.textContent = '0.00€';
+            cartItemsContainer.innerHTML = `
+                <div class="cart-empty-container">
+                    <i class="fas fa-shopping-basket" aria-hidden="true"></i>
+                    <h3>TU CESTA ESTÁ VACÍA</h3>
+                    <p>Mete lo que quieras reservar en la cesta para no quedarte sin tu talla en el festi.</p>
+                    <button type="button" class="btn-ir-catalogo" onclick="document.getElementById('close-cart-btn').click(); document.getElementById('merch')?.scrollIntoView({behavior: 'smooth'});">
+                        <i class="fas fa-arrow-left"></i> ELEGIR PRENDAS
+                    </button>
+                </div>`;
+            if (cartSubtotalPrice) cartSubtotalPrice.textContent = '0.00€';
+            if (cartTotalPrice) cartTotalPrice.textContent = '0.00€';
+            if (clearCartBtn) clearCartBtn.style.visibility = 'hidden';
             validateCheckoutState();
             return;
         }
 
-        let html = '';
-        let total = 0;
+        if (clearCartBtn) clearCartBtn.style.visibility = 'visible';
 
-        cart.forEach((item, index) => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
-            
-            const variantText = [item.size, item.color].filter(Boolean).join(' | ');
+        cartItemsContainer.innerHTML = cart.map((item, index) => {
+            const p = findProduct(item.id);
+            if (!p) return '';
+            const price = Number(p.price);
+            const variant = [item.size, item.color].filter(Boolean).join(' | ');
+            // Usar imagen específica de color si existe
+            let itemImg = p.image;
+            if (item.color && p.colorImages && p.colorImages[item.color]) {
+                itemImg = p.colorImages[item.color];
+            }
 
-            html += `
+            return `
                 <div class="cart-item">
-                    <img src="${utils.sanitizeUrl(item.image)}" alt="${utils.escapeHtml(item.name)}" class="cart-item-img">
+                    <img src="${utils.sanitizeUrl(itemImg)}" alt="${utils.escapeHtml(p.name)}" class="cart-item-img">
                     <div class="cart-item-details">
-                        <div class="cart-item-title">${utils.escapeHtml(item.name)}</div>
-                        ${variantText ? `<div class="cart-item-variant">${utils.escapeHtml(variantText)}</div>` : ''}
-                        <div class="cart-item-price">${item.price.toFixed(2)}€ x ${item.quantity} = ${itemTotal.toFixed(2)}€</div>
+                        <div class="cart-item-title">${utils.escapeHtml(p.name)}</div>
+                        ${variant ? `<div class="cart-item-variant">${utils.escapeHtml(variant)}</div>` : ''}
+                        <div class="cart-item-price">${price.toFixed(2)}€ x ${item.quantity} = ${(price * item.quantity).toFixed(2)}€</div>
                         <div class="cart-item-controls">
-                            <button class="qty-btn" data-index="${index}" data-delta="-1">-</button>
+                            <button type="button" class="qty-btn" data-index="${index}" data-delta="-1" aria-label="Quitar una">-</button>
                             <span>${item.quantity}</span>
-                            <button class="qty-btn" data-index="${index}" data-delta="1">+</button>
+                            <button type="button" class="qty-btn" data-index="${index}" data-delta="1" aria-label="Añadir una">+</button>
                         </div>
                     </div>
-                    <button class="remove-item-btn" data-index="${index}" title="Eliminar"><i class="fas fa-trash"></i></button>
-                </div>
-            `;
-        });
+                    <button type="button" class="remove-item-btn" data-index="${index}" title="Eliminar"><i class="fas fa-trash"></i></button>
+                </div>`;
+        }).join('');
 
-        cartItemsContainer.innerHTML = html;
-        cartTotalPrice.textContent = `${total.toFixed(2)}€`;
+        const totalFormatted = `${cartTotal().toFixed(2)}€`;
+        if (cartSubtotalPrice) cartSubtotalPrice.textContent = totalFormatted;
+        if (cartTotalPrice) cartTotalPrice.textContent = totalFormatted;
         validateCheckoutState();
     };
 
-    // Sidebar toggles
+    // Abrir / cerrar cesta
     const openCart = () => {
         if (!cartSidebar) return;
+        document.body.classList.add('cart-open');
         cartSidebar.classList.add('open');
-        cartOverlay.classList.add('show');
+        if (cartOverlay) cartOverlay.classList.add('show');
         document.body.style.overflow = 'hidden';
     };
-
     const closeCart = () => {
         if (!cartSidebar) return;
+        document.body.classList.remove('cart-open');
         cartSidebar.classList.remove('open');
-        cartOverlay.classList.remove('show');
+        if (cartOverlay) cartOverlay.classList.remove('show');
         document.body.style.overflow = '';
     };
 
@@ -347,120 +431,384 @@ document.addEventListener('DOMContentLoaded', () => {
     if (closeCartBtn) closeCartBtn.addEventListener('click', closeCart);
     if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
 
-    // Form Logic
-    if (deliverySelect && addressFields) {
-        deliverySelect.addEventListener('change', (e) => {
-            if (e.target.value === 'envio') {
-                addressFields.classList.add('active');
-            } else {
-                addressFields.classList.remove('active');
-            }
-            validateCheckoutState();
-        });
+    // Formulario y validaciones
+    const field = (id) => document.getElementById(id);
+    const readCustomer = () => ({
+        nombre: (field('res-nombre') ? field('res-nombre').value : '').trim(),
+        apellidos: (field('res-apellidos') ? field('res-apellidos').value : '').trim(),
+        email: (field('res-email') ? field('res-email').value : '').trim().toLowerCase(),
+        telefono: (field('res-telefono') ? field('res-telefono').value : '').trim()
+    });
+
+    const NAME_RE = /^[\p{L}][\p{L}\s'.-]{1,}$/u;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+
+    function validateEmailDomain(email) {
+        if (!EMAIL_RE.test(email)) return 'Email no válido. Escribe un correo auténtico.';
+        const parts = email.split('@');
+        const domain = (parts[1] || '').toLowerCase().trim();
+        if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) {
+            return 'No se permiten emails temporales ni desechables. Usa tu correo habitual para recibir la reserva serigrafiada.';
+        }
+        return null;
     }
 
-    if (legalCheckbox) {
-        legalCheckbox.addEventListener('change', validateCheckoutState);
+    function customerErrors(c) {
+        if (!NAME_RE.test(c.nombre)) return 'Pon tu nombre auténtico (solo letras).';
+        if (!NAME_RE.test(c.apellidos)) return 'Pon tus apellidos auténticos (solo letras).';
+        const emailErr = validateEmailDomain(c.email);
+        if (emailErr) return emailErr;
+        if (c.telefono && !/^\+?[\d ]{9,16}$/.test(c.telefono)) return 'El teléfono no es válido.';
+        return null;
     }
 
     function validateCheckoutState() {
         if (!checkoutBtn) return;
+        const cust = readCustomer();
+        const baseOk = cart.length > 0 && legalCheckbox && legalCheckbox.checked && !customerErrors(cust) && !sending;
         
-        let isValid = cart.length > 0;
-        
-        if (legalCheckbox && !legalCheckbox.checked) {
-            isValid = false;
-        }
+        // La reserva solo se activa si el email está verificado (o modo validado)
+        const isOk = baseOk && emailVerified;
+        checkoutBtn.disabled = !isOk;
 
-        if (deliverySelect && deliverySelect.value === 'envio') {
-            const addr = document.getElementById('delivery-address');
-            const cp = document.getElementById('delivery-cp');
-            const city = document.getElementById('delivery-city');
-            if (!addr || !addr.value.trim() || !cp || !cp.value.trim() || !city || !city.value.trim()) {
-                isValid = false; // Envío requiere dirección
-            }
+        if (!emailVerified && baseOk) {
+            checkoutBtn.title = 'Haz clic en "Verificar" junto a tu email para recibir el código y validar tu pedido.';
+        } else {
+            checkoutBtn.title = '';
         }
-
-        checkoutBtn.disabled = !isValid;
     }
 
-    // Bind address fields inputs to re-validate
-    const addressInputs = document.querySelectorAll('#address-fields input');
-    addressInputs.forEach(input => input.addEventListener('input', validateCheckoutState));
+    const showError = (msg) => {
+        if (!formError) return;
+        formError.textContent = msg || '';
+        formError.hidden = !msg;
+    };
 
-    // Checkout
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', () => {
-            if (checkoutBtn.disabled) return;
-            
-            // Generate Reference
-            const randomCode = Math.floor(1000 + Math.random() * 9000);
-            const ref = `JORG-2026-${randomCode}`;
-
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            
-            let addressInfo = "";
-            if (deliverySelect.value === 'envio') {
-                const addr = document.getElementById('delivery-address').value;
-                const cp = document.getElementById('delivery-cp').value;
-                const city = document.getElementById('delivery-city').value;
-                addressInfo = `Envío a: ${addr}, ${cp}, ${city}`;
-            } else {
-                addressInfo = "Recogida en festival";
+    // Si el usuario cambia el email después de haberlo verificado, invalidar la verificación previa
+    const emailInput = field('res-email');
+    if (emailInput) {
+        emailInput.addEventListener('input', () => {
+            const currentEmail = emailInput.value.trim().toLowerCase();
+            if (emailVerified && currentEmail !== verifiedEmailAddress) {
+                emailVerified = false;
+                if (sendOtpBtn) {
+                    sendOtpBtn.disabled = false;
+                    sendOtpBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Verificar';
+                }
+                if (emailHint) {
+                    emailHint.className = 'field-hint';
+                    emailHint.textContent = 'Has cambiado de email. Vuelve a verificarlo.';
+                }
+                if (otpWrapper) otpWrapper.hidden = true;
             }
-
-            // Summary for modal or alert
-            const orderSummaryStr = cart.map(item => 
-                `- ${item.quantity}x ${item.name} (${item.size || ''} ${item.color || ''})`
-            ).join('\n');
-
-            const alertMsg = `Tu Referencia de Pedido es: ${ref}\n\n` +
-                             `Por favor, COPIA esta referencia y ponla en el concepto de Bizum.\n\n` +
-                             `Total a pagar: ${total.toFixed(2)}€\n\n` +
-                             `Entrega: ${addressInfo}\n\n` +
-                             `Te vamos a redirigir al formulario de Google donde debes adjuntar tu comprobante de pago.`;
-
-            alert(alertMsg);
-
-            // Redirect to Form
-            if (CHECKOUT_FORM_URL.includes("PENDING_URL")) {
-                console.log(`Redirect blocked because FORM URL is PENDING_URL.`);
-            } else {
-                // If we knew the entry IDs of the form, we could pre-fill them:
-                // window.open(`${CHECKOUT_FORM_URL}?usp=pp_url&entry.XXXXX=${ref}&entry.YYYYY=${total}...`, '_blank');
-                window.open(CHECKOUT_FORM_URL, '_blank');
-            }
-            
-            // Limpiar carrito tras iniciar checkout? Opcional
-            // cart = [];
-            // saveCart();
-            // closeCart();
-            // updateCartUI();
+            showError('');
+            validateCheckoutState();
         });
     }
 
-    // Modal conditions link hook
+    // --- FLUJO DE VERIFICACIÓN ANTI-FRAUDE / OTP ---
+    if (sendOtpBtn) {
+        sendOtpBtn.addEventListener('click', async () => {
+            const customer = readCustomer();
+            const err = customerErrors(customer);
+            if (err) {
+                showError(err);
+                if (emailHint) {
+                    emailHint.className = 'field-hint error';
+                    emailHint.textContent = err;
+                }
+                return;
+            }
+
+            showError('');
+            sendOtpBtn.disabled = true;
+            sendOtpBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+            try {
+                if (!CFG.API_URL) {
+                    // MODO LOCAL / DEMO: generamos código localmente para pruebas
+                    currentOtpCode = String(Math.floor(100000 + Math.random() * 900000));
+                    verifiedEmailAddress = customer.email;
+                    if (otpWrapper) otpWrapper.hidden = false;
+                    if (otpFeedback) {
+                        otpFeedback.className = 'otp-feedback success';
+                        otpFeedback.innerHTML = `⚡ <strong>Código de prueba local:</strong> <code>${currentOtpCode}</code> (en producción se envía por email a ${customer.email}).`;
+                    }
+                    if (emailHint) {
+                        emailHint.className = 'field-hint success';
+                        emailHint.textContent = 'Introduce los 6 dígitos a continuación.';
+                    }
+                    if (otpInput) {
+                        otpInput.value = currentOtpCode; // facilitamos autocompletado en prueba local
+                        otpInput.focus();
+                    }
+                } else {
+                    const res = await fetch(CFG.API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            action: 'send_otp',
+                            email: customer.email,
+                            nombre: customer.nombre
+                        }),
+                        credentials: 'omit',
+                        redirect: 'follow'
+                    });
+                    const data = await res.json();
+                    if (!data || !data.ok) {
+                        throw new Error(data && data.error ? data.error : 'Fallo enviando código');
+                    }
+                    verifiedEmailAddress = customer.email;
+                    if (otpWrapper) otpWrapper.hidden = false;
+                    if (otpFeedback) {
+                        otpFeedback.className = 'otp-feedback';
+                        otpFeedback.textContent = `Hemos enviado un código de 6 dígitos a ${customer.email}. Revisa tu bandeja de entrada o spam.`;
+                    }
+                }
+            } catch (err) {
+                console.error(err);
+                sendOtpBtn.disabled = false;
+                sendOtpBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Reintentar';
+                showError('No se pudo enviar el código de verificación. Revisa el correo o conexión.');
+            }
+        });
+    }
+
+    if (verifyOtpBtn && otpInput) {
+        verifyOtpBtn.addEventListener('click', async () => {
+            const entered = otpInput.value.trim();
+            if (!/^[0-9]{6}$/.test(entered)) {
+                if (otpFeedback) {
+                    otpFeedback.className = 'otp-feedback error';
+                    otpFeedback.textContent = 'El código debe tener exactamente 6 números.';
+                }
+                return;
+            }
+
+            // Validar código: en local contra el código de prueba; en real, contra el servidor
+            let valid = false;
+            if (!CFG.API_URL) {
+                valid = !!currentOtpCode && entered === currentOtpCode;
+            } else {
+                verifyOtpBtn.disabled = true;
+                try {
+                    const res = await fetch(CFG.API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({ action: 'verify_otp', email: verifiedEmailAddress, otp: entered }),
+                        credentials: 'omit',
+                        redirect: 'follow'
+                    });
+                    const data = await res.json();
+                    valid = !!(data && data.ok);
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    verifyOtpBtn.disabled = false;
+                }
+            }
+
+            if (valid) {
+                emailVerified = true;
+                if (otpFeedback) {
+                    otpFeedback.className = 'otp-feedback success';
+                    otpFeedback.innerHTML = '<i class="fas fa-check-circle"></i> ¡Email verificado con éxito! Ya puedes confirmar tu reserva.';
+                }
+                if (sendOtpBtn) {
+                    sendOtpBtn.disabled = true;
+                    sendOtpBtn.innerHTML = '<i class="fas fa-check"></i> Verificado';
+                }
+                if (emailHint) {
+                    emailHint.className = 'field-hint success';
+                    emailHint.textContent = '✓ Correo autenticado.';
+                }
+                validateCheckoutState();
+            } else {
+                if (otpFeedback) {
+                    otpFeedback.className = 'otp-feedback error';
+                    otpFeedback.textContent = 'Código erróneo o caducado. Vuelve a comprobarlo.';
+                }
+            }
+        });
+    }
+
+    if (reservaForm) {
+        reservaForm.addEventListener('input', () => { showError(''); validateCheckoutState(); });
+        reservaForm.addEventListener('change', validateCheckoutState);
+        reservaForm.addEventListener('submit', (e) => { e.preventDefault(); submitReserva(); });
+    }
+
+    const ERRORS = {
+        too_fast: 'Vas más rápido que un bolo de hardcore. Espera unos segundos y vuelve a darle.',
+        invalid_customer: 'Revisa nombre, apellidos y email auténtico.',
+        invalid_email: 'El correo introducido no es válido.',
+        disposable_email: 'No se permiten correos temporales ni desechables.',
+        invalid_otp: 'Código de verificación incorrecto.',
+        invalid_items: 'Algo no cuadra en tu cesta. Recarga la página y vuelve a intentarlo.',
+        no_stock: 'Se ha agotado algo mientras reservabas. Recarga la página.',
+        rate_email: 'Ya has hecho una reserva hace nada. Espera un par de minutos.',
+        rate_global: 'Hay mucho jaleo ahora mismo. Inténtalo más tarde o escribe por WhatsApp.',
+        terms: 'Tienes que aceptar las condiciones de reserva.',
+        busy: 'Hay mucho jaleo ahora mismo en el servidor. Vuelve a intentarlo en un momento.'
+    };
+
+    // Generador automático robusto de referencia: JORG-YYMMDD-XXXXXX
+    function generateReservationReference() {
+        const now = new Date();
+        const yy = String(now.getFullYear()).slice(-2);
+        const mm = String(now.getMonth() + 1).padStart(2, '0');
+        const dd = String(now.getDate()).padStart(2, '0');
+        const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+        let randStr = '';
+        for (let i = 0; i < 6; i++) {
+            randStr += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return `JORG-${yy}${mm}${dd}-${randStr}`;
+    }
+
+    async function submitReserva() {
+        if (sending) return;
+        const customer = readCustomer();
+        const err = customerErrors(customer);
+        if (err) return showError(err);
+        if (!emailVerified) return showError('Debes verificar tu email antes de confirmar la reserva para asegurar la serigrafía.');
+        if (!legalCheckbox.checked) return showError(ERRORS.terms);
+        if (!cart.length) return;
+
+        // Comprobación anti-bots
+        const honeypot = field('res-website') ? field('res-website').value : '';
+        const elapsed = Date.now() - FORM_STARTED_AT;
+        if (honeypot || elapsed < 3000) {
+            console.warn('[Anti-Bot] Detección de bot activada.');
+            showError('Por seguridad, espera 3 segundos antes de enviar tu reserva.');
+            return;
+        }
+
+        const payload = {
+            customer,
+            items: cart.map(i => ({ id: i.id, size: i.size, color: i.color, quantity: i.quantity })),
+            acceptTerms: true,
+            startedAt: FORM_STARTED_AT,
+            otp: otpInput ? otpInput.value.trim() : '',
+            website: honeypot
+        };
+
+        sending = true;
+        checkoutBtn.disabled = true;
+        checkoutBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> RESERVANDO...';
+
+        try {
+            let result;
+            if (!CFG.API_URL) {
+                // MODO DEMO / LOCAL
+                console.warn('[Tienda] MODO LOCAL: Simulación de reserva completada.', payload);
+                await new Promise(r => setTimeout(r, 600));
+                result = { ok: true, ref: generateReservationReference(), total: cartTotal() };
+            } else {
+                const res = await fetch(CFG.API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(payload),
+                    credentials: 'omit',
+                    redirect: 'follow'
+                });
+                result = await res.json();
+            }
+
+            if (!result || !result.ok) {
+                showError(ERRORS[result && result.error] || 'No hemos podido guardar la reserva. Prueba otra vez o escríbenos por WhatsApp.');
+                return;
+            }
+            onSuccess(result, customer);
+        } catch (e) {
+            console.error(e);
+            showError('Fallo de conexión. Prueba otra vez o escríbenos por WhatsApp.');
+        } finally {
+            sending = false;
+            checkoutBtn.innerHTML = '<i class="fas fa-hand-rock" aria-hidden="true"></i> RESERVAR';
+            validateCheckoutState();
+        }
+    }
+
+    function onSuccess(result, customer) {
+        const ref = String(result.ref || generateReservationReference()).replace(/[^A-Z0-9-]/gi, '');
+        const lines = cart.map(i => {
+            const p = findProduct(i.id);
+            return `• ${i.quantity}x ${p ? p.name : i.id}${i.size ? ` (${i.size}` : ''}${i.color ? `${i.size ? ', ' : ' ('}${i.color}` : ''}${i.size || i.color ? ')' : ''}`;
+        }).join('\n');
+        const total = cartTotal().toFixed(2);
+
+        const waText = 
+            `¡Hola ${CFG.WHATSAPP_NAME || 'José María'}! Te envío los datos de mi reserva en la tienda del Jorgazo Rock 🤘\n\n` +
+            `📋 *Referencia:* ${ref}\n` +
+            `👤 *Nombre:* ${customer.nombre} ${customer.apellidos}\n` +
+            `📧 *Email:* ${customer.email}\n` +
+            (customer.telefono ? `📞 *Teléfono:* ${customer.telefono}\n` : '') +
+            `\n📦 *Artículos reservados:*\n${lines}\n\n` +
+            `💰 *Total a pagar en el festival:* ${total}€ (pago en efectivo)\n` +
+            `📍 *Recogida:* Puesto oficial de merchandising`;
+
+        const waUrl = waLink(waText);
+
+        if (okRef) okRef.textContent = ref;
+        if (okEmail && customer) okEmail.textContent = customer.email;
+        if (okWhatsapp) okWhatsapp.href = waUrl;
+
+        // Intentar abrir WhatsApp en pestaña nueva
+        try {
+            window.open(waUrl, '_blank');
+        } catch (e) {
+            console.log('Navegador bloqueó apertura de WhatsApp automática, botón manual habilitado.');
+        }
+
+        cart = [];
+        saveCart();
+        updateCartUI();
+        if (reservaForm) reservaForm.reset();
+        emailVerified = false;
+        if (sendOtpBtn) {
+            sendOtpBtn.disabled = false;
+            sendOtpBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Verificar';
+        }
+        if (otpWrapper) otpWrapper.hidden = true;
+        closeCart();
+        if (okModal) {
+            okModal.hidden = false;
+            if (okClose) okClose.focus();
+        }
+    }
+
+    if (okClose) okClose.addEventListener('click', () => { if (okModal) okModal.hidden = true; });
+    if (okModal) okModal.addEventListener('click', (e) => { if (e.target === okModal) okModal.hidden = true; });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (okModal && !okModal.hidden) okModal.hidden = true;
+            else closeCart();
+        }
+    });
+
+    // Enlace a condiciones: abre modal legal del footer si existe
     const linkCondiciones = document.getElementById('link-condiciones-venta');
     if (linkCondiciones) {
         linkCondiciones.addEventListener('click', (e) => {
             e.preventDefault();
-            const modalLegal = document.getElementById('modalLegal');
-            if (modalLegal && typeof window.abrirModalLegal === 'function') {
-                // Though abrirModalLegal might be scoped in principal.js, 
-                // actually we can trigger a click on a footer link to open it, 
-                // or expose it to window.
-            }
-            // For now let's just trigger a click on a footer link that has 'condiciones-venta'
-            const footerLink = Array.from(document.querySelectorAll('footer a')).find(a => a.getAttribute('href') && a.getAttribute('href').includes('condiciones-venta'));
-            if (footerLink) {
-                footerLink.click();
-            } else {
-                // Fallback to navigating to the page
-                window.open(linkCondiciones.href, '_blank');
-            }
+            const footerLink = Array.from(document.querySelectorAll('footer a')).find(a => (a.getAttribute('href') || '').includes('condiciones-venta'));
+            if (footerLink) footerLink.click();
+            else window.open(linkCondiciones.href, '_blank', 'noopener');
         });
     }
 
-    // Run!
-    init();
+    init().then(() => {
+        if (window.location.hash === '#cesta' || window.location.hash === '#cart') {
+            openCart();
+        } else if (window.location.hash === '#cart-demo') {
+            if (cart.length === 0 && products.length > 0) {
+                cart.push({ id: products[0].id, size: "Hombre - L", color: "Negro", quantity: 1 });
+                saveCart();
+                updateCartUI();
+            }
+            openCart();
+        }
+    });
 });
+

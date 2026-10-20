@@ -1,41 +1,121 @@
 [
   {
-    "id": "camiseta-negra",
-    "name": "Camiseta Oficial Jorgazo",
-    "description": "Camiseta clasica del festival en color negro.",
+    "id": "camiseta-xi-roja",
+    "name": "Camiseta Jorgazo Rock XI · Letras Rojas",
+    "description": "La camiseta oficial de la XI edición. Negra como la noche en la sierra y con las letras en rojo sangre. Pa' lucirla en primera fila y que se sepa de dónde vienes.",
     "price": 13,
-    "image": "../../images/logo/img43-sin-fondo.webp",
-    "sizes": ["Hombre", "Mujer", "Niño/a"],
+    "image": "../../images/tienda/camiseta-xi-roja.jpg",
+    "sizes": [
+      "Hombre",
+      "Mujer",
+      "Niño/a"
+    ],
     "colors": [
-      "Negro",
-      "Morado"
+      "Negro"
     ],
     "category": "Camisetas",
-    "stock": 50,
+    "stock": 500,
+    "bajoDemanda": true,
     "destacado": true
   },
   {
-    "id": "sudadera-morada",
-    "name": "Sudadera Jorgazo",
-    "description": "Sudadera con capucha para el frio de la sierra.",
-    "price": 20.00,
-    "image": "../../images/logo/img43-sin-fondo.webp",
-    "sizes": ["Hombre", "Mujer", "Niño/a"],
-    "colors": ["Morado", "Negro"],
+    "id": "camiseta-xi-blanca",
+    "name": "Camiseta Jorgazo Rock XI · Letras Blancas",
+    "description": "La misma XI edición, pero con las letras en blanco para los que prefieren el contraste puro. Algodón, pogo y recuerdos. Lo demás lo pones tú.",
+    "price": 13,
+    "image": "../../images/tienda/camiseta-xi-blanca.jpg",
+    "sizes": [
+      "Hombre",
+      "Mujer",
+      "Niño/a"
+    ],
+    "colors": [
+      "Negro"
+    ],
+    "category": "Camisetas",
+    "stock": 500,
+    "bajoDemanda": true,
+    "destacado": true
+  },
+  {
+    "id": "sudadera-capucha",
+    "name": "Sudadera con Capucha Jorgazo Rock",
+    "description": "Negra, con capucha y estampado a la espalda. Pa' cuando cae el relente en Cabeza la Vaca y el último bolo aún no ha terminado. Abriga más que un abrazo en el pogo.",
+    "price": 25,
+    "image": "../../images/tienda/sudadera-capucha.jpg",
+    "sizes": [
+      "Hombre",
+      "Mujer",
+      "Niño/a"
+    ],
+    "colors": [
+      "Negro"
+    ],
     "category": "Sudaderas",
-    "stock": 20,
-    "destacado": true
+    "stock": 500,
+    "bajoDemanda": true,
+    "destacado": false
   },
   {
-    "id": "parche-tela",
-    "name": "Parche Tela Jorgazo",
-    "description": "Parche termoadhesivo o para coser, logo oficial.",
-    "price": 3.00,
-    "image": "../../images/logo/img43-sin-fondo.webp",
-    "sizes": ["Unica"],
-    "colors": ["Blanco", "Rojo"],
-    "category": "Accesorios",
-    "stock": 100,
+    "id": "camiseta-ix-juandy",
+    "name": "Camiseta Jorgazo Rock IX · Homenaje a Juandy VR",
+    "description": "Edición IX, negra, con el homenaje a nuestro Juandy VR en la espalda y el logo pequeño en el pecho. Una camiseta con memoria: de las que no se lavan, se veneran.",
+    "price": 13,
+    "image": "../../images/tienda/camiseta-ix-juandy.jpg",
+    "sizes": [
+      "Hombre",
+      "Mujer",
+      "Niño/a"
+    ],
+    "colors": [
+      "Negro"
+    ],
+    "category": "Camisetas",
+    "stock": 5,
+    "bajoDemanda": false,
     "destacado": false
+  },
+  {
+    "id": "camiseta-x-aniversario",
+    "name": "Camiseta X Aniversario · Cabeza la Vaca",
+    "description": "Diez años de rock autogestionado en el pueblo se celebran a lo grande: el castillo patas arriba, la bruja en su escoba y todas las bandas del cartel. Disponible en morado o en negro.",
+    "price": 13,
+    "image": "../../images/tienda/camiseta-x-aniversario-morada.jpg",
+    "colorImages": {
+      "Morado": "../../images/tienda/camiseta-x-aniversario-morada.jpg",
+      "Negro": "../../images/tienda/camiseta-x-aniversario-negra.jpg"
+    },
+    "sizes": [
+      "Hombre",
+      "Mujer",
+      "Niño/a"
+    ],
+    "colors": [
+      "Morado",
+      "Negro"
+    ],
+    "category": "Camisetas",
+    "stock": 5,
+    "bajoDemanda": false,
+    "destacado": false
+  },
+  {
+    "id": "camiseta-fefa",
+    "name": "Camiseta Oficial FEFA",
+    "description": "La de la Federación Extremeña de Festivales Autogestionados: logo delante y el mapa con todos los festis de la tierra a la espalda. Pa' los que hacen ruta por Extremadura sin pedir permiso.",
+    "price": 15,
+    "image": "../../images/tienda/camiseta-fefa.jpg",
+    "sizes": [],
+    "colors": [
+      "Negro"
+    ],
+    "category": "Camisetas",
+    "stock": 4,
+    "bajoDemanda": false,
+    "destacado": false,
+    "sizeStock": {
+      "S": 1,
+      "L": 3
+    }
   }
 ]
