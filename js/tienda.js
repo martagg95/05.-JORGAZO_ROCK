@@ -554,9 +554,20 @@ document.addEventListener('DOMContentLoaded', () => {
                         credentials: 'omit',
                         redirect: 'follow'
                     });
-                    const data = await res.json();
+                    const raw = await res.text();
+                    let data;
+                    try {
+                        data = JSON.parse(raw);
+                    } catch (e) {
+                        console.error('[Apps Script Error]:', raw);
+                        if (raw.indexOf('doPost') !== -1) {
+                            throw new Error('Google Apps Script no tiene activa la función doPost. Comprueba la versión implementada.');
+                        }
+                        throw new Error('El servidor devolvió una respuesta no válida.');
+                    }
                     if (!data || !data.ok) {
-                        throw new Error(data && data.error ? data.error : 'Fallo enviando código');
+                        const errMsg = (data && data.error && ERRORS[data.error]) || (data && data.error) || 'Fallo enviando código';
+                        throw new Error(errMsg);
                     }
                     verifiedEmailAddress = customer.email;
                     if (otpWrapper) otpWrapper.hidden = false;
@@ -569,7 +580,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error(err);
                 sendOtpBtn.disabled = false;
                 sendOtpBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Reintentar';
-                showError('No se pudo enviar el código de verificación. Revisa el correo o conexión.');
+                showError(err.message || 'No se pudo enviar el código de verificación. Revisa el correo o conexión.');
             }
         });
     }
@@ -599,7 +610,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         credentials: 'omit',
                         redirect: 'follow'
                     });
-                    const data = await res.json();
+                    const raw = await res.text();
+                    let data;
+                    try { data = JSON.parse(raw); } catch (e) { console.error('[Apps Script Error]:', raw); }
                     valid = !!(data && data.ok);
                 } catch (e) {
                     console.error(e);
