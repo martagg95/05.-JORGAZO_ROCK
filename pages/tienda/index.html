@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../css/home.css">
     <link rel="stylesheet" href="../../css/estilos-responsive-jorgazo.css">
     <link rel="stylesheet" href="../../assets/css/gallery.css">
-    <link rel="stylesheet" href="../../css/tienda.css">
+    <link rel="stylesheet" href="../../css/tienda.css?v=20261020-2">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="icon" href="../../images/logo/favicon.ico" type="image/x-icon">
@@ -23,6 +23,20 @@
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap"
         rel="stylesheet">
     <style>
+        /* Asegurar que el header con el logo no solape el título de la tienda en ningún dispositivo */
+        header.main-header,
+        header {
+            position: relative !important;
+            top: auto !important;
+            width: 100% !important;
+            z-index: 10 !important;
+        }
+
+        body,
+        body.galeria-page {
+            padding-top: 0 !important;
+        }
+
         /* Fuerza absoluta para que el menú de la tienda sea igual al de la home */
         .menu-link {
             font-family: 'Rubik Glitch', sans-serif !important;
