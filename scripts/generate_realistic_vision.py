@@ -13,11 +13,13 @@ import argparse
 import gc
 import os
 import sys
+import warnings
 
 
 def generar_foto_realistic_vision(prompt_imagen, archivo_salida="portada_blog.png"):
-    from diffusers import DPMSolverMultistepScheduler, StableDiffusionPipeline
-    import torch
+    warnings.filterwarnings("ignore", message="urllib3 v2 only supports OpenSSL.*")
+    from diffusers import DPMSolverMultistepScheduler, StableDiffusionPipeline  # type: ignore
+    import torch  # type: ignore
 
     # 1. Descarga Realistic Vision (~2 GB en formato ligero fp16)
     device = "mps" if torch.backends.mps.is_available() else "cpu"

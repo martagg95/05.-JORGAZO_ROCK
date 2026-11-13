@@ -1,4 +1,5 @@
 .DS_Store
+.vscode/
 *.report.html
 local-report*.json
 report*.json
