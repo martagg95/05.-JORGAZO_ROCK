@@ -34,10 +34,23 @@ function isRelevantContent(title, description) {
     return allKeywords.some(kw => text.includes(kw));
 }
 
+function isSafeHttpsUrl(rawUrl) {
+    try {
+        const parsed = new URL(rawUrl);
+        if (parsed.protocol !== 'https:') return false;
+        const h = parsed.hostname.toLowerCase();
+        if (h === 'localhost' || h.startsWith('127.') || h.startsWith('10.') || h.startsWith('192.168.') || h.startsWith('169.254.')) return false;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 async function fetchRSS(url) {
+    if (!isSafeHttpsUrl(url)) return [];
     try {
         console.log(`Buscando RSS en: ${url}`);
-        const res = await fetch(url);
+        const res = await fetch(url, { signal: AbortSignal.timeout(10000) });
         const text = await res.text();
         const items = text.match(/<item>([\s\S]*?)<\/item>/g) || [];
         // Imágenes gratuitas (Rock/Punk) para fallback si el RSS no incluye foto
@@ -97,9 +110,10 @@ async function fetchRSS(url) {
 }
 
 async function scrapeWeb(source) {
+    if (!isSafeHttpsUrl(source.url)) return [];
     try {
         console.log(`Rastreando web: ${source.nombre} (${source.url})`);
-        const res = await fetch(source.url);
+        const res = await fetch(source.url, { signal: AbortSignal.timeout(10000) });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const html = await res.text();
 

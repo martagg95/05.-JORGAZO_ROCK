@@ -2,8 +2,10 @@
 *.report.html
 local-report*.json
 report*.json
-=
 node_modules/
+.venv/
+venv/
+__pycache__/
 .env
 .env.*
 .pnpm-store/
@@ -18,4 +20,6 @@ scripts/apps-script/
 data/*pedidos*.csv
 data/orders*.json
 data/pedidos*.json
+data/news_drafts.json
+
 

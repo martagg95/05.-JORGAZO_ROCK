@@ -4,45 +4,49 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Gemini -->
 <url>
   <loc>https://jorgazorock.es/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/actualidad/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/galeria/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
+  <loc>https://jorgazorock.es/pages/ediciones/</loc>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
   <loc>https://jorgazorock.es/pages/tienda/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/avisolegal/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.50</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/cookies/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.50</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/privacidad/</loc>
-  <lastmod>2026-02-26T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.50</priority>
 </url>
 <url>
   <loc>https://jorgazorock.es/pages/condiciones-venta/</loc>
-  <lastmod>2026-06-11T12:00:00+00:00</lastmod>
+  <lastmod>2026-11-13T10:00:00+01:00</lastmod>
   <priority>0.50</priority>
 </url>
 </urlset>

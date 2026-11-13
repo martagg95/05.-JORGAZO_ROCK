@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Ediciones del Festival | Jorgazo Rock</title>
     <link rel="canonical" href="https://jorgazorock.es/pages/ediciones/" />
     <meta name="description" content="Histórico de todas las ediciones del Jorgazo Rock, carteles y bandas que han pasado por la Fuente Lunara.">
@@ -87,8 +88,8 @@
         </a>
     </footer>
 
-    <script src="../../js/utils.js"></script>
-    <script src="../../js/principal.js"></script>
+    <script src="../../js/utils.js?v=1.6"></script>
+    <script src="../../js/principal.js?v=1.7"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const container = document.getElementById('ediciones-list');
@@ -102,22 +103,23 @@
                 let html = '';
                 pastEditions.forEach(ed => {
                     // Solo mostrar poster si existe
-                    const posterHtml = ed.poster 
-                        ? `<div class="edicion-poster"><img src="../../${ed.poster}" alt="Cartel Edicion ${ed.edicion}" loading="lazy"></div>` 
+                    const posterUrl = ed.poster ? utils.sanitizeUrl('../../' + ed.poster) : '';
+                    const posterHtml = posterUrl && posterUrl !== '#'
+                        ? `<div class="edicion-poster"><img src="${posterUrl}" alt="Cartel Edicion ${utils.escapeHtml(ed.edicion)}" loading="lazy"></div>` 
                         : '';
                     
                     const bandsHtml = ed.bands && ed.bands.length > 0 
-                        ? `<ul class="band-list">${ed.bands.map(b => `<li>${b.name}</li>`).join('')}</ul>`
+                        ? `<ul class="band-list">${ed.bands.map(b => `<li>${utils.escapeHtml(b.name)}</li>`).join('')}</ul>`
                         : '';
 
                     const subtitleHtml = ed.subtitle 
-                        ? `<span style="color:#e60000; font-weight:bold;"> — ${ed.subtitle}</span>` 
+                        ? `<span style="color:#e60000; font-weight:bold;"> — ${utils.escapeHtml(ed.subtitle)}</span>` 
                         : '';
 
                     html += `
                         <div class="edicion-block">
-                            <h2 class="edicion-title">EDICION ${ed.edicion} (${ed.year})${subtitleHtml}</h2>
-                            <p style="margin-top:-1rem; color:#aaa; margin-bottom: 1rem;">${ed.date} | ${ed.location}</p>
+                            <h2 class="edicion-title">EDICION ${utils.escapeHtml(ed.edicion)} (${utils.escapeHtml(ed.year)})${subtitleHtml}</h2>
+                            <p style="margin-top:-1rem; color:#aaa; margin-bottom: 1rem;">${utils.escapeHtml(ed.date)} | ${utils.escapeHtml(ed.location)}</p>
                             <div class="edicion-content">
                                 ${posterHtml}
                                 ${bandsHtml ? `<div class="edicion-bands"><h3>Bandas</h3>${bandsHtml}</div>` : ''}

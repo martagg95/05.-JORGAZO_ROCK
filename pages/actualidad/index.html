@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>El Altavoz del Jorgazo | Blog Punk-Rock Rural</title>
     <link rel="canonical" href="https://jorgazorock.es/pages/actualidad/" />
     <link rel="stylesheet" href="../../css/home.css">
@@ -391,7 +392,8 @@
         <button id="next-btn" class="pagination-btn" onclick="changePage(1)">SIGUIENTE</button>
     </div>
 
-    <script src="../../js/utils.js"></script>
+    <script src="../../js/utils.js?v=1.6"></script>
+    <script src="../../js/principal.js?v=1.7" defer></script>
     <script src="../../data/news_data.js?v=3"></script>
 
     <script>
@@ -507,8 +509,21 @@
                         allComments = await response.json();
                     }
 
-                    // Cargar comentarios de localStorage (simulando persistencia)
-                    const localComments = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                    // Cargar comentarios de localStorage (simulando persistencia) con validación
+                    let localComments = [];
+                    try {
+                        const rawLocal = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                        if (Array.isArray(rawLocal)) {
+                            localComments = rawLocal
+                                .filter(c => c && typeof c === 'object' && typeof c.name === 'string' && typeof c.text === 'string')
+                                .map(c => ({
+                                    news_id: String(c.news_id || ''),
+                                    name: c.name.trim().slice(0, 60),
+                                    text: c.text.trim().slice(0, 500),
+                                    date: String(c.date || '')
+                                }));
+                        }
+                    } catch (e) { localComments = []; }
                     const combinedComments = [...allComments, ...localComments].filter(c => c.news_id === newsId || (!c.news_id && newsId === 'noticia-1')); // Fallback para los viejos
 
                     let cHtml = '<div class="inner-comments" style="padding-top:1.5rem; border-top:1px dashed #444;">';
@@ -527,12 +542,13 @@
                     }
 
                     // Añadir Formulario
+                    const safeNewsId = utils.escapeHtml(newsId);
                     cHtml += `
                         <div class="comment-form">
                             <h4>Si tu opinión es tan anárquica como la nuestra, déjala por aquí</h4>
-                            <input type="text" id="name-${newsId}" placeholder="¿Quién eres?" required>
-                            <textarea id="text-${newsId}" placeholder="Escribe tu mensaje..." rows="3" required></textarea>
-                            <button onclick="submitComment('${newsId}')">ENVIAR COMENTARIO</button>
+                            <input type="text" id="name-${safeNewsId}" placeholder="¿Quién eres?" maxlength="60" required>
+                            <textarea id="text-${safeNewsId}" placeholder="Escribe tu mensaje..." rows="3" maxlength="500" required></textarea>
+                            <button onclick="submitComment('${safeNewsId}')">ENVIAR COMENTARIO</button>
                         </div>
                     `;
 
@@ -548,20 +564,27 @@
                 const nameInput = document.getElementById(`name-${newsId}`);
                 const textInput = document.getElementById(`text-${newsId}`);
 
-                if (!nameInput.value || !textInput.value) {
+                const cleanName = (nameInput && nameInput.value || '').trim().slice(0, 60);
+                const cleanText = (textInput && textInput.value || '').trim().slice(0, 500);
+
+                if (!cleanName || !cleanText) {
                     alert("¡Eh! Lxs campos no pueden estar vacíos. Rock y respeto.");
                     return;
                 }
 
                 const newComment = {
-                    news_id: newsId,
-                    name: nameInput.value,
-                    text: textInput.value,
+                    news_id: String(newsId),
+                    name: cleanName,
+                    text: cleanText,
                     date: new Date().toISOString()
                 };
 
                 // Guardar local
-                const localComments = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                let localComments = [];
+                try {
+                    const parsed = JSON.parse(localStorage.getItem('jorgazo_local_comments') || '[]');
+                    if (Array.isArray(parsed)) localComments = parsed.slice(-50);
+                } catch (e) { localComments = []; }
                 localComments.push(newComment);
                 localStorage.setItem('jorgazo_local_comments', JSON.stringify(localComments));
 

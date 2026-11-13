@@ -12,11 +12,12 @@ Este repositorio contiene la web del festival punk-rock **Jorgazo Rock**, un eve
 ## 🔥 Características
 
 - Sitio 100% responsivo con diseño visual potente y accesible.
-- HTML, CSS y JavaScript puro, sin frameworks.
+- HTML, CSS y JavaScript puro, sin frameworks ni dependencias en tiempo de ejecución innecesarias.
 - Scroll suave con efecto visual tipo “pantalla por pantalla”.
-- Modal dinámico de cartel con fallback automático.
-- Contador regresivo hasta el evento.
-- Galerías de imágenes, bloques de storytelling y manifiesto.
+- Modal dinámico de cartel con fallback automático y modales legales unificados en todas las páginas.
+- Contador regresivo hasta el evento, cartel de bandas con horarios y sección de actualidad (**El Altavoz**).
+- Tienda de reservas solidarias con verificación OTP por correo y recogida presencial.
+- Galerías de imágenes, archivo de ediciones pasadas, bloques de storytelling y manifiesto.
 - Integración con Spotify para vivir el ambiente del festival.
 - Optimización visual y coherencia con el estilo alternativo del evento.
 
@@ -26,20 +27,37 @@ Este repositorio contiene la web del festival punk-rock **Jorgazo Rock**, un eve
 
 - **HTML5** – estructura semántica y accesible.
 - **CSS3** – con uso avanzado de Flexbox, Grid, Media Queries y scroll-snap.
-- **JavaScript vanilla** – sin dependencias externas, puro y funcional.
+- **JavaScript vanilla** – sin dependencias de npm externas.
+- **Google Apps Script + Google Sheets** – backend serverless para gestión de reservas de merchandising.
 - **GitHub Pages** – usado como sistema de despliegue gratuito del sitio.
+
+---
+
+## 🛡️ Seguridad, Privacidad y Automatización
+
+El sitio incorpora endurecimiento de seguridad orientado a arquitectura estática (GitHub Pages) + backend serverless:
+
+- **Sanitización XSS y URLs**: validación estricta de esquemas (`utils.sanitizeUrl` y `utils.escapeHtml`) para bloquear esquemas peligrosos (`javascript:`, `data:`, `vbscript:`, rutas `//`) y prevenir inyección DOM en noticias, cartel de bandas y ediciones.
+- **Dependencias fijadas y CSP**: CDN de AOS fijado a versión concreta (`aos@2.3.4`), política `Referrer-Policy: strict-origin-when-cross-origin` en todas las páginas, enlaces externos con `rel="noopener noreferrer"` y Content Security Policy en la tienda.
+- **Integridad de reservas y hojas de cálculo**: validación de variantes y cantidades contra el catálogo antes de enviar pedidos, timeouts con `AbortController` (`15s`), y protección anti-CSV/Formula Injection (`=`, `+`, `-`, `@`) tanto en cliente como en servidor.
+- **Modales legales compatibles con rastreadores**: las páginas `/pages/privacidad/`, `/pages/avisolegal/`, `/pages/cookies/` y `/pages/condiciones-venta/` existen como documentos HTML independientes para cumplimiento e indexación, pero al navegar desde el footer de la web se despliegan en el modal integrado para conservar la estética punk-rock.
 
 ---
 
 ## 📁 Estructura del proyecto
 
-├── index.html       # Página principal
-├── css/             # Estilos del sitio
-├── js/              # Funcionalidades JS
-├── images/          # Imágenes de la web
-├── assets/          # Galería y otros assets
-├── pages/           # Secciones (tienda, galería, actualidad...)
-└── README.md        # Este documento
+├── index.html                   # Página principal
+├── css/                         # Estilos del sitio
+├── js/                          # Funcionalidades JS y utilidades de seguridad
+├── data/                        # Catálogo de tienda, noticias y ediciones
+├── images/                      # Imágenes y carteles de la web
+├── assets/                      # Galería, carteles de blog y otros assets
+├── pages/                       # Secciones (tienda, galería, actualidad, ediciones, legales)
+├── scripts/                     # Utilidades locales (sync tienda y automatización Altavoz)
+├── robots.txt                   # Reglas para buscadores y rastreadores
+├── llms.txt                     # Contexto y directrices para agentes IA
+├── sitemap.xml                  # Mapa del sitio para indexación
+└── README.md                    # Este documento
 
 ---
 
