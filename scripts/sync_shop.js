@@ -12,6 +12,21 @@ if (!SHEET_URL) {
   process.exit(1);
 }
 
+function isAllowedGoogleUrl(rawUrl) {
+  try {
+    const parsed = new URL(rawUrl);
+    if (parsed.protocol !== 'https:') return false;
+    return parsed.hostname === 'docs.google.com' || parsed.hostname.endsWith('.googleusercontent.com');
+  } catch (e) {
+    return false;
+  }
+}
+
+if (!isAllowedGoogleUrl(SHEET_URL)) {
+  console.error("ERROR DE SEGURIDAD: GOOGLE_SHEETS_CSV_URL debe usar HTTPS y pertenecer a docs.google.com.");
+  process.exit(1);
+}
+
 // Función sencilla para parsear CSV (maneja comillas y comas dentro de comillas)
 function parseCSV(text) {
   const lines = [];
@@ -58,8 +73,12 @@ https.get(SHEET_URL, (res) => {
 
   // Handle redirects (Google Sheets sometimes redirects)
   const downloadUrl = res.headers.location || SHEET_URL;
+  if (!isAllowedGoogleUrl(downloadUrl)) {
+    console.error("ERROR DE SEGURIDAD: Redirección a dominio no permitido bloqueada.");
+    process.exit(1);
+  }
   
-  https.get(downloadUrl, (resp) => {
+  https.get(downloadUrl, { timeout: 15000 }, (resp) => {
     let data = '';
     resp.on('data', (chunk) => data += chunk);
     

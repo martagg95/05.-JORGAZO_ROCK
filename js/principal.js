@@ -8,71 +8,72 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuOverlay = document.getElementById('punk-menu-overlay');
   const menuClose = document.getElementById('menu-close');
   const menuLinks = document.querySelectorAll('.menu-link');
-  const body = document.body;
 
-  const focusableElements = menuOverlay.querySelectorAll('button, [href]');
-  const firstFocusableElement = focusableElements[0];
-  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+  if (menuTrigger && menuOverlay && menuClose) {
+    const focusableElements = menuOverlay.querySelectorAll('button, [href]');
+    const firstFocusableElement = focusableElements[0];
+    const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
-  const openMenu = (e) => {
-    e.preventDefault();
-    menuTrigger.classList.add('hidden');
-    menuOverlay.classList.add('visible');
-    menuTrigger.setAttribute('aria-expanded', 'true');
-    setTimeout(() => {
-      menuClose.focus();
-    }, 50);
-  };
+    const openMenu = (e) => {
+      e.preventDefault();
+      menuTrigger.classList.add('hidden');
+      menuOverlay.classList.add('visible');
+      menuTrigger.setAttribute('aria-expanded', 'true');
+      setTimeout(() => {
+        menuClose.focus();
+      }, 50);
+    };
 
-  const closeMenu = () => {
-    menuOverlay.classList.remove('visible');
-    menuTrigger.classList.remove('hidden');
-    menuTrigger.setAttribute('aria-expanded', 'false');
-    menuTrigger.focus();
-  };
+    const closeMenu = () => {
+      menuOverlay.classList.remove('visible');
+      menuTrigger.classList.remove('hidden');
+      menuTrigger.setAttribute('aria-expanded', 'false');
+      menuTrigger.focus();
+    };
 
-  menuTrigger.addEventListener('click', openMenu);
-  menuClose.addEventListener('click', closeMenu);
-  menuLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      const targetId = link.getAttribute('href');
-      if (targetId.startsWith('#')) {
-        e.preventDefault();
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth'
-          });
+    menuTrigger.addEventListener('click', openMenu);
+    menuClose.addEventListener('click', closeMenu);
+    menuLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId.startsWith('#')) {
+          e.preventDefault();
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth'
+            });
+          }
+          closeMenu();
         }
+        // If it's a page (e.g., pages/tienda/), let the default navigation happen
+      });
+    });
+    menuOverlay.addEventListener('click', (e) => {
+      if (e.target === menuOverlay) {
         closeMenu();
       }
-      // If it's a page (e.g., pages/tienda.html), let the default navigation happen
     });
-  });
-  menuOverlay.addEventListener('click', (e) => {
-    if (e.target === menuOverlay) {
-      closeMenu();
-    }
-  });
-  menuOverlay.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeMenu();
-      return;
-    }
-    if (e.key === 'Tab') {
-      if (e.shiftKey) {
-        if (document.activeElement === firstFocusableElement) {
-          e.preventDefault();
-          lastFocusableElement.focus();
-        }
-      } else {
-        if (document.activeElement === lastFocusableElement) {
-          e.preventDefault();
-          firstFocusableElement.focus();
+    menuOverlay.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMenu();
+        return;
+      }
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstFocusableElement) {
+            e.preventDefault();
+            lastFocusableElement.focus();
+          }
+        } else {
+          if (document.activeElement === lastFocusableElement) {
+            e.preventDefault();
+            firstFocusableElement.focus();
+          }
         }
       }
-    }
-  });
+    });
+  }
 
   /* === MODAL CARTEL / FECHA === */
   const modalCartel = document.getElementById("modalCartel");
@@ -151,53 +152,86 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* === MODAL LEGAL === */
-  const modalLegal = document.getElementById("modalLegal");
+  let modalLegal = document.getElementById("modalLegal");
+  if (!modalLegal && document.querySelector("footer")) {
+    modalLegal = document.createElement("article");
+    modalLegal.id = "modalLegal";
+    modalLegal.className = "modal-cartel";
+    modalLegal.style.display = "none";
+    modalLegal.innerHTML = `
+      <div class="modal-content">
+        <span class="close-modal" id="cerrarLegalModal">&times;</span>
+        <div id="contenidoLegal" class="legal-content"></div>
+      </div>
+    `;
+    document.body.appendChild(modalLegal);
+  }
+
   if (modalLegal) {
     const textosLegales = {
       privacidad: `
         <h1>Política de Privacidad</h1>
-        <p>En cumplimiento de lo dispuesto en el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), la <strong>Asociación Jorgazo Rock</strong> informa que los datos personales recabados a través de este sitio web, incluyendo datos de navegación y analítica, serán tratados para gestionar la relación con socios y usuarios, así como para informar sobre las actividades del festival.</p>
-        <p><strong>Responsable:</strong> Asociación Jorgazo Rock. <strong>Fines:</strong> Comunicación, gestión de actividades y analítica web. <strong>Tienda:</strong> En caso de transacciones comerciales futuras, se tratarán datos identificativos y de pago exclusivamente para la gestión del pedido. <strong>Legitimación:</strong> Consentimiento del interesado y ejecución de contrato/relación asociativa. <strong>Destinatarios:</strong> No se cederán datos a terceros salvo obligación legal o proveedores técnicos necesarios. <strong>Derechos:</strong> Acceso, rectificación, supresión y portabilidad enviando un correo a la dirección de contacto.</p>
-        <p>Contacto: <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
+        <p>En cumplimiento de lo dispuesto en el Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), la <strong>Asociación Jorgazo Rock</strong> informa que los datos personales recabados a través de este sitio web o del formulario de reserva de merchandising serán tratados exclusivamente para gestionar la relación con socios/as y asistentes, tramitar reservas e informar sobre las actividades del festival.</p>
+        <p><strong>Responsable:</strong> Asociación Jorgazo Rock (Cabeza la Vaca, Badajoz). <strong>Fines:</strong> Comunicación, gestión de reservas en el puesto oficial y actividades culturales. <strong>Legitimación:</strong> Consentimiento expreso del interesado. <strong>Destinatarios:</strong> No se cederán datos a terceros salvo obligación legal o proveedores técnicos estrictamente necesarios. <strong>Derechos:</strong> Acceso, rectificación, supresión, limitación y portabilidad escribiendo a <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a>.</p>
+        <p><a href="${basePath}pages/privacidad/">Ver documento completo de Política de Privacidad</a></p>
       `,
       aviso: `
         <h1>Aviso Legal</h1>
         <p>En cumplimiento del artículo 10 de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se exponen los siguientes datos identificativos:</p>
         <p><strong>Titular:</strong> Asociación Jorgazo Rock<br>
-        <strong>CIF/NIF:</strong> [Pendiente Incluir si procede]<br>
         <strong>Domicilio:</strong> Cabeza la Vaca, 06293, Badajoz (Extremadura)<br>
         <strong>Correo electrónico:</strong> <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a></p>
-        <p>La asociación está inscrita en el Registro de Asociaciones de la Junta de Extremadura. El acceso a este sitio web atribuye la condición de USUARIO e implica la plena aceptación de las condiciones de uso publicadas.</p>
+        <p>La asociación está inscrita en el Registro de Asociaciones de la Junta de Extremadura. El acceso a este sitio web atribuye la condición de USUARIO e implica la aceptación de las condiciones de uso publicadas.</p>
+        <p><a href="${basePath}pages/avisolegal/">Ver documento completo de Aviso Legal</a></p>
       `,
       cookies: `
         <h1>Política de Cookies</h1>
-        <p>Este sitio web utiliza cookies propias y de terceros para mejorar la experiencia de navegación, realizar análisis estadísticos de uso y ofrecer contenidos de interés.</p>
-        <p><strong>Tipos de cookies utilizadas:</strong><br>
-        - <strong>Técnicas:</strong> Esenciales para el funcionamiento correcto de la web.<br>
-        - <strong>Analíticas:</strong> Utilizamos herramientas de medición (como Google Analytics o similares) para entender cómo interactúan los usuarios con la web, siempre respetando su privacidad.<br>
-        - <strong>Preferencias:</strong> Permiten recordar opciones como el idioma o la aceptación del banner de cookies.</p>
-        <p>Puedes revocar tu consentimiento o configurar tus preferencias en cualquier momento a través del banner de inicio o limpiando los datos de tu navegador.</p>
+        <p>Este sitio web utiliza almacenamiento técnico local para recordar tu aceptación o rechazo del banner de cookies y mantener tu cesta de reserva durante la sesión.</p>
+        <p><strong>Tipos de tecnologías utilizadas:</strong><br>
+        - <strong>Técnicas:</strong> Esenciales para el funcionamiento correcto de la web y la cesta de reserva.<br>
+        - <strong>Terceros embebidos:</strong> Al interactuar con reproductores o mapas externos (Spotify, Google Maps) pueden aplicarse cookies de dichos servicios bajo sus propias políticas.</p>
+        <p>Puedes revocar tu consentimiento o limpiar tus preferencias en cualquier momento desde la configuración de tu navegador.</p>
+        <p><a href="${basePath}pages/cookies/">Ver documento completo de Política de Cookies</a></p>
       `,
       condicionesVenta: `
-        <h1>Condiciones de Venta</h1>
-        <p>Las siguientes condiciones regulan la venta de merchandising de la <strong>Asociación Jorgazo Rock</strong>.</p>
-        <p>El proceso de pago se realiza mediante <strong>Bizum</strong> tras la confirmación de la reserva. Los envíos se gestionarán según la opción seleccionada (Recogida en festival o Envío a domicilio).</p>
-        <p><a href="pages/condiciones-venta/">Lee el texto completo de las condiciones de venta aquí</a>.</p>
+        <h1>Condiciones de Reserva de Merchandising</h1>
+        <p>Las siguientes condiciones regulan la reserva previa de merchandising oficial de la <strong>Asociación Jorgazo Rock</strong>.</p>
+        <p><strong>Exclusivamente recogida y pago en efectivo en el festival:</strong> No se realizan envíos postales ni cobros telemáticos previos. Al confirmar tu reserva tras validar tu correo, recibirás una referencia (<code>JORG-YYMMDD-XXXXXX</code>) para recoger y abonar tus prendas en el stand oficial durante el festival.</p>
+        <p>Si no vas a poder asistir o quieres modificar tu reserva, avísanos con antelación escribiendo a <a href="mailto:asociacionjorgazorock@gmail.com">asociacionjorgazorock@gmail.com</a>.</p>
+        <p><a href="${basePath}pages/condiciones-venta/">Ver texto completo de las condiciones de reserva</a></p>
       `
     };
     const abrirModalLegal = (tipo) => {
       const contenido = document.getElementById("contenidoLegal");
-      contenido.innerHTML = textosLegales[tipo];
+      if (!contenido) return;
+      contenido.innerHTML = textosLegales[tipo] || '';
       modalLegal.style.display = "flex";
-    }
+    };
     const cerrarModalLegal = () => {
       modalLegal.style.display = "none";
+    };
+    const closeLegalBtn = document.getElementById("cerrarLegalModal");
+    if (closeLegalBtn) {
+      closeLegalBtn.addEventListener("click", cerrarModalLegal);
     }
-    document.getElementById("cerrarLegalModal").addEventListener("click", cerrarModalLegal);
+    modalLegal.addEventListener("click", (e) => {
+      if (e.target === modalLegal) cerrarModalLegal();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modalLegal.style.display === "flex") {
+        cerrarModalLegal();
+      }
+    });
     document.querySelectorAll("footer a").forEach(enlace => {
       enlace.addEventListener("click", e => {
         const href = enlace.getAttribute("href");
-        if (href && href.includes('pages/')) {
+        const isLegalLink = href && !/^https?:/i.test(href) && (
+          href.includes('privacidad') ||
+          href.includes('avisolegal') ||
+          href.includes('cookies') ||
+          href.includes('condiciones-venta')
+        );
+        if (isLegalLink) {
           e.preventDefault();
           if (href.includes('privacidad')) abrirModalLegal("privacidad");
           else if (href.includes('avisolegal')) abrirModalLegal("aviso");
@@ -242,11 +276,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!social || Object.keys(social).length === 0) return '';
       const rel = useNofollow ? 'rel="nofollow noopener noreferrer"' : 'rel="noopener noreferrer"';
       let html = '';
-      if (social.instagram) html += `<a href="${social.instagram}" target="_blank" ${rel} title="Instagram"><i class="fab fa-instagram"></i></a>`;
-      if (social.facebook) html += `<a href="${social.facebook}" target="_blank" ${rel} title="Facebook"><i class="fab fa-facebook"></i></a>`;
-      if (social.youtube) html += `<a href="${social.youtube}" target="_blank" ${rel} title="YouTube"><i class="fab fa-youtube"></i></a>`;
-      if (social.spotify) html += `<a href="${social.spotify}" target="_blank" ${rel} title="Spotify"><i class="fab fa-spotify"></i></a>`;
-      if (social.bandcamp) html += `<a href="${social.bandcamp}" target="_blank" ${rel} title="Bandcamp"><i class="fab fa-bandcamp"></i></a>`;
+      if (social.instagram) html += `<a href="${utils.sanitizeUrl(social.instagram)}" target="_blank" ${rel} title="Instagram"><i class="fab fa-instagram"></i></a>`;
+      if (social.facebook) html += `<a href="${utils.sanitizeUrl(social.facebook)}" target="_blank" ${rel} title="Facebook"><i class="fab fa-facebook"></i></a>`;
+      if (social.youtube) html += `<a href="${utils.sanitizeUrl(social.youtube)}" target="_blank" ${rel} title="YouTube"><i class="fab fa-youtube"></i></a>`;
+      if (social.spotify) html += `<a href="${utils.sanitizeUrl(social.spotify)}" target="_blank" ${rel} title="Spotify"><i class="fab fa-spotify"></i></a>`;
+      if (social.bandcamp) html += `<a href="${utils.sanitizeUrl(social.bandcamp)}" target="_blank" ${rel} title="Bandcamp"><i class="fab fa-bandcamp"></i></a>`;
       return html;
     };
 
@@ -271,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           gridHtml += `
             <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 4) * 80}" tabindex="0">
-              ${banda.image ? `<img src="${basePath}${banda.image}" alt="${banda.name}" class="banda-bg-image">` : ''}
+              ${banda.image ? `<img src="${utils.sanitizeUrl(basePath + banda.image)}" alt="${utils.escapeHtml(banda.name)}" class="banda-bg-image">` : ''}
               <div class="banda-content-overlay">
                 <span class="banda-order">#${banda.order || (index + 1)}</span>
                 <div class="banda-nombre">${utils.escapeHtml(banda.name)}</div>

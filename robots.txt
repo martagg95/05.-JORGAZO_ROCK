@@ -1,9 +1,16 @@
 # ===================================================================
 # Reglas para todos los crawlers (buscadores y IA)
-# Se permite el acceso total para maximizar la visibilidad.
+# Se permite el acceso público a las páginas informativas y se restringen
+# scripts internos, datos de staging y ficheros auxiliares de automatización.
 # ===================================================================
 User-agent: *
 Allow: /
+Disallow: /scripts/
+Disallow: /data/*.csv
+Disallow: /data/news_staging.json
+Disallow: /data/news_drafts.json
+Disallow: /data/sources.json
+Disallow: /data/comments.json
 
 # ===================================================================
 # Ubicación del sitemap

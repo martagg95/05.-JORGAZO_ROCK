@@ -19,18 +19,23 @@ const utils = {
     },
 
     /**
-     * Sanitizes a URL to ensure it only uses safe protocols.
+     * Sanitizes a URL to ensure it only uses safe protocols or relative paths.
+     * Blocks javascript:, data:, vbscript:, and protocol-relative URLs (//...).
      * @param {string} url - The URL to sanitize.
      * @returns {string} The original URL if safe, or '#' if unsafe.
      */
     sanitizeUrl: function(url) {
         if (!url) return '#';
-        const stringUrl = String(url).trim();
-        // Allow http, https, mailto, and relative paths
-        const safeProtocols = /^(https?|mailto):/i;
-        const isRelative = /^[\w\/.-]/.test(stringUrl);
-        
-        if (safeProtocols.test(stringUrl) || isRelative || stringUrl.startsWith('#')) {
+        const stringUrl = String(url).replace(/[\u0000-\u001F\u007F]/g, '').trim();
+        if (!stringUrl || stringUrl.startsWith('//')) return '#';
+
+        // If URL declares a scheme, allow ONLY http, https, or mailto
+        if (/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(stringUrl)) {
+            return /^(https?|mailto):/i.test(stringUrl) ? stringUrl : '#';
+        }
+
+        // Allow safe relative paths and hash fragments
+        if (stringUrl.startsWith('#') || /^(\.\.?\/|\/|[a-zA-Z0-9_.-])/.test(stringUrl)) {
             return stringUrl;
         }
         return '#';

@@ -73,23 +73,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const findProduct = (id) => products.find(p => p.id === id);
 
+    // Sanitización contra inyección de fórmulas en Google Sheets / CSV y caracteres de control
+    const sanitizeSheetValue = (val) => {
+        const clean = String(val || '').replace(/[\u0000-\u001F\u007F\t\r\n]/g, ' ').trim();
+        return /^[=+\-@]/.test(clean) ? "'" + clean : clean;
+    };
+
+    // Fetch con timeout de seguridad (15s) para evitar bloqueos indefinidos
+    const fetchWithTimeout = async (url, options = {}, timeoutMs = 15000) => {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+            return await fetch(url, { ...options, signal: controller.signal });
+        } finally {
+            clearTimeout(timer);
+        }
+    };
+
     // Stock por talla (p.ej. FEFA: {"S":1,"L":3}). null si el producto no lo usa.
     const sizeStockOf = (p) => (p && p.sizeStock && typeof p.sizeStock === 'object' && Object.keys(p.sizeStock).length) ? p.sizeStock : null;
     const availableSizes = (p) => { const ss = sizeStockOf(p); return ss ? Object.keys(ss).filter(k => (parseInt(ss[k], 10) || 0) > 0) : []; };
     const unitsOfSize = (id, size) => cart.filter(i => i.id === id && i.size === size).reduce((s, i) => s + i.quantity, 0);
 
+    // Validación estricta de que talla y color pertenecen al catálogo oficial del producto
+    const isValidProductSelection = (product, size, color) => {
+        if (!product) return false;
+        const ss = sizeStockOf(product);
+        if (ss) {
+            if (!size || !availableSizes(product).includes(size)) return false;
+        } else if (Array.isArray(product.sizes) && product.sizes.length > 0) {
+            const allowedSizes = new Set();
+            product.sizes.forEach(fit => {
+                if (Array.isArray(tallasPrimark[fit])) {
+                    tallasPrimark[fit].forEach(sz => allowedSizes.add(`${fit} - ${sz}`));
+                }
+            });
+            if (!size || !allowedSizes.has(size)) return false;
+        } else if (size !== null && size !== '') {
+            return false;
+        }
+
+        const colors = Array.isArray(product.colors) ? product.colors : [];
+        if (colors.length > 0) {
+            if (!color || !colors.includes(color)) return false;
+        } else if (color !== null && color !== '') {
+            return false;
+        }
+        return true;
+    };
+
     // Inicializar
     const loadCatalog = async () => {
         if (CFG.API_URL) {
             try {
-                const res = await fetch(`${CFG.API_URL}?action=catalog`, { method: 'GET', credentials: 'omit', redirect: 'follow' });
+                const res = await fetchWithTimeout(`${CFG.API_URL}?action=catalog`, { method: 'GET', credentials: 'omit', redirect: 'follow' });
                 const data = await res.json();
                 if (data && data.ok && Array.isArray(data.products)) return data.products;
             } catch (e) {
                 console.warn('Catálogo remoto no disponible, usando copia local.', e);
             }
         }
-        const response = await fetch('../../data/products.json');
+        const response = await fetchWithTimeout('../../data/products.json');
         if (!response.ok) throw new Error('No se pudo cargar el catalogo');
         return response.json();
     };
@@ -98,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!productsGrid) return;
         try {
             products = await loadCatalog();
-            cart = cart.filter(i => findProduct(i.id)); // limpia productos que ya no existen
+            cart = cart.filter(i => isValidProductSelection(findProduct(i.id), i.size, i.color)); // limpia productos o variantes manipuladas
+            saveCart();
             renderFilters(products);
             renderProducts(products);
             updateCartUI();
@@ -246,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (product && product.colorImages && product.colorImages[e.target.value]) {
                 const targetImg = document.getElementById(`img-${prodId}`);
                 if (targetImg) {
-                    targetImg.src = product.colorImages[e.target.value];
+                    targetImg.src = utils.sanitizeUrl(product.colorImages[e.target.value]);
                 }
             }
         }
@@ -269,6 +314,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const size = sizeStock ? (sizeSelect ? sizeSelect.value : null)
             : (genreSelect && sizeSelect ? `${genreSelect.value} - ${sizeSelect.value}` : null);
         const color = colorSelect ? colorSelect.value : null;
+        if (!isValidProductSelection(product, size, color)) {
+            alert('La talla o color seleccionado no es válido.');
+            return;
+        }
         const qty = Math.min(CFG.MAX_QTY_PER_LINE || 10, parseInt(qtyInput && qtyInput.value, 10) || 1);
         const maxStock = parseInt(product.stock, 10) || 0;
         if (qty <= 0) return;
@@ -543,13 +592,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         otpInput.focus();
                     }
                 } else {
-                    const res = await fetch(CFG.API_URL, {
+                    const res = await fetchWithTimeout(CFG.API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify({
                             action: 'send_otp',
                             email: customer.email,
-                            nombre: customer.nombre
+                            nombre: sanitizeSheetValue(customer.nombre)
                         }),
                         credentials: 'omit',
                         redirect: 'follow'
@@ -603,7 +652,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 verifyOtpBtn.disabled = true;
                 try {
-                    const res = await fetch(CFG.API_URL, {
+                    const res = await fetchWithTimeout(CFG.API_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify({ action: 'verify_otp', email: verifiedEmailAddress, otp: entered }),
@@ -697,9 +746,29 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        const validItems = cart.filter(i => isValidProductSelection(findProduct(i.id), i.size, i.color));
+        if (validItems.length !== cart.length) {
+            cart = validItems;
+            saveCart();
+            updateCartUI();
+            return showError(ERRORS.invalid_items);
+        }
+
+        const safeCustomer = {
+            nombre: sanitizeSheetValue(customer.nombre),
+            apellidos: sanitizeSheetValue(customer.apellidos),
+            email: customer.email,
+            telefono: customer.telefono ? String(customer.telefono).replace(/[\u0000-\u001F\u007F\t\r\n]/g, '').trim() : ''
+        };
+
         const payload = {
-            customer,
-            items: cart.map(i => ({ id: i.id, size: i.size, color: i.color, quantity: i.quantity })),
+            customer: safeCustomer,
+            items: cart.map(i => ({
+                id: i.id,
+                size: i.size ? sanitizeSheetValue(i.size) : null,
+                color: i.color ? sanitizeSheetValue(i.color) : null,
+                quantity: i.quantity
+            })),
             acceptTerms: true,
             startedAt: FORM_STARTED_AT,
             otp: otpInput ? otpInput.value.trim() : '',
@@ -718,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 await new Promise(r => setTimeout(r, 600));
                 result = { ok: true, ref: generateReservationReference(), total: cartTotal() };
             } else {
-                const res = await fetch(CFG.API_URL, {
+                const res = await fetchWithTimeout(CFG.API_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                     body: JSON.stringify(payload),
@@ -767,9 +836,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (okEmail && customer) okEmail.textContent = customer.email;
         if (okWhatsapp) okWhatsapp.href = waUrl;
 
-        // Intentar abrir WhatsApp en pestaña nueva
+        // Intentar abrir WhatsApp en pestaña nueva con aislamiento de ventana
         try {
-            window.open(waUrl, '_blank');
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
         } catch (e) {
             console.log('Navegador bloqueó apertura de WhatsApp automática, botón manual habilitado.');
         }
@@ -814,7 +883,7 @@ document.addEventListener('DOMContentLoaded', () => {
     init().then(() => {
         if (window.location.hash === '#cesta' || window.location.hash === '#cart') {
             openCart();
-        } else if (window.location.hash === '#cart-demo') {
+        } else if (window.location.hash === '#cart-demo' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
             if (cart.length === 0 && products.length > 0) {
                 cart.push({ id: products[0].id, size: "Hombre - L", color: "Negro", quantity: 1 });
                 saveCart();
