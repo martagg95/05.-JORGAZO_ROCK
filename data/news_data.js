@@ -1,5 +1,41 @@
 const JORGAZO_NEWS = [
   {
+    "id": "horarios-jorgazo-xi-2026",
+    "title": "Horarios Oficiales del XI Jorgazo Rock: ¡Más de 13 horas de ruido sin tregua en Fuente Lunara!",
+    "link": "assets/gallery/blog/horarios_jorgazo_2026.jpg",
+    "linkText": "VER CARTEL DE HORARIOS →",
+    "date": "2026-11-13T10:00:00Z",
+    "source": "Jorgazo Rock",
+    "type": "web",
+    "image": "assets/gallery/blog/horarios_jorgazo_2026.jpg",
+    "imageFit": "contain",
+    "homeSummary": "¡Ya tenéis los horarios oficiales para el 21 de noviembre! Abrimos puertas a las 13:00 h y arrancamos con comida popular a las 14:00 h antes de más de 11 horas de música en directo con Delírium Klónico, Extorsión, Tendinitis Crónika, El Muerto, Barracuda, Ramoninos, Las moSKAs Retrompeteras, Kalerizo y Liposo+ Pa Tu Jeto. ¡Que no te lo cuenten!",
+    "summary": "¡Se acabó la espera, familia! Aquí tenéis la hoja de ruta oficial para que nadie se pierda ni un solo pogo este sábado 21 de noviembre en la Fuente Lunara. Más de trece horas de convivencia, autogestión, cultura libre y tralla en mitad de la sierra:\n\n🔓 13:00 h — Apertura de puertas\n🍲 14:00 - 15:00 h — Comida popular\n🤡 15:00 - 16:00 h — Delírium Klónico\n🎸 16:20 - 17:20 h — Extorsión\n⚡ 17:40 - 18:40 h — Tendinitis Crónika\n🔥 19:00 - 20:00 h — El Muerto\n🤘 20:20 - 21:20 h — Barracuda\n💥 21:40 - 22:40 h — Ramoninos\n🎺 23:00 - 00:00 h — Las moSKAs Retrompeteras\n🐗 00:20 - 01:20 h — Kalerizo\n✊ 01:40 - 02:40 h — Liposo+ Pa Tu Jeto\n\nPrecios populares en barra, entrada 100% gratuita y el mejor ambiente de Extremadura. ¡Nos vemos en el barro!"
+  },
+  {
+    "id": "gymkana-orientacion-jorgazo-2026",
+    "title": "Gymkana de Orientación Jorgazo Rock: deporte, pueblo y comunidad para todxs",
+    "link": "https://docs.google.com/forms/d/1mnn2a1vEexSGdb06CH7X0qKJjmebSG-axXJuC0X87UY/viewform?edit_requested=true",
+    "linkText": "INSCRÍBETE EN EL FORMULARIO →",
+    "date": "2026-11-13T09:30:00Z",
+    "source": "Jorgazo Rock",
+    "type": "web",
+    "image": "assets/gallery/blog/gymkana_orientacion_2026.jpg",
+    "imageFit": "contain",
+    "summary": "Desde el Jorgazo Rock os invitamos a participar en esta actividad gratuita que se llevará a cabo el 21 de noviembre en la Plaza Romero Castilla con el horario de 11:00 a 13:00 h.\n\nUna gymkana de orientación para lxs más peques con diferentes actividades, en ellas podrán participar niñxs de entre 3 y 12 años.\n\nPara lxs más grandes contamos con un circuito de orientación para conocer los diferentes sitios del municipio de una manera diferente e interactiva. Apto para cualquier público (12 años en adelante).\n\nOs esperamos en nuestra actividad y luego en nuestro festi a partir de las 14:00 h con comida y bebida a precios populares."
+  },
+  {
+    "id": "presentacion-xi-jorgazo-rock-2026",
+    "title": "El XI Jorgazo Rock se planta en la Diputación: el 21 de noviembre Cabeza la Vaca volverá a temblar",
+    "link": "https://www.facebook.com/share/p/1DT71K3fAJ/?mibextid=wwXIfr",
+    "linkText": "VER PUBLICACIÓN EN FACEBOOK →",
+    "date": "2026-11-13T09:00:00Z",
+    "source": "Ayto. Cabeza la Vaca / Jorgazo Rock",
+    "type": "web",
+    "image": "assets/gallery/blog/rueda_prensa_jorgazo_2026.jpg",
+    "summary": "El ruido rural se hace escuchar bien alto. El próximo 21 de noviembre, el paraje natural de Fuente Lunara volverá a acoger una nueva edición del Jorgazo Rock, que este año celebra su XI edición demostrando que la autogestión y la música alternativa laten con más fuerza que nunca en nuestrxs pueblos.\n\nEl evento ha sido presentado en rueda de prensa por miembros de la Asociación Jorgazo Rock, la diputada provincial Paqui Silva y el alcalde de Cabeza la Vaca, respaldando una jornada para disfrutar de la música en directo en un entorno privilegiado y con entrada completamente gratuita.\n\nOrganizado por la Asociación Jorgazo Rock con el apoyo de la Diputación de Badajoz y la colaboración del Ayuntamiento de Cabeza la Vaca, son ya once ediciones demostrando la importancia del tejido asociativo local para mantener viva la cultura y acercar propuestas musicales combativas y diferentes al medio rural. ¡Os esperamos el 21 de noviembre en Fuente Lunara! 🎸✊"
+  },
+  {
     "title": "Tormenta Fest en Burguillos del Cerro: Reincidentes trae el aguacero",
     "link": "https://www.facebook.com/tormentafest",
     "date": "2026-06-11T12:00:00Z",

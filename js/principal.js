@@ -372,13 +372,13 @@ document.addEventListener("DOMContentLoaded", () => {
         news.slice(0, 1).forEach(item => {
           newsHtml += `
             <article class="blog-card-mini" data-aos="fade-right" data-id="${item.id}">
-              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="Noticia" class="card-img">
+              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="${utils.escapeHtml(item.title || 'Noticia')}" class="card-img ${item.imageFit === 'contain' ? 'card-img-contain' : ''}">
               <div class="card-text">
                 <span class="tag">${utils.escapeHtml(item.source).toUpperCase()}</span>
                 <h3>${utils.escapeHtml(item.title)}</h3>
-                <p>${utils.escapeHtml(item.summary) || ''}</p>
+                <p>${utils.escapeHtml(item.homeSummary || item.summary) || ''}</p>
                 <div class="card-actions">
-                  <a href="${utils.sanitizeUrl(item.link)}" target="_blank" rel="noopener noreferrer" class="read-more">Fuente original →</a>
+                  <a href="${utils.sanitizeUrl(item.link)}" target="_blank" rel="noopener noreferrer" class="read-more">${utils.escapeHtml(item.linkText || 'Fuente original →')}</a>
                   <a href="${isSubpage ? '../actualidad/' : 'pages/actualidad/'}" class="read-more" style="border: 2px solid #e60000; color: #e60000; padding: 6px 12px; display: inline-block; margin-top: 8px; font-weight: bold; text-decoration: none; transition: all 0.2s ease;">Ver El Altavoz completo →</a>
                 </div>
               </div>

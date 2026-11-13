@@ -1957,6 +1957,13 @@ body.hidden-scroll #menu-trigger,
   transition: filter 0.3s ease;
 }
 
+.blog-card-mini .card-img.card-img-contain {
+  object-fit: contain;
+  background: #0a0a0a;
+  padding: 0.5rem;
+  filter: grayscale(0);
+}
+
 @media (max-width: 600px) {
   .blog-card-mini {
     flex-direction: column;
