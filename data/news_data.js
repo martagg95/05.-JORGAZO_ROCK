@@ -2,12 +2,12 @@ const JORGAZO_NEWS = [
   {
     "id": "horarios-jorgazo-xi-2026",
     "title": "Horarios Oficiales del XI Jorgazo Rock: ¡Más de 13 horas de ruido sin tregua en Fuente Lunara!",
-    "link": "assets/gallery/blog/horarios_jorgazo_2026.jpg",
+    "link": "assets/gallery/blog/horarios_jorgazo_2026.webp",
     "linkText": "VER CARTEL DE HORARIOS →",
     "date": "2026-11-13T10:00:00Z",
     "source": "Jorgazo Rock",
     "type": "web",
-    "image": "assets/gallery/blog/horarios_jorgazo_2026.jpg",
+    "image": "assets/gallery/blog/horarios_jorgazo_2026.webp",
     "imageFit": "contain",
     "homeSummary": "¡Ya tenéis los horarios oficiales para el 21 de noviembre! Abrimos puertas a las 13:00 h y arrancamos con comida popular a las 14:00 h antes de más de 11 horas de música en directo con Delírium Klónico, Extorsión, Tendinitis Crónika, El Muerto, Barracuda, Ramoninos, Las moSKAs Retrompeteras, Kalerizo y Liposo+ Pa Tu Jeto. ¡Que no te lo cuenten!",
     "summary": "¡Se acabó la espera, familia! Aquí tenéis la hoja de ruta oficial para que nadie se pierda ni un solo pogo este sábado 21 de noviembre en la Fuente Lunara. Más de trece horas de convivencia, autogestión, cultura libre y tralla en mitad de la sierra:\n\n🔓 13:00 h — Apertura de puertas\n🍲 14:00 - 15:00 h — Comida popular\n🤡 15:00 - 16:00 h — Delírium Klónico\n🎸 16:20 - 17:20 h — Extorsión\n⚡ 17:40 - 18:40 h — Tendinitis Crónika\n🔥 19:00 - 20:00 h — El Muerto\n🤘 20:20 - 21:20 h — Barracuda\n💥 21:40 - 22:40 h — Ramoninos\n🎺 23:00 - 00:00 h — Las moSKAs Retrompeteras\n🐗 00:20 - 01:20 h — Kalerizo\n✊ 01:40 - 02:40 h — Liposo+ Pa Tu Jeto\n\nPrecios populares en barra, entrada 100% gratuita y el mejor ambiente de Extremadura. ¡Nos vemos en el barro!"

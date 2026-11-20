@@ -16,8 +16,8 @@
   <meta name="robots" content="index, follow">
   <meta http-equiv="Content-Language" content="es">
   <meta name="theme-color" content="#e60000">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Hoja de estilos principal (reused) -->
@@ -53,10 +53,10 @@
     <img src="../../images/logo/menu1.svg" alt="Icono del menú">
   </button>
 
-  <nav id="punk-menu-overlay" class="punk-nav" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
+  <div id="punk-menu-overlay" class="punk-nav" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
     <div id="paint-splatter"></div>
     <h2 id="menu-heading" class="visually-hidden">Navegación Principal</h2>
-    <button id="menu-close" title="Cerrar menú">&times;</button>
+    <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
     <a href="../../" class="menu-link">INICIO</a>
     <a href="../actualidad/" class="menu-link">EL ALTAVOZ</a>
     <a href="../../#cartelazo" class="menu-link">EL CARTELAZO</a>
@@ -65,7 +65,7 @@
     <a href="#gallery-container" class="menu-link">GALERÍA</a>
     <a href="../tienda/" class="menu-link">LA TIENDA</a>
     <a href="../../#contacto" class="menu-link">CONTACTO</a>
-  </nav>
+  </div>
   <!-- === FIN MENÚ PUNK ROCK === -->
 
   <!-- <main class="gallery-main">

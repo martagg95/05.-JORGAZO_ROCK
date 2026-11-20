@@ -419,9 +419,18 @@ p {
 
 .cartel-img {
   width: 100%;
+  max-width: 500px;
   height: auto;
-  display: none;
+  display: block;
   border-radius: 8px;
+}
+
+.social-icon-svg {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  display: inline-block;
 }
 
 .fecha-jorgazo {
@@ -937,8 +946,8 @@ footer {
 }
 
 footer a {
-  color: #e60000;
-  /* rojo corporativo */
+  color: #ff4d4d;
+  /* rojo corporativo con contraste WCAG AA sobre negro */
   text-decoration: underline;
   font-weight: bold;
 }
@@ -956,8 +965,9 @@ footer a:focus {
 
 
 #logoFefa {
-  width: 400px;
-  height: 200px;
+  width: 100%;
+  max-width: 400px;
+  height: auto;
 }
 
 /* === BOTÓN CERRAR LIGHTBOX === */
@@ -1043,11 +1053,11 @@ footer a:focus {
 
 #scroll-logo {
   width: 100%;
-  max-width: 100%;
+  max-width: 520px;
   height: auto;
-  transform: scale(0.5);
+  transform: scale(1);
   transition: transform 0.1s linear, opacity 0.1s linear;
-  opacity: 0.8;
+  opacity: 0.9;
   display: block;
   margin: 0 auto;
 }
@@ -1727,7 +1737,7 @@ body.hidden-scroll #menu-trigger,
 .cookie-banner-wrapper h3 {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #e60000;
+  color: #ff4d4d;
   border-bottom: none;
   /* Sobrescribimos el h2/h3 genérico */
   display: block;

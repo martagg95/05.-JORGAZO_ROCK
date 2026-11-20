@@ -20,8 +20,8 @@
   <meta http-equiv="Content-Language" content="es">
 
   <meta name="google-site-verification" content="W80IDItCsa42OOizQoRtxv9Cx4NqTc9aLLpz5pD1oPk" />
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://unpkg.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://open.spotify.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <!-- Version Canónica -->
@@ -30,19 +30,27 @@
   <!-- Tema del navegador en dispositivos móviles -->
   <meta name="theme-color" content="#e60000">
 
-  <!-- Preload vital LCP images for maximum PageSpeed Core Web Vitals score -->
-  <link rel="preload" as="image" href="images/logo/img43-sin-fondo.webp" fetchpriority="high">
-  <link rel="preload" as="image" href="images/logo/mancha_pintura1.webp">
+  <!-- Preload LCP poster image for maximum PageSpeed Core Web Vitals score -->
+  <link rel="preload" as="image" type="image/avif" href="assets/gallery/full/cartel/Jorgazo-Rock_XI.avif"
+    imagesrcset="assets/gallery/full/cartel/Jorgazo-Rock_XI-480.avif 480w, assets/gallery/full/cartel/Jorgazo-Rock_XI.avif 721w"
+    imagesizes="(max-width: 600px) 85vw, 500px" fetchpriority="high">
 
   <!-- CRITICAL CSS INLINED -->
   <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     body,
     html {
       margin: 0;
       padding: 0;
       background: #000;
       overflow-x: hidden;
-      height: 100%;
+      min-height: 100%;
+      height: auto;
     }
 
     body {
@@ -64,7 +72,7 @@
 
     #scroll-logo {
       width: 100%;
-      max-width: 400px;
+      max-width: 520px;
       height: auto;
       display: block;
       margin: 0 auto;
@@ -131,6 +139,53 @@
       transition: opacity 0.3s;
     }
 
+    /* Critical modal styles for immediate LCP paint and zero CLS */
+    .modal-cartel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      z-index: 99999;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(2px);
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      overflow: auto;
+      border: 3px solid #e60000;
+      border-radius: 12px;
+      background: #111;
+      padding: 1rem;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .cartel-img {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      aspect-ratio: 721 / 1024;
+      display: block;
+      border-radius: 8px;
+    }
+
     /* Prevent layout collapse while async CSS loads, which triggers lazy iframe */
     .banda-card {
       min-height: 250px;
@@ -141,14 +196,13 @@
     }
   </style>
 
-  <!-- CSS PRINCIPAL Y RESPONSIVE (De-prioritized for initial render) -->
-  <link rel="preload" href="css/home.css?v=2" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- CSS PRINCIPAL Y RESPONSIVE (De-prioritized for initial render, CSP-safe) -->
+  <link rel="stylesheet" href="css/home.css?v=3" media="print" data-async-css>
   <noscript>
-    <link rel="stylesheet" href="css/home.css?v=2">
+    <link rel="stylesheet" href="css/home.css?v=3">
   </noscript>
 
-  <link rel="preload" href="css/estilos-responsive-jorgazo.css?v=2" as="style"
-    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=2" media="print" data-async-css>
   <noscript>
     <link rel="stylesheet" href="css/estilos-responsive-jorgazo.css?v=2">
   </noscript>
@@ -156,40 +210,34 @@
   <!-- Fuentes punk desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload"
+  <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap"
-    as="style" onload="this.onload=null;this.rel='stylesheet'">
+    media="print" data-async-css>
   <noscript>
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Rubik:wght@400;700;900&family=Rubik+Glitch&family=Rubik+Mono+One&display=swap">
   </noscript>
 
   <!-- AOS CSS -->
-  <link rel="preload" href="https://unpkg.com/aos@2.3.4/dist/aos.css" as="style"
-    onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" media="print" data-async-css>
   <noscript>
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
   </noscript>
 
   <!-- SimpleLightbox CSS & JS -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
-    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" media="print" data-async-css>
   <noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.css"
       crossorigin="anonymous" referrerpolicy="no-referrer">
   </noscript>
+  <script src="js/async-css.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/simplelightbox/2.14.2/simple-lightbox.min.js"
     crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
 
   <!-- FAVICON -->
 
   <link rel="icon" href="images/logo/favicon.ico" type="image/x-icon">
-
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" as="style"
-    onload="this.onload=null;this.rel='stylesheet'">
-  <noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-  </noscript>
 
   <script type="application/ld+json">
 {
@@ -253,10 +301,10 @@
 
   <!-- === MENÚ PUNK ROCK === -->
   <button id="menu-trigger" title="Menú" aria-label="Abrir menú" aria-haspopup="true" aria-controls="punk-menu-overlay">
-    <img src="images/logo/menu1.svg" alt="Icono del menú">
+    <img src="images/logo/menu1.svg" alt="Icono del menú" width="32" height="32">
   </button>
 
-  <nav id="punk-menu-overlay" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
+  <div id="punk-menu-overlay" role="dialog" aria-modal="true" aria-labelledby="menu-heading">
     <div id="paint-splatter"></div>
     <h2 id="menu-heading" class="visually-hidden">Navegación Principal</h2>
     <button id="menu-close" title="Cerrar menú" aria-label="Cerrar menú">&times;</button>
@@ -269,11 +317,11 @@
     <a href="pages/galeria/" class="menu-link">GALERÍA</a>
     <a href="pages/tienda/" class="menu-link">LA TIENDA</a>
     <a href="#contacto" class="menu-link">CONTACTO</a>
-  </nav>
+  </div>
   <!-- === FIN MENÚ PUNK ROCK === -->
   <section id="inicio" class="section-logo-intro">
     <img id="scroll-logo" src="images/logo/img43-sin-fondo.webp" alt="Logo Jorgazo Rock" width="400" height="400"
-      fetchpriority="high">
+      decoding="async">
   </section><br><br><br><br><br><br><br><br><br><br>
   <div class="grid-background">
     <div class="grid-square black"></div>
@@ -317,7 +365,17 @@
   <article id="modalCartel" class="modal-cartel">
     <div class="modal-content">
       <span class="close-modal" id="cerrarModal">&times;</span>
-      <img id="cartelImg" class="cartel-img" alt="Cartel Jorgazo Rock XI - 21 de noviembre de 2026" loading="lazy" src="assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg"/>
+      <picture>
+        <source type="image/avif"
+          srcset="assets/gallery/full/cartel/Jorgazo-Rock_XI-480.avif 480w, assets/gallery/full/cartel/Jorgazo-Rock_XI.avif 721w"
+          sizes="(max-width: 600px) 85vw, 500px">
+        <source type="image/webp"
+          srcset="assets/gallery/full/cartel/Jorgazo-Rock_XI-480.webp 480w, assets/gallery/full/cartel/Jorgazo-Rock_XI.webp 721w"
+          sizes="(max-width: 600px) 85vw, 500px">
+        <img id="cartelImg" class="cartel-img" alt="Cartel Jorgazo Rock XI - 21 de noviembre de 2026"
+          src="assets/gallery/full/cartel/Jorgazo-Rock_XI.webp" width="721" height="1024"
+          fetchpriority="high" decoding="sync" />
+      </picture>
       <div id="fallbackFecha" class="fecha-jorgazo" style="display: none;">
         <h2>21 de noviembre de 2026</h2>
         <p>¡Marca el día en rojo, que vuelve el Jorgazo Rock!</p>
@@ -384,10 +442,8 @@
           <h3 class="mini-title-glitch">DIFUNDE EL RUIDO</h3>
           <p>Síguenos para no perderte ni un pogo:</p>
           <div class="redes-btns">
-            <a href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer" class="btn-red"><i
-                class="fab fa-facebook"></i> FACEBOOK</a>
-            <a href="https://www.instagram.com/jorgazorock/" target="_blank" rel="noopener noreferrer" class="btn-red"><i
-                class="fab fa-instagram"></i> INSTAGRAM</a>
+            <a href="https://www.facebook.com/JorgazoRock" target="_blank" rel="noopener noreferrer" class="btn-red"><svg class="social-icon-svg" viewBox="0 0 512 512" aria-hidden="true"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg> FACEBOOK</a>
+            <a href="https://www.instagram.com/jorgazorock/" target="_blank" rel="noopener noreferrer" class="btn-red"><svg class="social-icon-svg" viewBox="0 0 448 512" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg> INSTAGRAM</a>
           </div>
         </div>
       </div>
@@ -430,7 +486,7 @@
     <center>
       <h2>El Cartelazo 2026</h2>
       <p class="cartelazo-subtitle">XI Edicion - 21 de noviembre - Fuente Lunara, Cabeza la Vaca</p>
-      <a href="assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg" alt="Cartel Oficial Jorgazo Rock XI" style="max-width:600px; width:100%; margin:1rem auto; display:block; border:3px solid #e60000;" loading="lazy"></a>
+      <a href="assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg" target="_blank" rel="noopener noreferrer"><img src="assets/gallery/full/cartel/Jorgazo-Rock_XI.webp" srcset="assets/gallery/full/cartel/Jorgazo-Rock_XI-480.webp 480w, assets/gallery/full/cartel/Jorgazo-Rock_XI.webp 721w" sizes="(max-width: 600px) 95vw, 600px" alt="Cartel Oficial Jorgazo Rock XI" width="721" height="1024" style="max-width:600px; width:100%; height:auto; margin:1rem auto; display:block; border:3px solid #e60000;" loading="lazy" decoding="async"></a>
     </center>
 
     <div class="bento-grid" id="bandas-grid-container">
@@ -463,7 +519,7 @@
     <div class="storytelling-img img-vertical-grande" data-aos="fade-left" data-aos-delay="200">
       <a href="assets/gallery/full/denis_inma.webp" title="Denis e Inma, organizadores del Jorgazo Rock">
         <img src="assets/gallery/full/denis_inma.webp" alt="Denis e Inma, organizadores del Jorgazo Rock"
-          loading="lazy">
+          width="880" height="1080" loading="lazy" decoding="async">
       </a>
     </div>
   </section>
@@ -474,14 +530,14 @@
     </center>
     <a href="assets/gallery/full/organizadoras_jorgazorock.webp" title="Imagen de las organizadoras del Jorgazo Rock">
       <img src="assets/gallery/full/organizadoras_jorgazorock.webp" alt="Imagen de las organizadoras del Jorgazo Rock"
-        loading="lazy">
+        width="1080" height="843" loading="lazy" decoding="async">
     </a>
   </section>
   <section class="storytelling-alt" data-aos="fade-up">
     <div class="storytelling-img" data-aos="fade-right">
       <a href="assets/gallery/full/merce_y_nina.webp" title="Merce y Nina, organizadoras del Jorgazo Rock">
         <img src="assets/gallery/full/merce_y_nina.webp" alt="Merce y Nina, organizadoras del Jorgazo Rock"
-          loading="lazy">
+          width="720" height="1002" loading="lazy" decoding="async">
       </a>
     </div>
     <div class="storytelling-text" data-aos="fade-left" data-aos-delay="200">
@@ -502,25 +558,25 @@
         <a href="assets/gallery/full/rafa_yerga_direccion_jorgazo.webp"
           title="Rafa Yerga en dirección del Jorgazo Rock">
           <img src="assets/gallery/full/rafa_yerga_direccion_jorgazo.webp"
-            alt="Rafa Yerga en dirección del Jorgazo Rock" loading="lazy">
+            alt="Rafa Yerga en dirección del Jorgazo Rock" width="2048" height="1152" loading="lazy" decoding="async">
         </a>
       </div>
       <div class="grid-item" data-aos="fade-up">
         <a href="assets/gallery/full/grupo1_jorgazorock_2024.webp" title="Grupo tocando en el Jorgazo Rock en 2024">
           <img src="assets/gallery/full/grupo1_jorgazorock_2024.webp" alt="Grupo tocando en el Jorgazo Rock en 2024"
-            loading="lazy">
+            width="2048" height="1536" loading="lazy" decoding="async">
         </a>
       </div>
       <div class="grid-item" data-aos="fade-up">
         <a href="assets/gallery/full/asistentes_jorgazorock.webp" title="Asistentes disfrutando del Jorgazo Rock">
           <img src="assets/gallery/full/asistentes_jorgazorock.webp" alt="Asistentes disfrutando del Jorgazo Rock"
-            loading="lazy">
+            width="2048" height="1365" loading="lazy" decoding="async">
         </a>
       </div>
       <div class="grid-item" data-aos="fade-up">
         <a href="assets/gallery/full/cantante_grupo_jorgazorock_2016.webp" title="Cantante en el Jorgazo Rock 2016">
           <img src="assets/gallery/full/cantante_grupo_jorgazorock_2016.webp" alt="Cantante en el Jorgazo Rock 2016"
-            loading="lazy">
+            width="2048" height="1365" loading="lazy" decoding="async">
         </a>
       </div>
     </div>
@@ -585,6 +641,7 @@
           <a href="https://youtube.com/shorts/SM2LiA_Ml4Y" target="_blank" rel="noopener noreferrer"
             aria-label="Ver vídeo resumen del Jorgazo Rock en YouTube">
             <img src="assets/gallery/full/portada_video.webp" alt="Miniatura del vídeo del festival"
+              width="2048" height="1536"
               style="width: 100%; height: auto; display: block; object-fit: cover; cursor: pointer;" loading="lazy"
               decoding="async" />
             <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
@@ -642,8 +699,8 @@
       <div class="pueblo-grid">
 
         <div class="pueblo-img grande" data-aos="fade-right">
-          <img src="assets/gallery/full/fuente_lunara.jpg"
-            alt="La Fuente Lunara, un paraje natural con árboles y un arroyo" width="600" height="451" loading="lazy">
+          <img src="assets/gallery/full/fuente_lunara_opt.webp"
+            alt="La Fuente Lunara, un paraje natural con árboles y un arroyo" width="800" height="603" loading="lazy" decoding="async">
           <div class="pueblo-img-content">
             <h3>La Fuente Lunara</h3>
             <p>Donde cada otoño se convierte en templo de diversión y abrazos, al aire libre, bajo las estrellas y hasta
@@ -653,7 +710,7 @@
 
         <div class="pueblo-img vertical" data-aos="zoom-in">
           <img src="assets/gallery/full/albergue_municipal.webp" alt="Fachada del Albergue Municipal de Cabeza la Vaca"
-            loading="lazy">
+            width="300" height="168" loading="lazy" decoding="async">
           <div class="pueblo-img-content">
             <h3>El Albergue Municipal</h3>
             <p>Un sitio humilde pero acogedor donde duermen las ideas, las risas y nuestrxs queridxs amigxs de los
@@ -663,7 +720,7 @@
 
         <div class="pueblo-img vertical" data-aos="zoom-in">
           <img src="assets/gallery/full/vecinos_cabeza_la_vaca.webp" alt="Vecinos del pueblo colaborando en el festival"
-            loading="lazy">
+            width="960" height="573" loading="lazy" decoding="async">
           <div class="pueblo-img-content">
             <h3>Vecinxs de lujo</h3>
             <p>Hasta quien no escucha rock o punk ayuda con una sonrisa, una caña bien fresquita o una buena paella.</p>
@@ -672,7 +729,7 @@
 
         <div class="pueblo-img vertical" data-aos="fade-up">
           <img src="assets/gallery/full/calles_pueblo_cabeza_la_vaca.webp"
-            alt="Una calle empedrada y blanca típica de Cabeza la Vaca" loading="lazy">
+            alt="Una calle empedrada y blanca típica de Cabeza la Vaca" width="2048" height="1365" loading="lazy" decoding="async">
           <div class="pueblo-img-content">
             <h3>Un lugar con historia</h3>
             <p>Un pueblo obrero que se ha hecho a sí mismo. Cabeza la Vaca es pasado, presente y futuro.</p>
@@ -681,7 +738,7 @@
 
         <div class="pueblo-img vertical" data-aos="fade-up">
           <img src="assets/gallery/full/peques_naturaleza_cabeza_la_vaca.webp"
-            alt="Niños y niñas jugando en un entorno natural durante las actividades infantiles" loading="lazy">
+            alt="Niños y niñas jugando en un entorno natural durante las actividades infantiles" width="720" height="960" loading="lazy" decoding="async">
           <div class="pueblo-img-content">
             <h3>Nuestrxs peques; el futuro</h3>
             <p>Actividades infantiles que mezclan punk y naturaleza. Porque la revolución también se enseña.</p>
@@ -712,10 +769,10 @@
 
       <div class="fake-video-wrapper">
         <a href="https://www.facebook.com/AytoCabezaLaVaca/videos/1226769235829694" target="_blank" rel="noopener noreferrer"
-          rel="noopener noreferrer" aria-label="Ver vídeo de la Fuente Lunara en Facebook">
-          <img src="assets/gallery/full/fuente_lunara.jpg"
-            alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" width="600"
-            height="451" loading="lazy" />
+          aria-label="Ver vídeo de la Fuente Lunara en Facebook">
+          <img src="assets/gallery/full/fuente_lunara_opt.webp"
+            alt="Espacio principal de Fuente Lunara donde se celebra el Jorgazo Rock" class="fake-video-img" width="800"
+            height="603" loading="lazy" decoding="async" />
           <div class="play-icon-overlay" style="pointer-events: none;">
             <svg width="60" height="60" viewBox="0 0 24 24" fill="#fff">
               <path d="M8 5v14l11-7z" />
@@ -760,7 +817,7 @@
 
     <script src="data/news_data.js?v=3" defer></script>
     <script src="js/utils.js?v=1.6" defer></script>
-    <script src="js/principal.js?v=1.7" defer></script>
+    <script src="js/principal.js?v=1.8" defer></script>
     <footer id="contacto" class="section-footer">
       <p>&copy; 2026 Asociación Jorgazo Rock. Todos los derechos reservados.</p>
       <p>Síguenos en <a href="https://www.instagram.com/jorgazorock" target="_blank" rel="noopener noreferrer">Instagram</a> y <a
@@ -783,7 +840,7 @@
       </noscript>
       <a href="https://www.instagram.com/fefa.rock/" target="_blank" rel="noopener noreferrer">
         <img src="images/logo/logo_fefa.webp" alt="logo Federación Extremeña de Festivales Autogestionados"
-          id="logoFefa">
+          id="logoFefa" width="400" height="217" loading="lazy" decoding="async">
       </a>
     </footer>
 
