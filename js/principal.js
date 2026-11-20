@@ -78,33 +78,40 @@ document.addEventListener("DOMContentLoaded", () => {
   /* === MODAL CARTEL / FECHA === */
   const modalCartel = document.getElementById("modalCartel");
   if (modalCartel) {
-    window.addEventListener("load", function () {
-      const cartelImg = document.getElementById("cartelImg");
-      const fallback = document.getElementById("fallbackFecha");
-      const cartelURL = basePath + "assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg";
-      fetch(cartelURL, { method: 'HEAD' })
-        .then(res => {
-          if (res.ok) {
-            cartelImg.src = cartelURL;
-            cartelImg.style.display = "block";
-            fallback.style.display = "none";
-          } else {
-            fallback.style.display = "block";
-          }
-          modalCartel.style.display = "flex";
-        })
-        .catch(() => {
-          fallback.style.display = "block";
-          modalCartel.style.display = "flex";
-        });
-      document.getElementById("cerrarModal").addEventListener("click", () => {
-        modalCartel.style.display = "none";
-      });
-      window.addEventListener("click", function (e) {
-        if (e.target === modalCartel) {
-          modalCartel.style.display = "none";
-        }
-      });
+    const festivalEndDate = new Date("2026-11-22T06:00:00");
+    const cartelImg = document.getElementById("cartelImg");
+    const fallback = document.getElementById("fallbackFecha");
+    const cerrarModalBtn = document.getElementById("cerrarModal");
+
+    const closeCartelModal = () => {
+      modalCartel.style.display = "none";
+    };
+
+    if (new Date() > festivalEndDate) {
+      closeCartelModal();
+    } else if (cartelImg && fallback) {
+      const showFallback = () => {
+        cartelImg.style.display = "none";
+        fallback.style.display = "block";
+      };
+      cartelImg.addEventListener("error", showFallback, { once: true });
+      if (cartelImg.complete && cartelImg.naturalWidth === 0) {
+        showFallback();
+      }
+    }
+
+    if (cerrarModalBtn) {
+      cerrarModalBtn.addEventListener("click", closeCartelModal);
+    }
+    modalCartel.addEventListener("click", (e) => {
+      if (e.target === modalCartel) {
+        closeCartelModal();
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && modalCartel.style.display !== "none") {
+        closeCartelModal();
+      }
     });
   }
 
@@ -272,15 +279,23 @@ document.addEventListener("DOMContentLoaded", () => {
   if (bandasGridContainer && modalBanda) {
     let currentBands = [];
 
+    const socialSvgIcons = {
+      instagram: '<svg class="social-icon-svg" viewBox="0 0 448 512" aria-hidden="true"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>',
+      facebook: '<svg class="social-icon-svg" viewBox="0 0 512 512" aria-hidden="true"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg>',
+      youtube: '<svg class="social-icon-svg" viewBox="0 0 576 512" aria-hidden="true"><path d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"/></svg>',
+      spotify: '<svg class="social-icon-svg" viewBox="0 0 496 512" aria-hidden="true"><path d="M248 8C111.1 8 0 119.1 0 256s111.1 248 248 248 248-111.1 248-248S384.9 8 248 8zm100.7 364.9c-4.2 0-6.8-1.3-10.7-3.6-62.4-37.6-135-39.2-206.7-24.5-3.9 1-9 2.6-11.9 2.6-9.7 0-15.8-7.7-15.8-15.8 0-10.3 6.1-15.2 13.6-16.8 81.9-18.1 165.6-16.5 237 26.2 6.1 3.9 9.7 7.4 9.7 16.5s-7.1 15.4-15.2 15.4zm26.9-65.6c-5.2 0-8.7-2.3-12.3-4.2-62.5-37-155.7-51.9-238.6-29.4-4.8 1.3-7.4 2.6-11.9 2.6-10.7 0-19.4-8.7-19.4-19.4s5.2-17.8 15.5-20.7c27.8-7.8 56.2-13.6 97.8-13.6 64.9 0 127.6 16.1 177 45.5 8.1 4.8 11.3 11 11.3 19.7-.1 10.8-8.5 19.5-19.4 19.5zm31-76.2c-5.2 0-8.4-1.3-12.9-3.9-71.2-42.5-198.5-52.7-280.9-29.7-3.6 1-8.1 2.6-12.9 2.6-13.2 0-23.3-10.3-23.3-23.6 0-13.6 8.4-21.3 17.4-23.9 35.2-10.3 74.6-15.2 117.5-15.2 73 0 149.5 15.2 205.4 47.8 7.8 4.5 12.9 10.7 12.9 22.6 0 13.6-11 23.3-23.2 23.3z"/></svg>',
+      bandcamp: '<svg class="social-icon-svg" viewBox="0 0 512 512" aria-hidden="true"><path d="M256,8C119,8,8,119,8,256S119,504,256,504,504,393,504,256,393,8,256,8Zm48.2,326.1h-181L207.9,178h181Z"/></svg>'
+    };
+
     const buildSocialIcons = (social, useNofollow) => {
       if (!social || Object.keys(social).length === 0) return '';
       const rel = useNofollow ? 'rel="nofollow noopener noreferrer"' : 'rel="noopener noreferrer"';
       let html = '';
-      if (social.instagram) html += `<a href="${utils.sanitizeUrl(social.instagram)}" target="_blank" ${rel} title="Instagram"><i class="fab fa-instagram"></i></a>`;
-      if (social.facebook) html += `<a href="${utils.sanitizeUrl(social.facebook)}" target="_blank" ${rel} title="Facebook"><i class="fab fa-facebook"></i></a>`;
-      if (social.youtube) html += `<a href="${utils.sanitizeUrl(social.youtube)}" target="_blank" ${rel} title="YouTube"><i class="fab fa-youtube"></i></a>`;
-      if (social.spotify) html += `<a href="${utils.sanitizeUrl(social.spotify)}" target="_blank" ${rel} title="Spotify"><i class="fab fa-spotify"></i></a>`;
-      if (social.bandcamp) html += `<a href="${utils.sanitizeUrl(social.bandcamp)}" target="_blank" ${rel} title="Bandcamp"><i class="fab fa-bandcamp"></i></a>`;
+      if (social.instagram) html += `<a href="${utils.sanitizeUrl(social.instagram)}" target="_blank" ${rel} title="Instagram" aria-label="Instagram">${socialSvgIcons.instagram}</a>`;
+      if (social.facebook) html += `<a href="${utils.sanitizeUrl(social.facebook)}" target="_blank" ${rel} title="Facebook" aria-label="Facebook">${socialSvgIcons.facebook}</a>`;
+      if (social.youtube) html += `<a href="${utils.sanitizeUrl(social.youtube)}" target="_blank" ${rel} title="YouTube" aria-label="YouTube">${socialSvgIcons.youtube}</a>`;
+      if (social.spotify) html += `<a href="${utils.sanitizeUrl(social.spotify)}" target="_blank" ${rel} title="Spotify" aria-label="Spotify">${socialSvgIcons.spotify}</a>`;
+      if (social.bandcamp) html += `<a href="${utils.sanitizeUrl(social.bandcamp)}" target="_blank" ${rel} title="Bandcamp" aria-label="Bandcamp">${socialSvgIcons.bandcamp}</a>`;
       return html;
     };
 
@@ -305,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
           
           gridHtml += `
             <article class="banda-card" data-index="${index}" data-aos="fade-up" data-aos-delay="${(index % 4) * 80}" tabindex="0">
-              ${banda.image ? `<img src="${utils.sanitizeUrl(basePath + banda.image)}" alt="${utils.escapeHtml(banda.name)}" class="banda-bg-image">` : ''}
+              ${banda.image ? `<img src="${utils.sanitizeUrl(basePath + banda.image)}" alt="${utils.escapeHtml(banda.name)}" class="banda-bg-image" width="600" height="600" loading="lazy" decoding="async">` : ''}
               <div class="banda-content-overlay">
                 <span class="banda-order">#${banda.order || (index + 1)}</span>
                 <div class="banda-nombre">${utils.escapeHtml(banda.name)}</div>
@@ -406,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
         news.slice(0, 1).forEach(item => {
           newsHtml += `
             <article class="blog-card-mini" data-aos="fade-right" data-id="${item.id}">
-              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="${utils.escapeHtml(item.title || 'Noticia')}" class="card-img ${item.imageFit === 'contain' ? 'card-img-contain' : ''}">
+              <img src="${item.image || 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?q=80&w=600'}" alt="${utils.escapeHtml(item.title || 'Noticia')}" class="card-img ${item.imageFit === 'contain' ? 'card-img-contain' : ''}" loading="lazy" decoding="async">
               <div class="card-text">
                 <span class="tag">${utils.escapeHtml(item.source).toUpperCase()}</span>
                 <h3>${utils.escapeHtml(item.title)}</h3>

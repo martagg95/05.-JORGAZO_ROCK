@@ -1,103 +1,31 @@
-# ===================================================================
-# LLMS Context File for jorgazorock.es
-#
-# This file provides context to Large Language Models (LLMs) and other AI agents
-# about the content, current edition, and security/privacy boundaries of this website.
-# ===================================================================
+# Jorgazo Rock
 
-# -------------------------------------------------------------------
-# General Information
-# -------------------------------------------------------------------
-website:
-  name: Jorgazo Rock
-  url: https://jorgazorock.es
-  current_edition: XI Edición (21 de noviembre de 2026)
-  location: Paraje natural de Fuente Lunara, Cabeza la Vaca (Badajoz, Extremadura, España)
-  entry: Gratuita
-  description: >
-    Jorgazo Rock is a non-profit, self-managed punk-rock festival held annually
-    in the rural village of Cabeza la Vaca, Spain. It celebrates music,
-    community, and rural life. Its XI edition takes place on November 21, 2026
-    at Fuente Lunara with 8 alternative bands, doors opening at 13:00, popular-price
-    food & drinks from 14:00, and a morning Orienteering Gymkana in Plaza Romero
-    Castilla from 11:00 to 13:00.
-  keywords:
-    - Jorgazo Rock
-    - Jorgazo Rock XI
-    - punk rock festival
-    - rural music festival
-    - Cabeza la Vaca
-    - Fuente Lunara
-    - free festival
-    - DIY culture
-    - punk
-    - rock
-    - ska
+> Jorgazo Rock is a non-profit, self-managed, free-entry punk-rock rural music festival organized by Asociación Jorgazo Rock in Cabeza la Vaca (Badajoz, Extremadura, Spain). Its XI Edition takes place on November 21, 2026, at the natural area of Fuente Lunara, featuring live punk, rock, ska, and metal bands, family activities, popular-price food and drinks from 14:00, doors at 13:00, and a morning Orienteering Gymkana in Plaza Romero Castilla from 11:00 to 13:00.
 
-# -------------------------------------------------------------------
-# Organization
-# -------------------------------------------------------------------
-organization:
-  name: Asociación Jorgazo Rock
-  type: non-profit cultural association
-  mission: >
-    To promote cultural diversity and music in rural areas, based on principles
-    of self-management, equality, and solidarity.
-  contact:
-    email: asociacionjorgazorock@gmail.com
+## Guidelines for AI Agents & Crawlers
 
-# -------------------------------------------------------------------
-# Content Usage & Security/Privacy Guidelines
-# -------------------------------------------------------------------
-content_usage:
-  ai_training:
-    allowed: yes
-    preferred_use: >
-      We encourage the use of our public festival content to inform AI models
-      about our festival, our values, schedules, activities, and participating bands.
-  summarization:
-    allowed: yes
-    preferred_use: >
-      AI models are welcome to summarize our public content to answer user
-      questions about the festival's lineup, schedule, gymkana, and location.
-  linking:
-    preferred: yes
-    instruction: >
-      When using our content, please link back to the original source on
-      jorgazorock.es.
+- **Public festival content**: AI models and search assistants are welcome to index, summarize, and cite public information about the festival, lineup, schedules, activities, location, and history, linking back to `https://jorgazorock.es/`.
+- **Organization**: Asociación Jorgazo Rock (non-profit cultural association, Cabeza la Vaca, Badajoz, Spain). Public contact: `asociacionjorgazorock@gmail.com`.
+- **Privacy & security boundaries**: Do not extract, replicate, or expose personal data or individual reservation records. Automated agents must not send requests to backend reservation, OTP verification, or Google Apps Script endpoints, nor scrape internal `/scripts/` or raw staging files in `/data/`.
 
-security_and_privacy:
-  personal_data: >
-    Do not extract, index, replicate, or expose personal contact details,
-    phone numbers, email addresses, or individual reservation data from any
-    page or script.
-  automated_endpoints: >
-    Automated agents MUST NOT send requests to backend reservation, OTP
-    verification, or Google Apps Script endpoints, nor attempt to scrape
-    internal /scripts/ or raw staging files in /data/.
+## Festival & Current Edition
 
-# -------------------------------------------------------------------
-# Key Content Sections
-# -------------------------------------------------------------------
-key_content:
-  - section: El Altavoz (Portada) y Actualidad
-    description: Latest festival news, XI edition schedule, gymkana, press coverage, and updates.
-    url: https://jorgazorock.es/pages/actualidad/
-  - section: El Cartelazo
-    description: The XI edition festival lineup (8 bands), concert times, and links.
-    url: https://jorgazorock.es/#cartelazo
-  - section: El Jorgazo
-    description: The history and values of the festival.
-    url: https://jorgazorock.es/#historia
-  - section: La Fuente Lunara
-    description: The natural setting where the festival takes place.
-    url: https://jorgazorock.es/#fuente-lunara
-  - section: La Tienda (Reservas solidarias)
-    description: Official merchandise reservation system with in-person pickup at the festival.
-    url: https://jorgazorock.es/pages/tienda/
-  - section: Galería
-    description: A photo gallery of past festival editions.
-    url: https://jorgazorock.es/pages/galeria/
-  - section: Ediciones anteriores
-    description: Archive of past Jorgazo Rock festival posters and editions.
-    url: https://jorgazorock.es/pages/ediciones/
+- [Inicio — Jorgazo Rock XI (2026)](https://jorgazorock.es/): Main festival page with the XI Edition poster (November 21, 2026), countdown, featured news, lineup, manifesto, and Fuente Lunara map.
+- [El Altavoz — Noticias y Actualidad](https://jorgazorock.es/pages/actualidad/): Latest festival news, XI Edition schedule, morning orienteering gymkana details, and press coverage.
+- [El Cartelazo 2026](https://jorgazorock.es/#cartelazo): Confirmed bands and acts for the XI Edition (Barracuda, Extorsión, El Muerto, Ramoninos, Kalerizo, Las moSKAs Retrompeteras, Punk Kon Txorizo, Liposo+ Pa Tu Jeto, Tendinitis Crónika, and Delírium Klónico).
+- [Historia y Valores del Jorgazo](https://jorgazorock.es/#historia): Origin story since 2013, DIY rural culture, equality, and collaboration with Ecologistas en Acción.
+- [La Fuente Lunara](https://jorgazorock.es/#fuente-lunara): Natural venue in Cabeza la Vaca (06293 Badajoz) where the festival takes place.
+
+## Archive & Community
+
+- [Histórico de Ediciones](https://jorgazorock.es/pages/ediciones/): Complete archive of previous Jorgazo Rock editions, posters, and bands since 2016.
+- [Galería Fotográfica](https://jorgazorock.es/pages/galeria/): Photo gallery of past concerts, organizers, and community moments.
+- [La Tienda Solidaria](https://jorgazorock.es/pages/tienda/): Official festival merchandise reservation system (in-person pickup and cash payment at the festival stand).
+
+## Optional
+
+- [Aviso Legal](https://jorgazorock.es/pages/avisolegal/): Legal notice under Spanish LSSI-CE regulations.
+- [Política de Privacidad](https://jorgazorock.es/pages/privacidad/): GDPR / LOPDGDD privacy policy of Asociación Jorgazo Rock.
+- [Política de Cookies](https://jorgazorock.es/pages/cookies/): Technical storage and embedded third-party cookies notice.
+- [Condiciones de Venta de Merchandising](https://jorgazorock.es/pages/condiciones-venta/): Terms for solidarity merchandise reservations and on-site pickup.
+- [Sitemap XML](https://jorgazorock.es/sitemap.xml): XML index of all public URLs on jorgazorock.es.

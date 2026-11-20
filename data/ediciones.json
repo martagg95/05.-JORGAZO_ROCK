@@ -4,7 +4,7 @@
     "year": 2026,
     "date": "21 de noviembre de 2026",
     "location": "Fuente Lunara, Cabeza la Vaca",
-    "poster": "assets/gallery/full/cartel/Jorgazo-Rock_XI.jpg",
+    "poster": "assets/gallery/full/cartel/Jorgazo-Rock_XI.webp",
     "posterPending": false,
     "current": true,
     "bands": [
@@ -14,7 +14,7 @@
         "bio": "Desde las entrañas del rock mas autentico llega Barracuda de Madrid, una banda que derrocha actitud, energia y puro sonido directo. Con un estilo contundente y sin filtros, prometen hacer vibrar el escenario como se merece. Si lo tuyo es el punk rock sin concesiones, este concierto es para ti.",
         "origin": "Ciempozuelos (Madrid)",
         "style": "Punk Rock",
-        "image": "assets/gallery/full/bandas/barracuda_2026.png",
+        "image": "assets/gallery/full/bandas/barracuda_2026.webp",
         "social": {
           "instagram": "https://www.instagram.com/barracuda_oficial"
         }
@@ -25,7 +25,7 @@
         "bio": "Directos desde la Plaza del Pumarejo (Sevilla) y activos desde 1994, llegan con su inconfundible punk rock directo, crudo y con mensaje. Letras con conciencia de clase, actitud autogestionada y un sonido que no deja indiferente. Han compartido escenario con bandas como Kaotiko y siguen mas vivos que nunca, reventando salas y festivales.",
         "origin": "Sevilla",
         "style": "Punk Rock",
-        "image": "assets/gallery/full/bandas/extorsion_2026.png",
+        "image": "assets/gallery/full/bandas/extorsion_2026.webp",
         "social": {
           "instagram": "https://www.instagram.com/extorsionrock/"
         }
@@ -36,7 +36,7 @@
         "bio": "Desde Huelva llega El Muerto, una banda que pisa fuerte con su sonido contundente y actitud arrolladora sobre el escenario. Su mezcla de riffs pesados, energia cruda y presencia escenica promete no dejar a nadie indiferente. Preparate para un directo intenso, de esos que se sienten en el pecho y se recuerdan mucho despues de que termine.",
         "origin": "Huelva",
         "style": "Rap Metal",
-        "image": "assets/gallery/full/bandas/el_muerto_2026.png",
+        "image": "assets/gallery/full/bandas/el_muerto_2026.webp",
         "social": {
           "instagram": "https://www.instagram.com/elmuerto_oficial/"
         }
@@ -47,7 +47,7 @@
         "bio": "Desde Navalmoral de la Mata, Ramoninos es una banda de rock formada en 2014 por jovenes musicos que, desde muy temprana edad, empezaron a dar cana versionando a grandes del rock y el punk como Ramones, Sex Pistols, The Clash, Eskorbuto o Siniestro Total. Con un directo cargado de fuerza, dinamismo y pura energia, han recorrido escenarios de toda la geografia nacional.",
         "origin": "Navalmoral de la Mata (Caceres)",
         "style": "Punk Rock",
-        "image": "assets/gallery/full/bandas/ramoninos_2026.png",
+        "image": "assets/gallery/full/bandas/ramoninos_2026.webp",
         "social": {
           "instagram": "https://www.instagram.com/ramoninos/",
           "facebook": "https://www.facebook.com/ramoninos/",
@@ -60,7 +60,7 @@
         "bio": "Directos desde Caceres, Kalerizo llega con una mezcla explosiva de punk-rock, rap-metal y actitud combativa que no deja indiferente a nadie. Formados en 2020, esta banda de seis miembros ha sabido hacerse un hueco en la escena extremena a base de distorsion, energia y letras que golpean donde duele. Con temas como Extremadura explota y su potente album debut Repartiendo Bellotas, traen un sonido que es pura reivindicacion. Este año aterrizan por segunda vez en el Jorgazo para presentar su nuevo disco.",
         "origin": "Caceres",
         "style": "Punk / Rap Metal",
-        "image": "assets/gallery/full/bandas/kalerizo_2026.png",
+        "image": "assets/gallery/full/bandas/kalerizo_2026.webp",
         "social": {
           "youtube": "https://www.youtube.com/@KalerizoEnfermizo",
           "instagram": "https://www.instagram.com/kalerizo/"
@@ -72,7 +72,7 @@
         "bio": "Desde Navarra llegan Las moSKAs Retrompeteras, una autentica descarga de Punk-Rock-Ska que no deja a nadie quieto. Nacidos como homenaje a Las MoSKAs Trompeteras y al recuerdo de Xabi Flores y Mikel Lasa, traen un directo lleno de energia y fiesta. Con mas de 50 conciertos en apenas dos anos, aterrizan en Cabeza la Vaca para liarla bien gorda.",
         "origin": "Dicastillo (Navarra)",
         "style": "Punk Rock Ska",
-        "image": "assets/gallery/full/bandas/las_moskas_2026.png",
+        "image": "assets/gallery/full/bandas/las_moskas_2026.webp",
         "social": {
           "instagram": "https://www.instagram.com/las_moskas_retrompeteras/"
         }
@@ -83,7 +83,7 @@
         "bio": "Directos desde Zahinos (Badajoz), vuelve una de las bandas mas miticas y peculiares del punk underground extremenu. Nacidos entre frontera, campo y carbon, supieron hacerse un hueco en la escena alternativa extremena gracias a su sonido crudo, rapido y sin filtros, acompanado de letras cargadas de ironia, critica social y mucha esencia de la tierra. Sera su segunda vez descargando metralleta en nuestro festival.",
         "origin": "Zahinos (Badajoz)",
         "style": "Punk",
-        "image": "assets/gallery/full/bandas/punk_kon_txorizo_2026.png",
+        "image": "assets/gallery/full/bandas/punk_kon_txorizo_2026.webp",
         "social": {}
       },
       {
@@ -92,7 +92,7 @@
         "bio": "Directamente desde Barcelona y nacidos en la escena underground de los anos 90, Liposo+ Pa Tu Jeto llevan decadas defendiendo el punk mas crudo, rapido y visceral. Con una potente voz femenina al frente, guitarras afiladas y letras cargadas de rabia y critica social, la banda se ha convertido en un referente para quienes entienden el punk como actitud, resistencia y forma de vida. Vienen a presentar su ultimo trabajo H.L.M.S.K.",
         "origin": "Barcelona",
         "style": "Punk Combativo",
-        "image": "assets/gallery/full/bandas/liposo_2026.png",
+        "image": "assets/gallery/full/bandas/liposo_2026.webp",
         "social": {
           "youtube": "https://www.youtube.com/@liposomaspatujetooficial",
           "instagram": "https://www.instagram.com/losliposomaspatujeto/"
